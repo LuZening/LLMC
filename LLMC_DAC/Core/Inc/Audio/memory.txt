@@ -1,0 +1,17 @@
+DSP: 128KB each
+
+Inputs:
+Encoder in-dbuf: 288B : No-cache
+Encoder in-fifo: 32KB
+From USB Playback fifo: 32KB
+From USB Playback bufCastToFloat: 12KB
+FS bufFileLoader: 32KB 
+FS bufCastToFloat: 64KB
+FS out-fifo: 128KB
+
+Outputs:
+Mixer: 576B x 2
+Decoder out-dbuf: 288B : No-cache
+To USB Recorder fifo: 32KB
+
+Total: 512KB (No-cache: 1KB)

@@ -1,0 +1,6 @@
+utf_convert.c:26:5:UTF16ToUTF8	20	static
+utf_convert.c:65:5:UTF8ToUTF16	28	static
+utf_convert.c:105:8:strnlen_TCHAR	0	static
+utf_convert.c:117:14:strncpy_TCHAR	24	static
+utf_convert.c:131:14:strnchr_TCHAR	4	static
+utf_convert.c:148:6:endswith_TCHAR	12	static

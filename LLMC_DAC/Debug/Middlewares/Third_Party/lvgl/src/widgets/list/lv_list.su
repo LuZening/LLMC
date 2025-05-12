@@ -1,0 +1,5 @@
+lv_list.c:65:12:lv_list_create	24	static
+lv_list.c:74:12:lv_list_add_text	24	static
+lv_list.c:84:12:lv_list_add_button	40	static
+lv_list.c:108:14:lv_list_get_button_text	24	static
+lv_list.c:123:6:lv_list_set_button_text	32	static

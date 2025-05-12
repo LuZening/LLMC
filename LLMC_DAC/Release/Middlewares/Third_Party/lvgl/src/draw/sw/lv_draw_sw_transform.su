@@ -1,0 +1,4 @@
+lv_draw_sw_transform.c:430:13:transform_rgb565a8	96	static
+lv_draw_sw_transform.c:612:13:transform_point_upscaled	16	static
+lv_draw_sw_transform.c:244:13:transform_rgb888	96	static
+lv_draw_sw_transform.c:82:6:lv_draw_sw_transform	248	static

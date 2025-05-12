@@ -1,0 +1,57 @@
+/*
+ * Config_user_define.c
+ *
+ *  Created on: Sep 5, 2023
+ *      Author: cpholzn
+ */
+
+#include <string.h>
+#include "Config/Config.h"
+#include "Config_user_define.h"
+#include "audio_settings.h"
+#include "ff.h"
+
+
+const char* VALID_STRING = "LLMCDEDICATEDFORYOU";
+
+// use '.' to indicate the positon in an array
+// for '.' is well supported in HTML URL encoding
+// either '()' or '[]' will be converted in HTML URL
+// WARNING: names can't be longer than 8bytes
+config_var_map_t configNameMapper[CONFIG_NUM_OF_VARS] = {
+//    {"TSCalibInfo", &(cfg.TSCalibInfo), CONFIG_VAR_OBJ},
+//    {"sel.2", &(cfg.nRadioToAntNums[1]), CONFIG_VAR_U8},
+//	{"label.1", &(cfg.sAntNames[0]), CONFIG_VAR_BYTESTRING_LONG},
+//	{"label.2", &(cfg.sAntNames[1]), CONFIG_VAR_BYTESTRING_LONG},
+//	{"label.3", &(cfg.sAntNames[2]), CONFIG_VAR_BYTESTRING_LONG},
+//	{"label.4", &(cfg.sAntNames[3]), CONFIG_VAR_BYTESTRING_LONG},
+//	{"label.5", &(cfg.sAntNames[4]), CONFIG_VAR_BYTESTRING_LONG},
+//	{"label.6", &(cfg.sAntNames[5]), CONFIG_VAR_BYTESTRING_LONG},
+		0
+
+};
+
+void init_config(Config *p)
+{
+    int i;
+    #ifdef USE_MUTEX_ON_CFG
+    if(mtxConfig == NULL) mtxConfig = xSemaphoreCreateMutex();
+    xSemaphoreTake(mtxConfig, portMAX_DELAY);
+    #endif
+    // set valid string
+    strcpy(p->sValid, VALID_STRING);
+    // set config inital values
+    memset(&(p->TSCalibInfo), 0, sizeof(TouchScreenCalibrationInfo_t));
+
+    p->audio_sample_rate = AUDIO_SAMPLE_RATE_48K;
+    p->audio_bit_depth = 24U;
+
+    p->nVolume100_decoder = 0;
+    p->nVolume100_encoder = 50;
+    p->nVolume100_FS = 20;
+
+    isModified = true;
+    #ifdef USE_MUTEX_ON_CFG
+    xSemaphoreGive(mtxConfig);
+    #endif
+}

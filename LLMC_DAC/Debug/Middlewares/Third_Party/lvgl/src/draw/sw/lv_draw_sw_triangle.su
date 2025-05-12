@@ -1,0 +1,5 @@
+lv_area.h:139:23:lv_area_get_width	16	static
+lv_area.h:149:23:lv_area_get_height	16	static
+lv_area.h:268:26:lv_point_from_precise	24	static
+lv_area.h:298:20:lv_point_swap	24	static
+lv_draw_sw_triangle.c:44:6:lv_draw_sw_triangle	376	static

@@ -1,0 +1,6 @@
+lv_string.h:65:20:lv_memzero	16	static
+lv_init.c:78:20:lv_global_init	16	static
+lv_init.c:106:20:_lv_cleanup_devices	16	static
+lv_init.c:117:6:lv_is_initialized	4	static
+lv_init.c:127:6:lv_init	32	static
+lv_init.c:312:6:lv_deinit	8	static

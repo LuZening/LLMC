@@ -1,0 +1,11 @@
+tjpgd.c:132:15:alloc_pool	24	static
+tjpgd.c:158:16:create_qt_tbl	40	static
+tjpgd.c:194:16:create_huffman_tbl	64	static
+tjpgd.c:285:12:huffext	72	static
+tjpgd.c:438:12:bitext	40	static
+tjpgd.c:534:9:jd_restart	32	static
+tjpgd.c:610:13:block_idct	88	static
+tjpgd.c:735:9:jd_mcu_load	64	static
+tjpgd.c:826:9:jd_mcu_output	104	static
+tjpgd.c:940:9:jd_prepare	56	static
+tjpgd.c:1101:9:jd_decomp	48	static

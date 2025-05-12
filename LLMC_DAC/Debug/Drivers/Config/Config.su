@@ -1,0 +1,8 @@
+Config.c:27:6:push_config_to_volatile_variables	16	static
+Config.c:37:6:load_config	16	static
+Config.c:75:6:save_config	16	static
+Config.c:127:6:set_config_variable_by_name	32	static
+Config.c:177:6:get_if_config_modified	16	static
+Config.c:185:19:get_config_variable_mapper_item_by_name	32	static
+Config.c:204:6:get_config_variable_by_name	32	static
+Config.c:245:5:get_config_string	16	static

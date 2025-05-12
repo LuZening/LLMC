@@ -1,0 +1,6 @@
+audio_DSP_resampler.c:21:17:gcd	24	static
+audio_DSP_resampler.c:31:17:lcm	24	static
+audio_DSP_resampler.c:44:14:bessel_i0	48	static
+audio_DSP_resampler.c:66:13:kaiser_window	48	static
+audio_DSP_resampler.c:80:6:audio_sinc_resampler_init	24	static
+audio_DSP_resampler.c:144:6:audio_sinc_resampler_process	96	static

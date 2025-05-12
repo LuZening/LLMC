@@ -1,0 +1,17 @@
+lv_display.h:410:26:lv_layer_sys	8	static
+lv_obj_pos.h:184:20:lv_obj_center	16	static
+lv_obj.h:311:20:lv_obj_set_user_data	16	static
+lv_obj.h:363:22:lv_obj_get_user_data	16	static
+lv_slider.h:77:20:lv_slider_set_value	24	static
+lv_slider.h:99:20:lv_slider_set_range	24	static
+lv_slider.h:109:20:lv_slider_set_mode	16	static
+lv_slider.h:123:23:lv_slider_get_value	16	static
+LVGL_GUI_volume_control.c:88:6:init_volume_control	16	static
+LVGL_GUI_volume_control.c:98:6:sync_volumes	40	static
+LVGL_GUI_volume_control.c:217:13:dismiss_volume_control_screen	8	static
+LVGL_GUI_volume_control.c:239:13:volume_change_event_cb	40	static
+LVGL_GUI_volume_control.c:265:13:reset_audio_analog_chips_event_cb	16	static
+LVGL_GUI_volume_control.c:271:13:pregains_change_event_cb	40	static
+LVGL_GUI_volume_control.c:298:13:value_update_timer_cb	64	static
+LVGL_GUI_volume_control.c:361:6:display_volume_control_screen	112	static
+LVGL_GUI_volume_control.c:549:6:reset_audio_analog_chips	24	static

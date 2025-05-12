@@ -1,0 +1,8 @@
+mp3dec.c:60:13:MP3InitDecoder	16	static
+mp3dec.c:81:6:MP3FreeDecoder	24	static
+mp3dec.c:104:5:MP3FindSyncWord	24	static
+mp3dec.c:141:12:MP3FindFreeSync	32	static
+mp3dec.c:184:6:MP3GetLastFrameInfo	24	static
+mp3dec.c:221:5:MP3GetNextFrameInfo	32	static
+mp3dec.c:248:13:MP3ClearBadFrame	24	static
+mp3dec.c:280:5:MP3Decode	96	static

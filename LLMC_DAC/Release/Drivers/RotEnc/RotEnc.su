@@ -1,0 +1,4 @@
+RotEnc.c:11:6:RotEnc_init	32	static
+RotEnc.c:36:6:RotEnc_append_trigger_callback	16	static
+RotEnc.c:50:8:RotEnc_tick	24	static
+RotEnc.c:104:8:RotEnc_interrupt	48	static

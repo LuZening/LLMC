@@ -1,0 +1,4 @@
+lv_draw_sw_blend_to_argb8888.c:614:6:lv_color_mix_with_alpha_cache_init	8	static
+lv_draw_sw_blend_to_argb8888.c:368:35:rgb888_image_blend	112	static
+lv_draw_sw_blend_to_argb8888.c:139:28:lv_draw_sw_blend_color_to_argb8888	104	static
+lv_draw_sw_blend_to_argb8888.c:248:28:lv_draw_sw_blend_image_to_argb8888	120	static

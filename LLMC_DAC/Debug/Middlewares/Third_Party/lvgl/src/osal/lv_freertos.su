@@ -1,0 +1,14 @@
+lv_freertos.c:66:13:lv_thread_init	40	static
+lv_freertos.c:90:13:lv_thread_delete	16	static
+lv_freertos.c:97:13:lv_mutex_init	16	static
+lv_freertos.c:105:13:lv_mutex_lock	24	static
+lv_freertos.c:119:13:lv_mutex_lock_isr	24	static,ignoring_inline_asm
+lv_freertos.c:141:13:lv_mutex_unlock	24	static
+lv_freertos.c:155:13:lv_mutex_delete	16	static
+lv_freertos.c:163:13:lv_thread_sync_init	16	static
+lv_freertos.c:176:13:lv_thread_sync_wait	24	static
+lv_freertos.c:245:13:lv_thread_sync_signal	16	static
+lv_freertos.c:289:13:lv_thread_sync_delete	16	static
+lv_freertos.c:309:13:prvRunThread	24	static
+lv_freertos.c:319:13:prvMutexInit	16	static
+lv_freertos.c:333:13:prvCheckMutexInit	16	static

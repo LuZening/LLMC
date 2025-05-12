@@ -1,0 +1,3 @@
+audio_DSP_compressor.c:31:6:audio_compress_init	32	static
+audio_DSP_compressor.c:46:6:audio_compress_modify_params	32	static,ignoring_inline_asm
+audio_DSP_compressor.c:71:6:audio_compress	40	static

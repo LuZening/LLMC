@@ -1,0 +1,14 @@
+lv_draw.c:50:6:lv_draw_init	0	static
+lv_draw.c:57:6:lv_draw_deinit	16	static
+lv_draw.c:74:8:lv_draw_create_unit	8	static
+lv_draw.c:84:18:lv_draw_add_task	24	static
+lv_draw.c:173:6:lv_draw_dispatch_layer	48	static
+lv_draw.c:153:6:lv_draw_dispatch	24	static
+lv_draw.c:109:6:lv_draw_finalize_task_creation	24	static
+lv_draw.c:265:6:lv_draw_dispatch_wait_for_request	0	static
+lv_draw.c:275:6:lv_draw_dispatch_request	0	static
+lv_draw.c:284:18:lv_draw_get_next_available_task	40	static
+lv_draw.c:316:10:lv_draw_get_dependent_count	16	static
+lv_draw.c:337:14:lv_draw_layer_create	32	static
+lv_draw.c:361:8:lv_draw_layer_alloc_buf	24	static
+lv_draw.c:390:8:lv_draw_layer_go_to_xy	0	static

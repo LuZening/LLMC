@@ -1,0 +1,15 @@
+*.log
+*.exe
+*.7z
+*.zip
+*.rar
+*.tar*
+*.ttf
+*.otf
+*.exe
+*.mp3
+*.flac
+*.wav
+reference/*.pdf
+reference/*.PDF
+

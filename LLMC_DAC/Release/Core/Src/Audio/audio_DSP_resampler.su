@@ -1,0 +1,2 @@
+audio_DSP_resampler.c:80:6:audio_sinc_resampler_init	16	static
+audio_DSP_resampler.c:144:6:audio_sinc_resampler_process	96	static

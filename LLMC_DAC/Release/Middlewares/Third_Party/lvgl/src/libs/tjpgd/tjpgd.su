@@ -1,0 +1,7 @@
+tjpgd.c:285:12:huffext	32	static
+tjpgd.c:438:12:bitext	32	static
+tjpgd.c:534:9:jd_restart	24	static
+tjpgd.c:735:9:jd_mcu_load	64	static
+tjpgd.c:826:9:jd_mcu_output	80	static
+tjpgd.c:940:9:jd_prepare	80	static
+tjpgd.c:1101:9:jd_decomp	40	static

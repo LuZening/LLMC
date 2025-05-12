@@ -1,0 +1,13 @@
+audio_player.c:167:13:FS_player_reset.isra.0	24	static
+audio_player.c:371:12:find_track_in_the_same_folder.constprop	48	static
+audio_player.c:147:6:FS_player_init	16	static
+audio_player.c:190:6:FS_player_task_start	8	static
+audio_player.c:1070:6:FS_player_signal_start	0	static
+audio_player.c:1080:6:FS_player_signal_stop	0	static
+audio_player.c:1088:6:FS_player_signal_pause	0	static
+audio_player.c:1097:6:FS_player_signal_replay	8	static
+audio_player.c:1107:6:FS_player_signal_next	8	static
+audio_player.c:1116:6:FS_player_signal_prev	8	static
+audio_player.c:508:13:task_FS_loader	88	static
+audio_player.c:1125:6:FS_player_change_track	24	static
+audio_player.c:1150:6:FS_player_test	8	static

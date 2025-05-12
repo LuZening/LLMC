@@ -1,0 +1,1862 @@
+Bus Hound 6.00 capture on Windows Vista (x64). Complements of www.perisoft.net
+
+UAC set cur freq
+
+  Device - Device ID (followed by the endpoint for USB devices)
+            (15) USB Input Device
+            (21) HID-compliant mouse
+            (35) USB Composite Device
+            (36) LZN Product [ROM=0.01]
+            (37) Unknown USB Device (Device Descriptor Request Failed)
+            (38) USB Audio Device
+            (39) USB Attached SCSI (UAS) Mass Storage Device
+            (40) JMicron Tech [ROM=0214]
+  Length - Total transfer length
+  Phase  - Phase Type
+            CTL   USB control transfer       OUT   Data out transfer
+            IN    Data in transfer           RESET bus reset
+            ISOC  Isochronous transfer       USTS  USB status
+  Data   - Hex dump of the data transferred
+  Descr  - Description of the phase
+  Cmd... - Position in the captured data
+  Driver - Driver that submitted the command
+            ctxusbm      : Citrix USB Filter Driver 19.3.0.1015
+            ntoskrnl     : NT Kernel & System 10.0.22621.3880 (WinBuild.160101.0800)
+            usbaudio     : USB Audio Class Driver 10.0.22621.3672 (WinBuild.160101.0800)
+
+
+Device  Length    Phase  Data                      Description       Cmd.Phase.Ofs(rep)  Driver      
+------  --------  -----  ------------------------  ----------------  ------------------  ------------
+  35.0            CTL    80 06 00 01  00 00 12 00  GET DESCRIPTOR           1.1.0(2)     ctxusbm       
+  35.0        18  IN     12 01 00 02  00 00 00 40  .......@                 1.2.0                      
+                         83 04 40 57  00 02 01 02  ..@W....                 1.2.8                      
+                         03 01                     ..                       1.2.16                     
+  35.0            CTL    80 06 00 02  00 00 09 00  GET DESCRIPTOR           2.1.0(2)     ctxusbm       
+  35.0         9  IN     09 02 d7 00  03 01 00 c0  ........                 2.2.0                      
+                         32                        2                        2.2.8                      
+  35.0            CTL    80 06 00 02  00 00 d7 00  GET DESCRIPTOR           3.1.0(2)     ctxusbm       
+  35.0       215  IN     09 02 d7 00  03 01 00 c0  ........                 3.2.0                      
+                         32 09 04 00  00 00 01 01  2.......                 3.2.8                      
+                         00 00 0a 24  01 00 01 4e  ...$...N                 3.2.16                     
+                         00 02 01 02  0c 24 02 01  .....$..                 3.2.24                     
+  35.0            CTL    00 09 01 00  00 00 00 00  SET CONFIG               7.1.0        ntoskrnl      
+  35.0            CTL    80 06 02 03  09 04 04 00  GET DESCRIPTOR           8.1.0        ntoskrnl      
+  35.0         4  IN     24 03 53 00               $.S.                     8.2.0                      
+  35.0            CTL    80 06 02 03  09 04 24 00  GET DESCRIPTOR           9.1.0        ntoskrnl      
+  35.0        36  IN     24 03 53 00  54 00 4d 00  $.S.T.M.                 9.2.0                      
+                         33 00 32 00  20 00 41 00  3.2. .A.                 9.2.8                      
+                         75 00 64 00  69 00 6f 00  u.d.i.o.                 9.2.16                     
+                         20 00 43 00  6c 00 61 00   .C.l.a.                 9.2.24                     
+  38.0            CTL    80 06 00 01  00 00 12 00  GET DESCRIPTOR          10.1.0(2)     ctxusbm       
+  38.0        18  IN     12 01 00 02  00 00 00 40  .......@                10.2.0                      
+                         83 04 40 57  00 02 01 02  ..@W....                10.2.8                      
+                         03 01                     ..                      10.2.16                     
+  38.0            CTL    80 06 00 02  00 00 09 00  GET DESCRIPTOR          11.1.0(2)     ctxusbm       
+  38.0         9  IN     09 02 d7 00  03 01 00 c0  ........                11.2.0                      
+                         32                        2                       11.2.8                      
+  38.0            CTL    80 06 00 02  00 00 d7 00  GET DESCRIPTOR          12.1.0(2)     ctxusbm       
+  38.0       215  IN     09 02 d7 00  03 01 00 c0  ........                12.2.0                      
+                         32 09 04 00  00 00 01 01  2.......                12.2.8                      
+                         00 00 0a 24  01 00 01 4e  ...$...N                12.2.16                     
+                         00 02 01 02  0c 24 02 01  .....$..                12.2.24                     
+  38.0            CTL    00 09 01 00  00 00 00 00  SET CONFIG              16.1.0        usbaudio      
+  38.0            CTL    80 06 02 03  09 04 04 00  GET DESCRIPTOR          17.1.0        usbaudio      
+  38.0         4  IN     24 03 53 00               $.S.                    17.2.0                      
+  38.0            CTL    80 06 02 03  09 04 24 00  GET DESCRIPTOR          18.1.0        usbaudio      
+  38.0        36  IN     24 03 53 00  54 00 4d 00  $.S.T.M.                18.2.0                      
+                         33 00 32 00  20 00 41 00  3.2. .A.                18.2.8                      
+                         75 00 64 00  69 00 6f 00  u.d.i.o.                18.2.16                     
+                         20 00 43 00  6c 00 61 00   .C.l.a.                18.2.24                     
+  38.0            CTL    a1 81 00 01  00 02 01 00  GET CUR                 19.1.0        usbaudio      
+  38.0         1  IN     00                        .                       19.2.0                      
+  38.0            CTL    a1 81 00 02  00 02 02 00  GET CUR                 20.1.0        usbaudio      
+  38.0         2  IN     00 00                     ..                      20.2.0                      
+  38.0            CTL    a1 82 00 02  00 02 02 00  GET MIN                 21.1.0        usbaudio      
+  38.0         2  IN     00 81                     ..                      21.2.0                      
+  38.0            CTL    a1 83 00 02  00 02 02 00  GET MAX                 22.1.0        usbaudio      
+  38.0         2  IN     00 00                     ..                      22.2.0                      
+  38.0            CTL    a1 84 00 02  00 02 02 00  GET RES                 23.1.0        usbaudio      
+  38.0         2  IN     00 01                     ..                      23.2.0                      
+  38.0            CTL    a1 81 00 01  00 05 01 00  GET CUR                 24.1.0        usbaudio      
+  38.0         1  IN     00                        .                       24.2.0                      
+  38.0            CTL    a1 81 00 02  00 05 02 00  GET CUR                 25.1.0        usbaudio      
+  38.0         2  IN     00 00                     ..                      25.2.0                      
+  38.0            CTL    a1 82 00 02  00 05 02 00  GET MIN                 26.1.0        usbaudio      
+  38.0         2  IN     00 81                     ..                      26.2.0                      
+  38.0            CTL    a1 83 00 02  00 05 02 00  GET MAX                 27.1.0        usbaudio      
+  38.0         2  IN     00 00                     ..                      27.2.0                      
+  38.0            CTL    a1 84 00 02  00 05 02 00  GET RES                 28.1.0        usbaudio      
+  38.0         2  IN     00 01                     ..                      28.2.0                      
+  38.0            CTL    01 0b 00 00  01 00 00 00  SET INTERFACE           29.1.0        usbaudio      
+  38.0            CTL    01 0b 00 00  02 00 00 00  SET INTERFACE           30.1.0        usbaudio      
+  35.0            CTL    80 06 00 03  00 00 ff 00  GET DESCRIPTOR          31.1.0        ctxusbm       
+  35.0         4  IN     04 03 09 04               ....                    31.2.0                      
+  35.0            CTL    80 06 01 03  09 04 ff 00  GET DESCRIPTOR          32.1.0        ctxusbm       
+  35.0        38  IN     26 03 53 00  54 00 4d 00  &.S.T.M.                32.2.0                      
+                         69 00 63 00  72 00 6f 00  i.c.r.o.                32.2.8                      
+                         65 00 6c 00  65 00 63 00  e.l.e.c.                32.2.16                     
+                         74 00 72 00  6f 00 6e 00  t.r.o.n.                32.2.24                     
+  35.0            CTL    80 06 02 03  09 04 ff 00  GET DESCRIPTOR          33.1.0        ctxusbm       
+  35.0        36  IN     24 03 53 00  54 00 4d 00  $.S.T.M.                33.2.0                      
+                         33 00 32 00  20 00 41 00  3.2. .A.                33.2.8                      
+                         75 00 64 00  69 00 6f 00  u.d.i.o.                33.2.16                     
+                         20 00 43 00  6c 00 61 00   .C.l.a.                33.2.24                     
+  35.0            CTL    80 06 03 03  09 04 ff 00  GET DESCRIPTOR          34.1.0        ctxusbm       
+  35.0        26  IN     1a 03 33 00  30 00 36 00  ..3.0.6.                34.2.0                      
+                         31 00 33 00  36 00 35 00  1.3.6.5.                34.2.8                      
+                         36 00 33 00  33 00 33 00  6.3.3.3.                34.2.16                     
+                         30 00                     0.                      34.2.24                     
+  38.0            CTL    21 01 00 02  00 02 02 00  SET CUR                 35.1.0        usbaudio      
+  38.0         2  OUT    bc fe                     ..                      35.2.0                      
+  38.0            CTL    01 0b 01 00  01 00 00 00  SET INTERFACE           36.1.0(2)     usbaudio      
+  38.0            CTL    01 0b 00 00  01 00 00 00  SET INTERFACE           37.1.0(2)     usbaudio      
+  38.0            CTL    01 0b 01 00  02 00 00 00  SET INTERFACE           40.1.0        usbaudio      
+  38.0            CTL    22 01 00 01  81 00 03 00  SET CUR                 41.1.0        usbaudio      
+  38.0         3  OUT    80 bb 00                  ...                     41.2.0                      
+  38           0  ISOC                                                     42.1.0(272)   usbaudio      
+  38.1            RESET                                                   314.1.0        usbaudio      
+  38.0            CTL    01 0b 00 00  02 00 00 00  SET INTERFACE          315.1.0        usbaudio      
+  38.0            CTL    01 0b 01 00  01 00 00 00  SET INTERFACE          316.1.0        usbaudio      
+  38.2            RESET                                                   317.1.0(508)   usbaudio      
+  38.2            USTS   80000300                  bad parameter          318.1.0(508)   usbaudio      
+  38.1      2880  ISOC   00 00 00 00  00 00 00 00  ........              1333.1.0        usbaudio      
+                         00 00 00 00  00 00 00 00  ........              1333.1.8                      
+                         00 00 00 00  00 00 00 00  ........              1333.1.16                     
+                         00 00 00 00  00 00 00 00  ........              1333.1.24                     
+  38.2            RESET                                                  1334.1.0(561)   usbaudio      
+  38.2            USTS   80000300                  bad parameter         1335.1.0(561)   usbaudio      
+  38.2            RESET                                                  2456.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 00  00 00 00 00  ........              2457.1.0        usbaudio      
+                         00 00 00 00  00 00 00 00  ........              2457.1.8                      
+                         00 00 00 00  00 00 00 00  ........              2457.1.16                     
+                         00 00 00 00  00 00 00 00  ........              2457.1.24                     
+  38.2            USTS   80000300                  bad parameter         2458.1.0(506)   usbaudio      
+  38.2            RESET                                                  2459.1.0(506)   usbaudio      
+  38.2            USTS   80000300                  bad parameter         3470.1.0        usbaudio      
+  38.1      2880  ISOC   60 04 55 00  00 00 92 0f  `.U.....              3471.1.0        usbaudio      
+                         4f 00 00 00  34 d4 48 00  O...4.H.              3471.1.8                      
+                         00 00 d6 88  41 00 00 00  ....A...              3471.1.16                     
+                         0a 4b 3a 00  00 00 f9 18  .K:.....              3471.1.24                     
+  38.2            RESET                                                  3472.1.0(577)   usbaudio      
+  38.2            USTS   80000300                  bad parameter         3473.1.0(577)   usbaudio      
+  38.2            RESET                                                  4626.1.0        usbaudio      
+  38.1      2880  ISOC   c6 ac e8 00  00 00 f7 07  ........              4627.1.0        usbaudio      
+                         f0 00 00 00  9d 5b f7 00  .....[..              4627.1.8                      
+                         00 00 ca e8  fe 00 00 00  ........              4627.1.16                     
+                         88 62 06 00  00 00 21 dc  .b....!.              4627.1.24                     
+  38.2            USTS   80000300                  bad parameter         4628.1.0(512)   usbaudio      
+  38.2            RESET                                                  4629.1.0(512)   usbaudio      
+  38.1      2880  ISOC   b8 7e 00 00  00 00 10 77  .......w              5652.1.0        usbaudio      
+                         f8 00 00 00  9e 81 f0 00  ........              5652.1.8                      
+                         00 00 75 b2  e8 00 00 00  ..u.....              5652.1.16                     
+                         28 1f e1 00  00 00 91 f6  (.......              5652.1.24                     
+  38.2            USTS   80000300                  bad parameter         5653.1.0(499)   usbaudio      
+  38.2            RESET                                                  5654.1.0(499)   usbaudio      
+  38.1      2880  ISOC   f6 a7 1e 00  00 00 aa a5  ........              6651.1.0        usbaudio      
+                         25 00 00 00  be 74 2c 00  %....t,.              6651.1.8                      
+                         00 00 0f c9  32 00 00 00  ....2...              6651.1.16                     
+                         37 0d 39 00  00 00 02 97  7.9.....              6651.1.24                     
+  38.2            USTS   80000300                  bad parameter         6652.1.0(575)   usbaudio      
+  38.2            RESET                                                  6653.1.0(575)   usbaudio      
+  38.2            USTS   80000300                  bad parameter         7802.1.0        usbaudio      
+  38.1      2880  ISOC   78 c1 c5 00  00 00 f2 bb  x.......              7803.1.0        usbaudio      
+                         c0 00 00 00  cb db bb 00  ........              7803.1.8                      
+                         00 00 a6 b8  b7 00 00 00  ........              7803.1.16                     
+                         d7 9f b3 00  00 00 96 93  ........              7803.1.24                     
+  38.2            RESET                                                  7804.1.0(534)   usbaudio      
+  38.2            USTS   80000300                  bad parameter         7805.1.0(534)   usbaudio      
+  38.1      2880  ISOC   09 24 4d 00  00 00 e1 4a  .$M....J              8872.1.0        usbaudio      
+                         50 00 00 00  b9 30 53 00  P....0S.              8872.1.8                      
+                         00 00 d6 1c  55 00 00 00  ....U...              8872.1.16                     
+                         ed fa 56 00  00 00 27 9d  ..V...'.              8872.1.24                     
+  38.2            RESET                                                  8873.1.0(525)   usbaudio      
+  38.2            USTS   80000300                  bad parameter         8874.1.0(525)   usbaudio      
+  38.2            RESET                                                  9923.1.0        usbaudio      
+  38.1      2880  ISOC   58 54 af 00  00 00 6f 74  XT....ot              9924.1.0        usbaudio      
+                         ae 00 00 00  75 ca ad 00  ....u...              9924.1.8                      
+                         00 00 76 1b  ae 00 00 00  ..v.....              9924.1.16                     
+                         ed 6c ae 00  00 00 d0 ed  .l......              9924.1.24                     
+  38.2            USTS   80000300                  bad parameter         9925.1.0(513)   usbaudio      
+  38.2            RESET                                                  9926.1.0(513)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        10951.1.0        usbaudio      
+  38.1      2880  ISOC   0e 5d 45 00  00 00 e6 41  .]E....A             10952.1.0        usbaudio      
+                         44 00 00 00  6a f5 42 00  D...j.B.             10952.1.8                      
+                         00 00 f0 cb  40 00 00 00  ....@...             10952.1.16                     
+                         16 a0 3e 00  00 00 9d 8b  ..>.....             10952.1.24                     
+  38.2            RESET                                                 10953.1.0(440)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        10954.1.0(440)   usbaudio      
+  38.1      2880  ISOC   c6 7d c6 00  00 00 c8 69  .......i             11833.1.0        usbaudio      
+                         c9 00 00 00  87 78 cc 00  .....x..             11833.1.8                      
+                         00 00 5b 36  d0 00 00 00  ..[6....             11833.1.16                     
+                         4b e3 d3 00  00 00 78 35  K.....x5             11833.1.24                     
+  38.2            RESET                                                 11834.1.0(518)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        11835.1.0(518)   usbaudio      
+  38.1      2880  ISOC   17 38 24 00  00 00 64 82  .8$...d.             12870.1.0        usbaudio      
+                         20 00 00 00  2f b6 1c 00   .../...             12870.1.8                      
+                         00 00 32 87  18 00 00 00  ..2.....             12870.1.16                     
+                         41 6d 14 00  00 00 34 ff  Am....4.             12870.1.24                     
+  38.2            RESET                                                 12871.1.0(524)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        12872.1.0(524)   usbaudio      
+  38.1      2880  ISOC   1c b7 ee 00  00 00 b7 f7  ........             13919.1.0        usbaudio      
+                         f2 00 00 00  82 35 f7 00  .....5..             13919.1.8                      
+                         00 00 83 8b  fb 00 00 00  ........             13919.1.16                     
+                         cd c6 ff 00  00 00 b4 19  ........             13919.1.24                     
+  38.2            RESET                                                 13920.1.0(491)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        13921.1.0(491)   usbaudio      
+  38.2            RESET                                                 14902.1.0        usbaudio      
+  38.1      2880  ISOC   81 13 fd 00  00 00 4d 13  ......M.             14903.1.0        usbaudio      
+                         f9 00 00 00  37 1e f5 00  ....7...             14903.1.8                      
+                         00 00 e6 4a  f1 00 00 00  ...J....             14903.1.16                     
+                         f1 88 ed 00  00 00 2b f9  ......+.             14903.1.24                     
+  38.2            USTS   80000300                  bad parameter        14904.1.0(495)   usbaudio      
+  38.2            RESET                                                 14905.1.0(495)   usbaudio      
+  38.1      2880  ISOC   28 71 10 00  00 00 78 d5  (q....x.             15894.1.0        usbaudio      
+                         13 00 00 00  81 2e 17 00  ........             15894.1.8                      
+                         00 00 fe 46  1a 00 00 00  ...F....             15894.1.16                     
+                         e5 44 1d 00  00 00 2d da  .D....-.             15894.1.24                     
+  38.2            USTS   80000300                  bad parameter        15895.1.0(560)   usbaudio      
+  38.2            RESET                                                 15896.1.0(560)   usbaudio      
+  38.1      2880  ISOC   ea d3 e2 00  00 00 43 57  ......CW             17015.1.0        usbaudio      
+                         e0 00 00 00  04 f6 dd 00  ........             17015.1.8                      
+                         00 00 f3 01  dc 00 00 00  ........             17015.1.16                     
+                         d6 17 da 00  00 00 26 ab  ......&.             17015.1.24                     
+  38.2            USTS   80000300                  bad parameter        17016.1.0(545)   usbaudio      
+  38.2            RESET                                                 17017.1.0(545)   usbaudio      
+  38.1      2880  ISOC   b1 c5 22 00  00 00 1e 24  .."....$             18106.1.0        usbaudio      
+                         24 00 00 00  73 66 25 00  $...sf%.             18106.1.8                      
+                         00 00 02 3d  26 00 00 00  ...=&...             18106.1.16                     
+                         ed 10 27 00  00 00 50 53  ..'...PS             18106.1.24                     
+  38.2            USTS   80000300                  bad parameter        18107.1.0(554)   usbaudio      
+  38.2            RESET                                                 18108.1.0(554)   usbaudio      
+  38.1      2880  ISOC   a1 15 bc 00  00 00 1e ab  ........             19215.1.0        usbaudio      
+                         bd 00 00 00  da 0f bf 00  ........             19215.1.8                      
+                         00 00 d0 2c  c1 00 00 00  ...,....             19215.1.16                     
+                         b4 d3 c2 00  00 00 38 52  ......8R             19215.1.24                     
+  38.2            USTS   80000300                  bad parameter        19216.1.0(540)   usbaudio      
+  38.2            RESET                                                 19217.1.0(540)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        20296.1.0        usbaudio      
+  38.1      2880  ISOC   d2 66 4b 00  00 00 67 4f  .fK...gO             20297.1.0        usbaudio      
+                         48 00 00 00  dc 03 45 00  H.....E.             20297.1.8                      
+                         00 00 b4 db  40 00 00 00  ....@...             20297.1.16                     
+                         f5 f8 3c 00  00 00 17 44  ..<....D             20297.1.24                     
+  38.2            RESET                                                 20298.1.0(486)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        20299.1.0(486)   usbaudio      
+  38.2            RESET                                                 21270.1.0        usbaudio      
+  38.1      2880  ISOC   95 c5 c1 00  00 00 6c 1a  ......l.             21271.1.0        usbaudio      
+                         c5 00 00 00  3c aa c8 00  ....<...             21271.1.8                      
+                         00 00 24 01  cd 00 00 00  ..$.....             21271.1.16                     
+                         17 56 d1 00  00 00 3c 68  .V....<h             21271.1.24                     
+  38.2            USTS   80000300                  bad parameter        21272.1.0(413)   usbaudio      
+  38.2            RESET                                                 21273.1.0(413)   usbaudio      
+  38.1      2880  ISOC   5d de 1d 00  00 00 96 dc  ].......             22098.1.0        usbaudio      
+                         19 00 00 00  a8 d1 15 00  ........             22098.1.8                      
+                         00 00 de 76  11 00 00 00  ...v....             22098.1.16                     
+                         30 31 0d 00  00 00 ab ad  01......             22098.1.24                     
+  38.2            USTS   80000300                  bad parameter        22099.1.0(416)   usbaudio      
+  38.2            RESET                                                 22100.1.0(416)   usbaudio      
+  38.1      2880  ISOC   60 86 f5 00  00 00 07 ec  `.......             22931.1.0        usbaudio      
+                         f9 00 00 00  2d 36 fe 00  ....-6..             22931.1.8                      
+                         00 00 35 91  02 00 00 00  ..5.....             22931.1.16                     
+                         a2 d1 06 00  00 00 4c 03  ......L.             22931.1.24                     
+  38.2            USTS   80000300                  bad parameter        22932.1.0(431)   usbaudio      
+  38.2            RESET                                                 22933.1.0(431)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        23794.1.0        usbaudio      
+  38.1      2880  ISOC   8c b4 f9 00  00 00 e8 51  .......Q             23795.1.0        usbaudio      
+                         f5 00 00 00  29 fc f0 00  ....)...             23795.1.8                      
+                         00 00 8b d9  ec 00 00 00  ........             23795.1.16                     
+                         cf bb e8 00  00 00 08 d9  ........             23795.1.24                     
+  38.2            RESET                                                 23796.1.0(542)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        23797.1.0(542)   usbaudio      
+  38.2            RESET                                                 24880.1.0        usbaudio      
+  38.1      2880  ISOC   5b 46 15 00  00 00 df 5c  [F.....\             24881.1.0        usbaudio      
+                         18 00 00 00  98 77 1b 00  .....w..             24881.1.8                      
+                         00 00 ce 57  1e 00 00 00  ...W....             24881.1.16                     
+                         83 4d 21 00  00 00 e4 d0  .M!.....             24881.1.24                     
+  38.2            USTS   80000300                  bad parameter        24882.1.0(477)   usbaudio      
+  38.2            RESET                                                 24883.1.0(477)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        25836.1.0        usbaudio      
+  38.1      2880  ISOC   5c d7 da 00  00 00 e9 e4  \.......             25837.1.0        usbaudio      
+                         d8 00 00 00  bd 07 d7 00  ........             25837.1.8                      
+                         00 00 bc a8  d5 00 00 00  ........             25837.1.16                     
+                         e6 38 d4 00  00 00 56 5a  .8....VZ             25837.1.24                     
+  38.2            RESET                                                 25838.1.0(505)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        25839.1.0(505)   usbaudio      
+  38.2            RESET                                                 26848.1.0        usbaudio      
+  38.1      2880  ISOC   58 f6 27 00  00 00 84 e3  X.'.....             26849.1.0        usbaudio      
+                         28 00 00 00  93 ba 29 00  (.....).             26849.1.8                      
+                         00 00 24 14  2a 00 00 00  ..$.*...             26849.1.16                     
+                         7e 7b 2a 00  00 00 50 47  ..*...PG             26849.1.24                     
+  38.2            USTS   80000300                  bad parameter        26850.1.0(585)   usbaudio      
+  38.2            RESET                                                 26851.1.0(585)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        28020.1.0        usbaudio      
+  38.1      2880  ISOC   62 59 d7 00  00 00 8a 9e  bY......             28021.1.0        usbaudio      
+                         d7 00 00 00  25 f7 d7 00  ....%...             28021.1.8                      
+                         00 00 a6 c8  d8 00 00 00  ........             28021.1.16                     
+                         70 6b d9 00  00 00 f8 8f  pk......             28021.1.24                     
+  38.2            RESET                                                 28022.1.0(510)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        28023.1.0(510)   usbaudio      
+  38.2            RESET                                                 29042.1.0        usbaudio      
+  38.1      2880  ISOC   ec 6d 21 00  00 00 c6 26  .m!....&             29043.1.0        usbaudio      
+                         20 00 00 00  b8 c4 1e 00   .......             29043.1.8                      
+                         00 00 3a fb  1c 00 00 00  ..:.....             29043.1.16                     
+                         2e 51 1b 00  00 00 4a 4f  .Q....JO             29043.1.24                     
+  38.2            USTS   80000300                  bad parameter        29044.1.0(545)   usbaudio      
+  38.2            RESET                                                 29045.1.0(545)   usbaudio      
+  38.1      2880  ISOC   42 9a e4 00  00 00 0b a1  B.......             30134.1.0        usbaudio      
+                         e6 00 00 00  2a b5 e8 00  ....*...             30134.1.8                      
+                         00 00 9a 18  eb 00 00 00  ........             30134.1.16                     
+                         f6 64 ed 00  00 00 e5 f6  .d......             30134.1.24                     
+  38.2            USTS   80000300                  bad parameter        30135.1.0(498)   usbaudio      
+  38.2            RESET                                                 30136.1.0(498)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        31131.1.0        usbaudio      
+  38.1      2880  ISOC   b7 40 0d 00  00 00 0b eb  .@......             31132.1.0        usbaudio      
+                         0a 00 00 00  ad 92 08 00  ........             31132.1.8                      
+                         00 00 3d 18  06 00 00 00  ..=.....             31132.1.16                     
+                         50 a2 03 00  00 00 5c 15  P.....\.             31132.1.24                     
+  38.2            RESET                                                 31133.1.0(465)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        31134.1.0(465)   usbaudio      
+  38.2            RESET                                                 32063.1.0        usbaudio      
+  38.1      2880  ISOC   53 5f fc 00  00 00 27 c5  S_....'.             32064.1.0        usbaudio      
+                         fe 00 00 00  9d 22 01 00  ....."..             32064.1.8                      
+                         00 00 0d 87  03 00 00 00  ........             32064.1.16                     
+                         0c e6 05 00  00 00 a1 35  .......5             32064.1.24                     
+  38.2            USTS   80000300                  bad parameter        32065.1.0(512)   usbaudio      
+  38.2            RESET                                                 32066.1.0(512)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        33089.1.0        usbaudio      
+  38.1      2880  ISOC   46 e1 f6 00  00 00 61 a1  F.....a.             33090.1.0        usbaudio      
+                         f4 00 00 00  81 62 f2 00  .....b..             33090.1.8                      
+                         00 00 4f 53  f0 00 00 00  ..OS....             33090.1.16                     
+                         c3 45 ee 00  00 00 74 66  .E....tf             33090.1.24                     
+  38.2            RESET                                                 33091.1.0(516)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        33092.1.0(516)   usbaudio      
+  38.1      2880  ISOC   4a 8b 0f 00  00 00 8e 43  J......C             34123.1.0        usbaudio      
+                         11 00 00 00  27 f3 12 00  ....'...             34123.1.8                      
+                         00 00 c8 73  14 00 00 00  ...s....             34123.1.16                     
+                         eb fa 15 00  00 00 59 33  ......Y3             34123.1.24                     
+  38.2            RESET                                                 34124.1.0(555)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        34125.1.0(555)   usbaudio      
+  38.1      2880  ISOC   f8 14 17 00  00 00 36 c9  ......6.             35234.1.0        usbaudio      
+                         14 00 00 00  8a 59 12 00  .....Y..             35234.1.8                      
+                         00 00 b9 8f  0f 00 00 00  ........             35234.1.16                     
+                         46 c1 0c 00  00 00 03 a4  F.......             35234.1.24                     
+  38.2            RESET                                                 35235.1.0(495)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        35236.1.0(495)   usbaudio      
+  38.2            RESET                                                 36225.1.0        usbaudio      
+  38.1      2880  ISOC   5f bd f7 00  00 00 91 bb  _.......             36226.1.0        usbaudio      
+                         f1 00 00 00  8a b0 eb 00  ........             36226.1.8                      
+                         00 00 36 f3  e5 00 00 00  ..6.....             36226.1.16                     
+                         a7 11 e0 00  00 00 71 aa  ......q.             36226.1.24                     
+  38.2            USTS   80000300                  bad parameter        36227.1.0(496)   usbaudio      
+  38.2            RESET                                                 36228.1.0(496)   usbaudio      
+  38.1      2880  ISOC   77 15 ae 00  00 00 8b da  w.......             37219.1.0        usbaudio      
+                         b2 00 00 00  6c 5d b7 00  ....l]..             37219.1.8                      
+                         00 00 5c be  bc 00 00 00  ..\.....             37219.1.16                     
+                         3e 72 c1 00  00 00 16 0d  >r......             37219.1.24                     
+  38.2            USTS   80000300                  bad parameter        37220.1.0(547)   usbaudio      
+  38.2            RESET                                                 37221.1.0(547)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        38314.1.0        usbaudio      
+  38.1      2880  ISOC   a1 d4 6a 00  00 00 82 2d  ..j....-             38315.1.0        usbaudio      
+                         69 00 00 00  b1 8b 67 00  i.....g.             38315.1.8                      
+                         00 00 8a b0  64 00 00 00  ....d...             38315.1.16                     
+                         62 4c 62 00  00 00 a0 68  bLb....h             38315.1.24                     
+  38.2            RESET                                                 38316.1.0(508)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        38317.1.0(508)   usbaudio      
+  38.1      2880  ISOC   54 ba 9b 00  00 00 cd 96  T.......             39332.1.0        usbaudio      
+                         99 00 00 00  16 2b 97 00  .....+..             39332.1.8                      
+                         00 00 96 df  95 00 00 00  ........             39332.1.16                     
+                         d8 c9 93 00  00 00 be 25  .......%             39332.1.24                     
+  38.2            RESET                                                 39333.1.0(562)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        39334.1.0(562)   usbaudio      
+  38.1      2880  ISOC   15 f4 0d 00  00 00 e5 17  ........             40457.1.0        usbaudio      
+                         12 00 00 00  b8 34 16 00  .....4..             40457.1.8                      
+                         00 00 15 1b  1a 00 00 00  ........             40457.1.16                     
+                         a4 12 1e 00  00 00 f6 b6  ........             40457.1.24                     
+  38.2            RESET                                                 40458.1.0(554)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        40459.1.0(554)   usbaudio      
+  38.1      2880  ISOC   0e d8 40 00  00 00 01 cb  ..@.....             41566.1.0        usbaudio      
+                         3d 00 00 00  38 eb 3a 00  =...8.:.             41566.1.8                      
+                         00 00 2c 59  37 00 00 00  ..,Y7...             41566.1.16                     
+                         2d 2e 34 00  00 00 ab 2f  -.4..../             41566.1.24                     
+  38.2            RESET                                                 41567.1.0(494)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        41568.1.0(494)   usbaudio      
+  38.1      2880  ISOC   93 49 92 00  00 00 52 cd  .I....R.             42555.1.0        usbaudio      
+                         90 00 00 00  4f 0c 8f 00  ....O...             42555.1.8                      
+                         00 00 66 8a  8e 00 00 00  ..f.....             42555.1.16                     
+                         94 40 8d 00  00 00 8a 85  .@......             42555.1.24                     
+  38.2            RESET                                                 42556.1.0(513)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        42557.1.0(513)   usbaudio      
+  38.1      2880  ISOC   70 91 3d 00  00 00 48 20  p.=...H              43582.1.0        usbaudio      
+                         42 00 00 00  a6 c0 46 00  B.....F.             43582.1.8                      
+                         00 00 b2 9e  4a 00 00 00  ....J...             43582.1.16                     
+                         aa dd 4e 00  00 00 0e 1a  ..N.....             43582.1.24                     
+  38.2            RESET                                                 43583.1.0(471)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        43584.1.0(471)   usbaudio      
+  38.1      2880  ISOC   47 b8 00 00  00 00 59 53  G.....YS             44525.1.0        usbaudio      
+                         fb 00 00 00  21 f3 f5 00  ....!...             44525.1.8                      
+                         00 00 99 ad  f0 00 00 00  ........             44525.1.16                     
+                         dc 89 eb 00  00 00 63 a8  ......c.             44525.1.24                     
+  38.2            RESET                                                 44526.1.0(514)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        44527.1.0(514)   usbaudio      
+  38.2            RESET                                                 45554.1.0        usbaudio      
+  38.1      2880  ISOC   65 8a c3 00  00 00 61 56  e.....aV             45555.1.0        usbaudio      
+                         c6 00 00 00  f6 eb c8 00  ........             45555.1.8                      
+                         00 00 14 1f  cc 00 00 00  ........             45555.1.16                     
+                         96 c6 ce 00  00 00 2e 1f  ........             45555.1.24                     
+  38.2            USTS   80000300                  bad parameter        45556.1.0(536)   usbaudio      
+  38.2            RESET                                                 45557.1.0(536)   usbaudio      
+  38.1      2880  ISOC   5b d9 3f 00  00 00 7e 0e  [.?.....             46628.1.0        usbaudio      
+                         41 00 00 00  3c 83 42 00  A...<.B.             46628.1.8                      
+                         00 00 b4 3f  43 00 00 00  ...?C...             46628.1.16                     
+                         56 66 44 00  00 00 b7 92  VfD.....             46628.1.24                     
+  38.2            USTS   80000300                  bad parameter        46629.1.0(386)   usbaudio      
+  38.2            RESET                                                 46630.1.0(386)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        47401.1.0        usbaudio      
+  38.1      2880  ISOC   96 a0 e9 00  00 00 36 62  ......6b             47402.1.0        usbaudio      
+                         e5 00 00 00  6c fc e0 00  ....l...             47402.1.8                      
+                         00 00 9a cb  dc 00 00 00  ........             47402.1.16                     
+                         08 63 d8 00  00 00 a1 8d  .c......             47402.1.24                     
+  38.2            RESET                                                 47403.1.0(430)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        47404.1.0(430)   usbaudio      
+  38.2            RESET                                                 48263.1.0        usbaudio      
+  38.1      2880  ISOC   cd e7 d8 00  00 00 17 4c  .......L             48264.1.0        usbaudio      
+                         dd 00 00 00  fb 9e e1 00  ........             48264.1.8                      
+                         00 00 de 54  e6 00 00 00  ...T....             48264.1.16                     
+                         1c b6 ea 00  00 00 28 66  ......(f             48264.1.24                     
+  38.2            USTS   80000300                  bad parameter        48265.1.0(475)   usbaudio      
+  38.2            RESET                                                 48266.1.0(475)   usbaudio      
+  38.1      2880  ISOC   11 1a 44 00  00 00 ae d5  ..D.....             49215.1.0        usbaudio      
+                         41 00 00 00  0c c2 3f 00  A.....?.             49215.1.8                      
+                         00 00 3f fc  3c 00 00 00  ..?.<...             49215.1.16                     
+                         73 a7 3a 00  00 00 ab 6c  s.:....l             49215.1.24                     
+  38.2            USTS   80000300                  bad parameter        49216.1.0(537)   usbaudio      
+  38.2            RESET                                                 49217.1.0(537)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        50290.1.0        usbaudio      
+  38.1      2880  ISOC   22 3e c3 00  00 00 15 55  ">.....U             50291.1.0        usbaudio      
+                         c2 00 00 00  06 46 c1 00  .....F..             50291.1.8                      
+                         00 00 5e ea  c0 00 00 00  ..^.....             50291.1.16                     
+                         da 18 c0 00  00 00 6b 24  ......k$             50291.1.24                     
+  38.2            RESET                                                 50292.1.0(469)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        50293.1.0(469)   usbaudio      
+  38.2            RESET                                                 51230.1.0        usbaudio      
+  38.1      2880  ISOC   e7 ae 09 00  00 00 8d 7c  ........             51231.1.0        usbaudio      
+                         0c 00 00 00  95 49 0f 00  .....I..             51231.1.8                      
+                         00 00 c9 f2  11 00 00 00  ........             51231.1.16                     
+                         75 b1 14 00  00 00 42 34  u.....B4             51231.1.24                     
+  38.2            USTS   80000300                  bad parameter        51232.1.0(480)   usbaudio      
+  38.2            RESET                                                 51233.1.0(480)   usbaudio      
+  38.1      2880  ISOC   ed 37 26 00  00 00 e7 b4  .7&.....             52192.1.0        usbaudio      
+                         23 00 00 00  7e 4d 21 00  #....M!.             52192.1.8                      
+                         00 00 8a 7c  1e 00 00 00  ........             52192.1.16                     
+                         d9 de 1b 00  00 00 1f d5  ........             52192.1.24                     
+  38.2            USTS   80000300                  bad parameter        52193.1.0(562)   usbaudio      
+  38.2            RESET                                                 52194.1.0(562)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        53317.1.0        usbaudio      
+  38.1      2880  ISOC   4c 7d bc 00  00 00 6c f7  L.....l.             53318.1.0        usbaudio      
+                         bc 00 00 00  de 41 bd 00  .....A..             53318.1.8                      
+                         00 00 1e 3f  be 00 00 00  ...?....             53318.1.16                     
+                         f7 c2 be 00  00 00 80 37  .......7             53318.1.24                     
+  38.2            RESET                                                 53319.1.0(459)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        53320.1.0(459)   usbaudio      
+  38.2            RESET                                                 54237.1.0        usbaudio      
+  38.1      2880  ISOC   64 02 30 00  00 00 5d da  d.0...].             54238.1.0        usbaudio      
+                         31 00 00 00  32 ca 33 00  1...2.3.             54238.1.8                      
+                         00 00 c0 32  35 00 00 00  ...25...             54238.1.16                     
+                         d0 e5 36 00  00 00 16 d0  ..6.....             54238.1.24                     
+  38.2            USTS   80000300                  bad parameter        54239.1.0(380)   usbaudio      
+  38.2            RESET                                                 54240.1.0(380)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        54999.1.0        usbaudio      
+  38.1      2880  ISOC   30 f0 f4 00  00 00 3e 28  0.....>(             55000.1.0        usbaudio      
+                         f2 00 00 00  6d 56 ef 00  ....mV..             55000.1.8                      
+                         00 00 b3 ac  ec 00 00 00  ........             55000.1.16                     
+                         df f8 e9 00  00 00 2f 90  ....../.             55000.1.24                     
+  38.2            RESET                                                 55001.1.0(480)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        55002.1.0(480)   usbaudio      
+  38.1      2880  ISOC   42 95 de 00  00 00 62 66  B.....bf             55961.1.0        usbaudio      
+                         e0 00 00 00  74 1a e2 00  ....t...             55961.1.8                      
+                         00 00 87 2c  e4 00 00 00  ...,....             55961.1.16                     
+                         3d f9 e5 00  00 00 04 25  =......%             55961.1.24                     
+  38.2            RESET                                                 55962.1.0(388)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        55963.1.0(388)   usbaudio      
+  38.1      2880  ISOC   8a d3 2a 00  00 00 37 23  ..*...7#             56738.1.0        usbaudio      
+                         2b 00 00 00  f0 8c 2b 00  +.....+.             56738.1.8                      
+                         00 00 c7 82  2b 00 00 00  ....+...             56738.1.16                     
+                         60 cc 2b 00  00 00 43 78  `.+...Cx             56738.1.24                     
+  38.2            RESET                                                 56739.1.0(332)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        56740.1.0(332)   usbaudio      
+  38.1      2880  ISOC   92 2d e2 00  00 00 d8 ea  .-......             57403.1.0        usbaudio      
+                         df 00 00 00  18 98 dd 00  ........             57403.1.8                      
+                         00 00 8c a0  db 00 00 00  ........             57403.1.16                     
+                         48 6a d9 00  00 00 1f b4  Hj......             57403.1.24                     
+  38.2            RESET                                                 57404.1.0(368)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        57405.1.0(368)   usbaudio      
+  38.2            RESET                                                 58140.1.0        usbaudio      
+  38.1      2880  ISOC   b6 4d f7 00  00 00 84 19  .M......             58141.1.0        usbaudio      
+                         fa 00 00 00  a0 d3 fc 00  ........             58141.1.8                      
+                         00 00 c7 99  ff 00 00 00  ........             58141.1.16                     
+                         5d 4d 02 00  00 00 92 06  ]M......             58141.1.24                     
+  38.2            USTS   80000300                  bad parameter        58142.1.0(428)   usbaudio      
+  38.2            RESET                                                 58143.1.0(428)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        58998.1.0        usbaudio      
+  38.1      2880  ISOC   0e f0 1e 00  00 00 44 46  ......DF             58999.1.0        usbaudio      
+                         1d 00 00 00  1b b6 1b 00  ........             58999.1.8                      
+                         00 00 bc c7  19 00 00 00  ........             58999.1.16                     
+                         c4 06 18 00  00 00 54 ef  ......T.             58999.1.24                     
+  38.2            RESET                                                 59000.1.0(369)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        59001.1.0(369)   usbaudio      
+  38.2            RESET                                                 59738.1.0        usbaudio      
+  38.1      2880  ISOC   8b 70 da 00  00 00 2b 46  .p....+F             59739.1.0        usbaudio      
+                         da 00 00 00  61 f9 d9 00  ....a...             59739.1.8                      
+                         00 00 c4 11  da 00 00 00  ........             59739.1.16                     
+                         ce df d9 00  00 00 e6 3a  .......:             59739.1.24                     
+  38.2            USTS   80000300                  bad parameter        59740.1.0(405)   usbaudio      
+  38.2            RESET                                                 59741.1.0(405)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        60550.1.0        usbaudio      
+  38.1      2880  ISOC   20 55 0b 00  00 00 b4 f5   U......             60551.1.0        usbaudio      
+                         0c 00 00 00  40 9f 0e 00  ....@...             60551.1.8                      
+                         00 00 fe 32  10 00 00 00  ...2....             60551.1.16                     
+                         af e2 11 00  00 00 02 4e  .......N             60551.1.24                     
+  38.2            RESET                                                 60552.1.0(341)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        60553.1.0(341)   usbaudio      
+  38.1      2880  ISOC   44 5b 0e 00  00 00 ce 76  D[.....v             61234.1.0        usbaudio      
+                         0c 00 00 00  cc 9c 0a 00  ........             61234.1.8                      
+                         00 00 3b a1  08 00 00 00  ..;.....             61234.1.16                     
+                         a8 b5 06 00  00 00 6f a6  ......o.             61234.1.24                     
+  38.2            RESET                                                 61235.1.0(321)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        61236.1.0(321)   usbaudio      
+  38.2            RESET                                                 61877.1.0        usbaudio      
+  38.1      2880  ISOC   c0 34 da 00  00 00 f7 0e  .4......             61878.1.0        usbaudio      
+                         db 00 00 00  50 d9 db 00  ....P...             61878.1.8                      
+                         00 00 9e 19  dd 00 00 00  ........             61878.1.16                     
+                         b8 15 de 00  00 00 0e 81  ........             61878.1.24                     
+  38.2            USTS   80000300                  bad parameter        61879.1.0(340)   usbaudio      
+  38.2            RESET                                                 61880.1.0(340)   usbaudio      
+  38.1      2880  ISOC   c0 ae 1d 00  00 00 a7 36  .......6             62559.1.0        usbaudio      
+                         1e 00 00 00  ab d2 1e 00  ........             62559.1.8                      
+                         00 00 29 1a  1f 00 00 00  ..).....             62559.1.16                     
+                         fe 8a 1f 00  00 00 9c 87  ........             62559.1.24                     
+  38.2            USTS   80000300                  bad parameter        62560.1.0(317)   usbaudio      
+  38.2            RESET                                                 62561.1.0(317)   usbaudio      
+  38.1      2880  ISOC   c5 b2 f3 00  00 00 d0 49  .......I             63194.1.0        usbaudio      
+                         f2 00 00 00  2c d7 f0 00  ....,...             63194.1.8                      
+                         00 00 fa 90  ef 00 00 00  ........             63194.1.16                     
+                         cc 36 ee 00  00 00 d3 13  .6......             63194.1.24                     
+  38.2            USTS   80000300                  bad parameter        63195.1.0(339)   usbaudio      
+  38.2            RESET                                                 63196.1.0(339)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        63873.1.0        usbaudio      
+  38.1      2880  ISOC   d2 d8 ee 00  00 00 e9 17  ........             63874.1.0        usbaudio      
+                         f0 00 00 00  c4 42 f1 00  .....B..             63874.1.8                      
+                         00 00 07 92  f2 00 00 00  ........             63874.1.16                     
+                         2e bd f3 00  00 00 e3 1f  ........             63874.1.24                     
+  38.2            RESET                                                 63875.1.0(412)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        63876.1.0(412)   usbaudio      
+  38.1      2880  ISOC   a6 85 19 00  00 00 ca 62  .......b             64699.1.0        usbaudio      
+                         19 00 00 00  15 4d 19 00  .....M..             64699.1.8                      
+                         00 00 66 e7  18 00 00 00  ..f.....             64699.1.16                     
+                         98 a9 18 00  00 00 02 18  ........             64699.1.24                     
+  38.2            RESET                                                 64700.1.0(408)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        64701.1.0(408)   usbaudio      
+  38.2            RESET                                                 65516.1.0        usbaudio      
+  38.1      2880  ISOC   eb d4 e7 00  00 00 d6 e9  ........             65517.1.0        usbaudio      
+                         e6 00 00 00  1a e8 e5 00  ........             65517.1.8                      
+                         00 00 c9 1b  e5 00 00 00  ........             65517.1.16                     
+                         e7 1d e4 00  00 00 48 8f  ......H.             65517.1.24                     
+  38.2            USTS   80000300                  bad parameter        65518.1.0(492)   usbaudio      
+  38.2            RESET                                                 65519.1.0(492)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        66502.1.0        usbaudio      
+  38.1      2880  ISOC   8b 62 01 00  00 00 d6 e0  .b......             66503.1.0        usbaudio      
+                         02 00 00 00  85 54 04 00  .....T..             66503.1.8                      
+                         00 00 d7 bb  05 00 00 00  ........             66503.1.16                     
+                         be 25 07 00  00 00 6a 80  .%....j.             66503.1.24                     
+  38.2            RESET                                                 66504.1.0(536)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        66505.1.0(536)   usbaudio      
+  38.2            RESET                                                 67576.1.0        usbaudio      
+  38.1      2880  ISOC   d3 da 0b 00  00 00 dd d0  ........             67577.1.0        usbaudio      
+                         0a 00 00 00  7c cc 09 00  ........             67577.1.8                      
+                         00 00 1c a6  08 00 00 00  ........             67577.1.16                     
+                         60 98 07 00  00 00 cb 71  `......q             67577.1.24                     
+  38.2            USTS   80000300                  bad parameter        67578.1.0(418)   usbaudio      
+  38.2            RESET                                                 67579.1.0(418)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        68414.1.0        usbaudio      
+  38.1      2880  ISOC   64 bd e9 00  00 00 73 cc  d.....s.             68415.1.0        usbaudio      
+                         e9 00 00 00  2c c6 e9 00  ....,...             68415.1.8                      
+                         00 00 ac 01  ea 00 00 00  ........             68415.1.16                     
+                         53 13 ea 00  00 00 8d 70  S......p             68415.1.24                     
+  38.2            RESET                                                 68416.1.0(440)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        68417.1.0(440)   usbaudio      
+  38.1      2880  ISOC   f5 a6 09 00  00 00 ea 8a  ........             69296.1.0        usbaudio      
+                         0a 00 00 00  05 6f 0b 00  .....o..             69296.1.8                      
+                         00 00 08 2f  0c 00 00 00  .../....             69296.1.16                     
+                         4e 02 0d 00  00 00 48 b2  N.....H.             69296.1.24                     
+  38.2            RESET                                                 69297.1.0(313)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        69298.1.0(313)   usbaudio      
+  38.2            RESET                                                 69923.1.0        usbaudio      
+  38.1      2880  ISOC   7f db 01 00  00 00 46 af  ......F.             69924.1.0        usbaudio      
+                         00 00 00 00  fb 79 ff 00  .....y..             69924.1.8                      
+                         00 00 96 44  fe 00 00 00  ...D....             69924.1.16                     
+                         be 18 fd 00  00 00 bb fa  ........             69924.1.24                     
+  38.2            USTS   80000300                  bad parameter        69925.1.0(391)   usbaudio      
+  38.2            RESET                                                 69926.1.0(391)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        70707.1.0        usbaudio      
+  38.1      2880  ISOC   e8 9a ed 00  00 00 74 56  ......tV             70708.1.0        usbaudio      
+                         ee 00 00 00  80 fa ee 00  ........             70708.1.8                      
+                         00 00 36 d5  ef 00 00 00  ..6.....             70708.1.16                     
+                         2b 9b f0 00  00 00 9d a1  +.......             70708.1.24                     
+  38.2            RESET                                                 70709.1.0(465)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        70710.1.0(465)   usbaudio      
+  38.1      2880  ISOC   c7 70 0f 00  00 00 3a 80  .p....:.             71639.1.0        usbaudio      
+                         0f 00 00 00  b6 98 0f 00  ........             71639.1.8                      
+                         00 00 cb 88  0f 00 00 00  ........             71639.1.16                     
+                         66 92 0f 00  00 00 27 5e  f.....'^             71639.1.24                     
+  38.2            RESET                                                 71640.1.0(401)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        71641.1.0(401)   usbaudio      
+  38.2            RESET                                                 72442.1.0        usbaudio      
+  38.1      2880  ISOC   99 2a f6 00  00 00 63 7e  .*....c.             72443.1.0        usbaudio      
+                         f5 00 00 00  e6 cb f4 00  ........             72443.1.8                      
+                         00 00 dd 39  f4 00 00 00  ...9....             72443.1.16                     
+                         3f 92 f3 00  00 00 24 12  ?.....$.             72443.1.24                     
+  38.2            USTS   80000300                  bad parameter        72444.1.0(482)   usbaudio      
+  38.2            RESET                                                 72445.1.0(482)   usbaudio      
+  38.1      2880  ISOC   4c 50 f8 00  00 00 68 04  LP....h.             73408.1.0        usbaudio      
+                         f9 00 00 00  2c c2 f9 00  ....,...             73408.1.8                      
+                         00 00 9d a2  fa 00 00 00  ........             73408.1.16                     
+                         f5 69 fb 00  00 00 66 2d  .i....f-             73408.1.24                     
+  38.2            USTS   80000300                  bad parameter        73409.1.0(465)   usbaudio      
+  38.2            RESET                                                 73410.1.0(465)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        74339.1.0        usbaudio      
+  38.1      2880  ISOC   4c 0b 0c 00  00 00 65 b7  L.....e.             74340.1.0        usbaudio      
+                         0b 00 00 00  34 63 0b 00  ....4c..             74340.1.8                      
+                         00 00 44 f3  0a 00 00 00  ..D.....             74340.1.16                     
+                         e7 a1 0a 00  00 00 b5 2c  .......,             74340.1.24                     
+  38.2            RESET                                                 74341.1.0(554)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        74342.1.0(554)   usbaudio      
+  38.2            RESET                                                 75449.1.0        usbaudio      
+  38.1      2880  ISOC   10 dc f0 00  00 00 9c 9a  ........             75450.1.0        usbaudio      
+                         f0 00 00 00  e6 4b f0 00  .....K..             75450.1.8                      
+                         00 00 fe 23  f0 00 00 00  ...#....             75450.1.16                     
+                         90 dd ef 00  00 00 8e d3  ........             75450.1.24                     
+  38.2            USTS   80000300                  bad parameter        75451.1.0(453)   usbaudio      
+  38.2            RESET                                                 75452.1.0(453)   usbaudio      
+  38.1      2880  ISOC   55 b3 02 00  00 00 6c 56  U.....lV             76357.1.0        usbaudio      
+                         03 00 00 00  70 f8 03 00  ....p...             76357.1.8                      
+                         00 00 58 8f  04 00 00 00  ..X.....             76357.1.16                     
+                         74 24 05 00  00 00 94 aa  t$......             76357.1.24                     
+  38.2            USTS   80000300                  bad parameter        76358.1.0(516)   usbaudio      
+  38.2            RESET                                                 76359.1.0(516)   usbaudio      
+  38.1      2880  ISOC   60 1b 03 00  00 00 be 8e  `.......             77390.1.0        usbaudio      
+                         02 00 00 00  7e 01 02 00  ........             77390.1.8                      
+                         00 00 f9 6e  01 00 00 00  ...n....             77390.1.16                     
+                         10 e5 00 00  00 00 9b 57  .......W             77390.1.24                     
+  38.2            USTS   80000300                  bad parameter        77391.1.0(559)   usbaudio      
+  38.2            RESET                                                 77392.1.0(559)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        78509.1.0        usbaudio      
+  38.1      2880  ISOC   1a 22 f4 00  00 00 3f 4c  ."....?L             78510.1.0        usbaudio      
+                         f4 00 00 00  8a 69 f4 00  .....i..             78510.1.8                      
+                         00 00 f0 9b  f4 00 00 00  ........             78510.1.16                     
+                         9d b1 f4 00  00 00 7b f9  ........             78510.1.24                     
+  38.2            RESET                                                 78511.1.0(497)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        78512.1.0(497)   usbaudio      
+  38.2            RESET                                                 79505.1.0        usbaudio      
+  38.1      2880  ISOC   ca e1 05 00  00 00 33 2a  ......3*             79506.1.0        usbaudio      
+                         06 00 00 00  a6 7b 06 00  ........             79506.1.8                      
+                         00 00 81 ca  06 00 00 00  ........             79506.1.16                     
+                         1f 24 07 00  00 00 c8 57  .$.....W             79506.1.24                     
+  38.2            USTS   80000300                  bad parameter        79507.1.0(504)   usbaudio      
+  38.2            RESET                                                 79508.1.0(504)   usbaudio      
+  38.1      2880  ISOC   c0 33 fd 00  00 00 ba a1  .3......             80515.1.0        usbaudio      
+                         fc 00 00 00  53 11 fc 00  ....S...             80515.1.8                      
+                         00 00 fa 8f  fb 00 00 00  ........             80515.1.16                     
+                         4c 07 fb 00  00 00 09 8a  L.......             80515.1.24                     
+  38.2            USTS   80000300                  bad parameter        80516.1.0(462)   usbaudio      
+  38.2            RESET                                                 80517.1.0(462)   usbaudio      
+  38.1      2880  ISOC   00 96 f8 00  00 00 7e fb  ........             81440.1.0        usbaudio      
+                         f8 00 00 00  0e 5c f9 00  .....\..             81440.1.8                      
+                         00 00 8d d8  f9 00 00 00  ........             81440.1.16                     
+                         02 45 fa 00  00 00 a7 be  .E......             81440.1.24                     
+  38.2            USTS   80000300                  bad parameter        81441.1.0(473)   usbaudio      
+  38.2            RESET                                                 81442.1.0(473)   usbaudio      
+  38.1      2880  ISOC   af f6 05 00  00 00 3e e2  ......>.             82387.1.0        usbaudio      
+                         05 00 00 00  02 d2 05 00  ........             82387.1.8                      
+                         00 00 0e b9  05 00 00 00  ........             82387.1.16                     
+                         64 aa 05 00  00 00 fe 7f  d.......             82387.1.24                     
+  38.2            USTS   80000300                  bad parameter        82388.1.0(455)   usbaudio      
+  38.2            RESET                                                 82389.1.0(455)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        83298.1.0        usbaudio      
+  38.1      2880  ISOC   6f 82 f9 00  00 00 58 40  o.....X@             83299.1.0        usbaudio      
+                         f9 00 00 00  2d f7 f8 00  ....-...             83299.1.8                      
+                         00 00 ca c2  f8 00 00 00  ........             83299.1.16                     
+                         b3 83 f8 00  00 00 96 5d  .......]             83299.1.24                     
+  38.2            RESET                                                 83300.1.0(487)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        83301.1.0(487)   usbaudio      
+  38.2            RESET                                                 84274.1.0        usbaudio      
+  38.1      2880  ISOC   d2 5a fd 00  00 00 d9 ac  .Z......             84275.1.0        usbaudio      
+                         fd 00 00 00  1a 04 fe 00  ........             84275.1.8                      
+                         00 00 01 72  fe 00 00 00  ...r....             84275.1.16                     
+                         4a d8 fe 00  00 00 b3 32  J......2             84275.1.24                     
+  38.2            USTS   80000300                  bad parameter        84276.1.0(541)   usbaudio      
+  38.2            RESET                                                 84277.1.0(541)   usbaudio      
+  38.1      2880  ISOC   2c af 03 00  00 00 a8 78  ,......x             85358.1.0        usbaudio      
+                         03 00 00 00  95 3f 03 00  .....?..             85358.1.8                      
+                         00 00 7b f8  02 00 00 00  ........             85358.1.16                     
+                         6d b3 02 00  00 00 12 67  m......g             85358.1.24                     
+  38.2            USTS   80000300                  bad parameter        85359.1.0(413)   usbaudio      
+  38.2            RESET                                                 85360.1.0(413)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        86185.1.0        usbaudio      
+  38.1      2880  ISOC   4a 35 f8 00  00 00 df 2b  J5.....+             86186.1.0        usbaudio      
+                         f8 00 00 00  37 1a f8 00  ....7...             86186.1.8                      
+                         00 00 e6 23  f8 00 00 00  ...#....             86186.1.16                     
+                         ef 21 f8 00  00 00 6d 3a  .!....m:             86186.1.24                     
+  38.2            RESET                                                 86187.1.0(499)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        86188.1.0(499)   usbaudio      
+  38.1      2880  ISOC   3d 5c 01 00  00 00 2c a4  =\....,.             87185.1.0        usbaudio      
+                         01 00 00 00  33 eb 01 00  ....3...             87185.1.8                      
+                         00 00 79 1e  02 00 00 00  ..y.....             87185.1.16                     
+                         d3 46 02 00  00 00 a5 6d  .F.....m             87185.1.24                     
+  38.2            RESET                                                 87186.1.0(518)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        87187.1.0(518)   usbaudio      
+  38.2            RESET                                                 88222.1.0        usbaudio      
+  38.1      2880  ISOC   35 af ff 00  00 00 82 6f  5......o             88223.1.0        usbaudio      
+                         ff 00 00 00  5d 27 ff 00  ....]'..             88223.1.8                      
+                         00 00 64 e2  fe 00 00 00  ..d.....             88223.1.16                     
+                         2b a3 fe 00  00 00 12 6c  +......l             88223.1.24                     
+  38.2            USTS   80000300                  bad parameter        88224.1.0(471)   usbaudio      
+  38.2            RESET                                                 88225.1.0(471)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        89166.1.0        usbaudio      
+  38.1      2880  ISOC   84 32 fa 00  00 00 ec 50  .2.....P             89167.1.0        usbaudio      
+                         fa 00 00 00  88 66 fa 00  .....f..             89167.1.8                      
+                         00 00 21 8d  fa 00 00 00  ..!.....             89167.1.16                     
+                         1e a8 fa 00  00 00 3c d4  ......<.             89167.1.24                     
+  38.2            RESET                                                 89168.1.0(451)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        89169.1.0(451)   usbaudio      
+  38.2            RESET                                                 90070.1.0        usbaudio      
+  38.1      2880  ISOC   51 72 02 00  00 00 ba 8c  Qr......             90071.1.0        usbaudio      
+                         02 00 00 00  c8 a2 02 00  ........             90071.1.8                      
+                         00 00 69 af  02 00 00 00  ..i.....             90071.1.16                     
+                         50 c1 02 00  00 00 34 ce  P.....4.             90071.1.24                     
+  38.2            USTS   80000300                  bad parameter        90072.1.0(482)   usbaudio      
+  38.2            RESET                                                 90073.1.0(482)   usbaudio      
+  38.1      2880  ISOC   5f fa fc 00  00 00 cf d0  _.......             91036.1.0        usbaudio      
+                         fc 00 00 00  40 98 fc 00  ....@...             91036.1.8                      
+                         00 00 82 5c  fc 00 00 00  ...\....             91036.1.16                     
+                         cd 1d fc 00  00 00 7b fa  ........             91036.1.24                     
+  38.2            USTS   80000300                  bad parameter        91037.1.0(375)   usbaudio      
+  38.2            RESET                                                 91038.1.0(375)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        91787.1.0        usbaudio      
+  38.1      2880  ISOC   56 cf fc 00  00 00 2c 01  V.....,.             91788.1.0        usbaudio      
+                         fd 00 00 00  a9 31 fd 00  .....1..             91788.1.8                      
+                         00 00 1b 6d  fd 00 00 00  ...m....             91788.1.16                     
+                         3e 9e fd 00  00 00 52 d2  >.....R.             91788.1.24                     
+  38.2            RESET                                                 91789.1.0(359)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        91790.1.0(359)   usbaudio      
+  38.2            RESET                                                 92507.1.0        usbaudio      
+  38.1      2880  ISOC   b5 a8 01 00  00 00 d4 97  ........             92508.1.0        usbaudio      
+                         01 00 00 00  44 83 01 00  ....D...             92508.1.8                      
+                         00 00 3e 6e  01 00 00 00  ..>n....             92508.1.16                     
+                         9d 5f 01 00  00 00 47 49  ._....GI             92508.1.24                     
+  38.2            USTS   80000300                  bad parameter        92509.1.0(327)   usbaudio      
+  38.2            RESET                                                 92510.1.0(327)   usbaudio      
+  38.1      2880  ISOC   0d fd fb 00  00 00 2a f0  ......*.             93163.1.0        usbaudio      
+                         fb 00 00 00  c9 d6 fb 00  ........             93163.1.8                      
+                         00 00 07 bf  fb 00 00 00  ........             93163.1.16                     
+                         18 a1 fb 00  00 00 4e 9e  ......N.             93163.1.24                     
+  38.2            USTS   80000300                  bad parameter        93164.1.0(433)   usbaudio      
+  38.2            RESET                                                 93165.1.0(433)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        94030.1.0        usbaudio      
+  38.1      2880  ISOC   3f db fe 00  00 00 c2 05  ?.......             94031.1.0        usbaudio      
+                         ff 00 00 00  04 2f ff 00  ...../..             94031.1.8                      
+                         00 00 05 5c  ff 00 00 00  ...\....             94031.1.16                     
+                         be 82 ff 00  00 00 be a7  ........             94031.1.24                     
+  38.2            RESET                                                 94032.1.0(402)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        94033.1.0(402)   usbaudio      
+  38.1      2880  ISOC   95 5d 00 00  00 00 7d 37  .].....7             94836.1.0        usbaudio      
+                         00 00 00 00  9c 0d 00 00  ........             94836.1.8                      
+                         00 00 07 ea  ff 00 00 00  ........             94836.1.16                     
+                         a0 cd ff 00  00 00 1c b3  ........             94836.1.24                     
+  38.2            RESET                                                 94837.1.0(457)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        94838.1.0(457)   usbaudio      
+  38.2            RESET                                                 95751.1.0        usbaudio      
+  38.1      2880  ISOC   be fe fb 00  00 00 a0 04  ........             95752.1.0        usbaudio      
+                         fc 00 00 00  ea 08 fc 00  ........             95752.1.8                      
+                         00 00 f0 16  fc 00 00 00  ........             95752.1.16                     
+                         d6 1a fc 00  00 00 2c 2e  ......,.             95752.1.24                     
+  38.2            USTS   80000300                  bad parameter        95753.1.0(495)   usbaudio      
+  38.2            RESET                                                 95754.1.0(495)   usbaudio      
+  38.1      2880  ISOC   f7 28 00 00  00 00 36 44  .(....6D             96743.1.0        usbaudio      
+                         00 00 00 00  3d 60 00 00  ....=`..             96743.1.8                      
+                         00 00 9b 72  00 00 00 00  ...r....             96743.1.16                     
+                         55 7b 00 00  00 00 2c 85  U.....,.             96743.1.24                     
+  38.2            USTS   80000300                  bad parameter        96744.1.0(459)   usbaudio      
+  38.2            RESET                                                 96745.1.0(459)   usbaudio      
+  38.1      2880  ISOC   dd c5 fe 00  00 00 30 ae  ......0.             97662.1.0        usbaudio      
+                         fe 00 00 00  d5 8b fe 00  ........             97662.1.8                      
+                         00 00 2c 6a  fe 00 00 00  ..,j....             97662.1.16                     
+                         d8 4b fe 00  00 00 de 3a  .K.....:             97662.1.24                     
+  38.2            USTS   80000300                  bad parameter        97663.1.0(476)   usbaudio      
+  38.2            RESET                                                 97664.1.0(476)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        98615.1.0        usbaudio      
+  38.1      2880  ISOC   e5 05 fd 00  00 00 d6 12  ........             98616.1.0        usbaudio      
+                         fd 00 00 00  e1 25 fd 00  .....%..             98616.1.8                      
+                         00 00 68 46  fd 00 00 00  ..hF....             98616.1.16                     
+                         cc 56 fd 00  00 00 92 66  .V.....f             98616.1.24                     
+  38.2            RESET                                                 98617.1.0(459)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        98618.1.0(459)   usbaudio      
+  38.1      2880  ISOC   ef 77 00 00  00 00 96 79  .w.....y             99535.1.0        usbaudio      
+                         00 00 00 00  2f 81 00 00  ..../...             99535.1.8                      
+                         00 00 a4 89  00 00 00 00  ........             99535.1.16                     
+                         64 8d 00 00  00 00 8a 89  d.......             99535.1.24                     
+  38.2            RESET                                                 99536.1.0(501)   usbaudio      
+  38.2            USTS   80000300                  bad parameter        99537.1.0(501)   usbaudio      
+  38.1      2880  ISOC   6a ad fd 00  00 00 1b a3  j.......            100538.1.0        usbaudio      
+                         fd 00 00 00  d7 8b fd 00  ........            100538.1.8                      
+                         00 00 71 73  fd 00 00 00  ..qs....            100538.1.16                     
+                         96 59 fd 00  00 00 25 53  .Y....%S            100538.1.24                     
+  38.2            RESET                                                100539.1.0(524)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       100540.1.0(524)   usbaudio      
+  38.2            RESET                                                101587.1.0        usbaudio      
+  38.1      2880  ISOC   f1 58 fe 00  00 00 53 6b  .X....Sk            101588.1.0        usbaudio      
+                         fe 00 00 00  66 79 fe 00  ....fy..            101588.1.8                      
+                         00 00 e7 90  fe 00 00 00  ........            101588.1.16                     
+                         88 a9 fe 00  00 00 2e c6  ........            101588.1.24                     
+  38.2            USTS   80000300                  bad parameter       101589.1.0(520)   usbaudio      
+  38.2            RESET                                                101590.1.0(520)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       102629.1.0        usbaudio      
+  38.1      2880  ISOC   62 f1 ff 00  00 00 c7 eb  b.......            102630.1.0        usbaudio      
+                         ff 00 00 00  13 e0 ff 00  ........            102630.1.8                      
+                         00 00 7c d1  ff 00 00 00  ........            102630.1.16                     
+                         b6 c5 ff 00  00 00 c3 c0  ........            102630.1.24                     
+  38.2            RESET                                                102631.1.0(464)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       102632.1.0(464)   usbaudio      
+  38.2            RESET                                                103559.1.0        usbaudio      
+  38.1      2880  ISOC   1e 8d fd 00  00 00 34 79  ......4y            103560.1.0        usbaudio      
+                         fd 00 00 00  23 6c fd 00  ....#l..            103560.1.8                      
+                         00 00 0b 77  fd 00 00 00  ...w....            103560.1.16                     
+                         2b 7b fd 00  00 00 58 78  +.....Xx            103560.1.24                     
+  38.2            USTS   80000300                  bad parameter       103561.1.0(452)   usbaudio      
+  38.2            RESET                                                103562.1.0(452)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       104465.1.0        usbaudio      
+  38.1      2880  ISOC   59 21 ff 00  00 00 e9 37  Y!.....7            104466.1.0        usbaudio      
+                         ff 00 00 00  aa 50 ff 00  .....P..            104466.1.8                      
+                         00 00 7c 65  ff 00 00 00  ...e....            104466.1.16                     
+                         00 70 ff 00  00 00 f3 7c  .p......            104466.1.24                     
+  38.2            RESET                                                104467.1.0(502)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       104468.1.0(502)   usbaudio      
+  38.2            RESET                                                105471.1.0        usbaudio      
+  38.1      2880  ISOC   5d 45 ff 00  00 00 91 31  ]E.....1            105472.1.0        usbaudio      
+                         ff 00 00 00  d4 1f ff 00  ........            105472.1.8                      
+                         00 00 93 15  ff 00 00 00  ........            105472.1.16                     
+                         a6 08 ff 00  00 00 80 fa  ........            105472.1.24                     
+  38.2            USTS   80000300                  bad parameter       105473.1.0(514)   usbaudio      
+  38.2            RESET                                                105474.1.0(514)   usbaudio      
+  38.1      2880  ISOC   4d cd fd 00  00 00 1c d8  M.......            106501.1.0        usbaudio      
+                         fd 00 00 00  19 ea fd 00  ........            106501.1.8                      
+                         00 00 56 f7  fd 00 00 00  ..V.....            106501.1.16                     
+                         32 f0 fd 00  00 00 1d f2  2.......            106501.1.24                     
+  38.2            USTS   80000300                  bad parameter       106502.1.0(464)   usbaudio      
+  38.2            RESET                                                106503.1.0(464)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       107430.1.0        usbaudio      
+  38.1      2880  ISOC   9b 92 ff 00  00 00 5a 93  ......Z.            107431.1.0        usbaudio      
+                         ff 00 00 00  06 98 ff 00  ........            107431.1.8                      
+                         00 00 3e a2  ff 00 00 00  ..>.....            107431.1.16                     
+                         94 a7 ff 00  00 00 1b a9  ........            107431.1.24                     
+  38.2            RESET                                                107432.1.0(143)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       107433.1.0(143)   usbaudio      
+  38.1      2880  ISOC   03 b7 fe 00  00 00 76 b5  ......v.            107718.1.0        usbaudio      
+                         fe 00 00 00  37 a3 fe 00  ....7...            107718.1.8                      
+                         00 00 f0 8e  fe 00 00 00  ........            107718.1.16                     
+                         2f 83 fe 00  00 00 48 89  /.....H.            107718.1.24                     
+  38.1      2880  ISOC   fb 70 fe 00  00 00 29 77  .p....)w            107719.1.0        usbaudio      
+                         fe 00 00 00  ab 78 fe 00  .....x..            107719.1.8                      
+                         00 00 44 85  fe 00 00 00  ..D.....            107719.1.16                     
+                         92 93 fe 00  00 00 6c a1  ......l.            107719.1.24                     
+  38.0            CTL    01 0b 00 00  01 00 00 00  SET INTERFACE       107720.1.0        usbaudio      
+  38.0            CTL    01 0b 01 00  01 00 00 00  SET INTERFACE       107721.1.0        usbaudio      
+  38.2            RESET                                                107722.1.0(518)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       107723.1.0(518)   usbaudio      
+  38.2            RESET                                                108758.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 00  00 00 00 00  ........            108759.1.0        usbaudio      
+                         00 00 00 00  00 00 00 00  ........            108759.1.8                      
+                         00 00 00 00  00 00 00 00  ........            108759.1.16                     
+                         00 00 00 00  00 00 00 00  ........            108759.1.24                     
+  38.2            USTS   80000300                  bad parameter       108760.1.0(574)   usbaudio      
+  38.2            RESET                                                108761.1.0(574)   usbaudio      
+  38.1      2880  ISOC   00 00 00 00  00 00 00 00  ........            109908.1.0        usbaudio      
+                         00 00 00 00  00 00 00 00  ........            109908.1.8                      
+                         00 00 00 00  00 00 00 00  ........            109908.1.16                     
+                         00 00 00 00  00 00 00 00  ........            109908.1.24                     
+  38.2            USTS   80000300                  bad parameter       109909.1.0(481)   usbaudio      
+  38.2            RESET                                                109910.1.0(481)   usbaudio      
+  38.1      2880  ISOC   00 00 00 62  28 a1 00 00  ...b(...            110871.1.0        usbaudio      
+                         00 1b ce 9f  00 00 00 ba  ........            110871.1.8                      
+                         ca 9e 00 00  00 af 39 9f  ......9.            110871.1.16                     
+                         00 00 00 59  a3 9f 00 00  ...Y....            110871.1.24                     
+  38.2            USTS   80000300                  bad parameter       110872.1.0(396)   usbaudio      
+  38.2            RESET                                                110873.1.0(396)   usbaudio      
+  38.1      2880  ISOC   00 00 00 2a  25 11 00 00  ...*%...            111664.1.0        usbaudio      
+                         00 0b 81 15  00 00 00 a1  ........            111664.1.8                      
+                         27 1a 00 00  00 8a a0 1e  '.......            111664.1.16                     
+                         00 00 00 e2  4b 23 00 00  ....K#..            111664.1.24                     
+  38.2            USTS   80000300                  bad parameter       111665.1.0(382)   usbaudio      
+  38.2            RESET                                                111666.1.0(382)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       112429.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 92  ba 3a 00 00  .....:..            112430.1.0        usbaudio      
+                         00 51 3d 35  00 00 00 5b  .Q=5...[            112430.1.8                      
+                         c6 2f 00 00  00 d9 a1 29  ./.....)            112430.1.16                     
+                         00 00 00 44  fa 23 00 00  ...D.#..            112430.1.24                     
+  38.2            RESET                                                112431.1.0(311)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       112432.1.0(311)   usbaudio      
+  38.2            RESET                                                113053.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 62  ef a4 00 00  ...b....            113054.1.0        usbaudio      
+                         00 eb d0 a5  00 00 00 90  ........            113054.1.8                      
+                         75 a6 00 00  00 85 1a a8  u.......            113054.1.16                     
+                         00 00 00 94  28 a9 00 00  ....(...            113054.1.24                     
+  38.2            USTS   80000300                  bad parameter       113055.1.0(421)   usbaudio      
+  38.2            RESET                                                113056.1.0(421)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       113897.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 4e  ff 4c 00 00  ...N.L..            113898.1.0        usbaudio      
+                         00 bc fd 4f  00 00 00 78  ...O...x            113898.1.8                      
+                         57 53 00 00  00 78 e4 55  WS...x.U            113898.1.16                     
+                         00 00 00 c4  23 59 00 00  ....#Y..            113898.1.24                     
+  38.2            RESET                                                113899.1.0(469)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       113900.1.0(469)   usbaudio      
+  38.2            RESET                                                114837.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 5a  90 f3 00 00  ...Z....            114838.1.0        usbaudio      
+                         00 e2 85 ee  00 00 00 dc  ........            114838.1.8                      
+                         68 e9 00 00  00 c6 63 e4  h.....c.            114838.1.16                     
+                         00 00 00 bc  3a df 00 00  ....:...            114838.1.24                     
+  38.2            USTS   80000300                  bad parameter       114839.1.0(576)   usbaudio      
+  38.2            RESET                                                114840.1.0(576)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       115991.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 0e  b3 b5 00 00  ........            115992.1.0        usbaudio      
+                         00 42 f4 b9  00 00 00 69  .B.....i            115992.1.8                      
+                         fa bd 00 00  00 1b cf c2  ........            115992.1.16                     
+                         00 00 00 60  34 c7 00 00  ...`4...            115992.1.24                     
+  38.2            RESET                                                115993.1.0(497)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       115994.1.0(497)   usbaudio      
+  38.2            RESET                                                116987.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 c6  df 5f 00 00  ....._..            116988.1.0        usbaudio      
+                         00 8e f5 5f  00 00 00 94  ..._....            116988.1.8                      
+                         4a 60 00 00  00 12 9d 5f  J`....._            116988.1.16                     
+                         00 00 00 4e  ad 5f 00 00  ...N._..            116988.1.24                     
+  38.2            USTS   80000300                  bad parameter       116989.1.0(474)   usbaudio      
+  38.2            RESET                                                116990.1.0(474)   usbaudio      
+  38.1      2880  ISOC   00 00 00 74  e3 c7 00 00  ...t....            117937.1.0        usbaudio      
+                         00 b1 3a c4  00 00 00 d6  ..:.....            117937.1.8                      
+                         87 c0 00 00  00 52 7d bd  .....R..            117937.1.16                     
+                         00 00 00 5c  07 ba 00 00  ...\....            117937.1.24                     
+  38.2            USTS   80000300                  bad parameter       117938.1.0(455)   usbaudio      
+  38.2            RESET                                                117939.1.0(455)   usbaudio      
+  38.1      2880  ISOC   00 00 00 2c  2e f0 00 00  ...,....            118848.1.0        usbaudio      
+                         00 3d d2 f4  00 00 00 13  .=......            118848.1.8                      
+                         63 f9 00 00  00 76 1e fe  c....v..            118848.1.16                     
+                         00 00 00 49  c8 02 00 00  ...I....            118848.1.24                     
+  38.2            USTS   80000300                  bad parameter       118849.1.0(481)   usbaudio      
+  38.2            RESET                                                118850.1.0(481)   usbaudio      
+  38.1      2880  ISOC   00 00 00 0b  ad 45 00 00  .....E..            119811.1.0        usbaudio      
+                         00 2e f1 42  00 00 00 e0  ...B....            119811.1.8                      
+                         61 40 00 00  00 a1 16 3d  a@.....=            119811.1.16                     
+                         00 00 00 4e  53 3a 00 00  ...NS:..            119811.1.24                     
+  38.2            USTS   80000300                  bad parameter       119812.1.0(549)   usbaudio      
+  38.2            RESET                                                119813.1.0(549)   usbaudio      
+  38.1      2880  ISOC   00 00 00 25  4d b2 00 00  ...%M...            120910.1.0        usbaudio      
+                         00 85 2a b1  00 00 00 86  ..*.....            120910.1.8                      
+                         e5 af 00 00  00 f8 80 af  ........            120910.1.16                     
+                         00 00 00 b3  86 ae 00 00  ........            120910.1.24                     
+  38.2            USTS   80000300                  bad parameter       120911.1.0(444)   usbaudio      
+  38.2            RESET                                                120912.1.0(444)   usbaudio      
+  38.1      2880  ISOC   00 00 00 7b  ae 1d 00 00  ........            121799.1.0        usbaudio      
+                         00 bd 47 21  00 00 00 77  ..G!...w            121799.1.8                      
+                         ef 24 00 00  00 a6 43 28  .$....C(            121799.1.16                     
+                         00 00 00 dc  d7 2b 00 00  .....+..            121799.1.24                     
+  38.2            USTS   80000300                  bad parameter       121800.1.0(489)   usbaudio      
+  38.2            RESET                                                121801.1.0(489)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       122778.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 55  e1 1a 00 00  ...U....            122779.1.0        usbaudio      
+                         00 0b 21 17  00 00 00 ef  ..!.....            122779.1.8                      
+                         72 13 00 00  00 b0 85 0f  r.......            122779.1.16                     
+                         00 00 00 5a  d1 0b 00 00  ...Z....            122779.1.24                     
+  38.2            RESET                                                122780.1.0(538)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       122781.1.0(538)   usbaudio      
+  38.2            RESET                                                123856.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 b8  65 be 00 00  ....e...            123857.1.0        usbaudio      
+                         00 e4 d4 bf  00 00 00 83  ........            123857.1.8                      
+                         1e c1 00 00  00 7c 2b c3  ......+.            123857.1.16                     
+                         00 00 00 d9  c4 c4 00 00  ........            123857.1.24                     
+  38.2            USTS   80000300                  bad parameter       123858.1.0(449)   usbaudio      
+  38.2            RESET                                                123859.1.0(449)   usbaudio      
+  38.1      2880  ISOC   00 00 00 b0  8a 38 00 00  .....8..            124756.1.0        usbaudio      
+                         00 77 fc 39  00 00 00 07  .w.9....            124756.1.8                      
+                         86 3b 00 00  00 bb 63 3c  .;....c<            124756.1.16                     
+                         00 00 00 df  af 3d 00 00  .....=..            124756.1.24                     
+  38.2            USTS   80000300                  bad parameter       124757.1.0(546)   usbaudio      
+  38.2            RESET                                                124758.1.0(546)   usbaudio      
+  38.1      2880  ISOC   00 00 00 8a  ad da 00 00  ........            125849.1.0        usbaudio      
+                         00 04 4d d8  00 00 00 08  ..M.....            125849.1.8                      
+                         c7 d5 00 00  00 42 ad d3  .....B..            125849.1.16                     
+                         00 00 00 0b  3a d1 00 00  ....:...            125849.1.24                     
+  38.2            USTS   80000300                  bad parameter       125850.1.0(487)   usbaudio      
+  38.2            RESET                                                125851.1.0(487)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       126824.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 28  0d f0 00 00  ...(....            126825.1.0        usbaudio      
+                         00 e9 28 f1  00 00 00 1f  ..(.....            126825.1.8                      
+                         2e f2 00 00  00 e2 64 f3  ......d.            126825.1.16                     
+                         00 00 00 fa  80 f4 00 00  ........            126825.1.24                     
+  38.2            RESET                                                126826.1.0(486)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       126827.1.0(486)   usbaudio      
+  38.2            RESET                                                127798.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 29  19 2f 00 00  ...)./..            127799.1.0        usbaudio      
+                         00 f8 c1 2f  00 00 00 a8  .../....            127799.1.8                      
+                         94 30 00 00  00 05 e6 30  .0.....0            127799.1.16                     
+                         00 00 00 2e  a2 31 00 00  .....1..            127799.1.24                     
+  38.2            USTS   80000300                  bad parameter       127800.1.0(545)   usbaudio      
+  38.2            RESET                                                127801.1.0(545)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       128890.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 ac  c1 d4 00 00  ........            128891.1.0        usbaudio      
+                         00 00 ef d1  00 00 00 fa  ........            128891.1.8                      
+                         03 cf 00 00  00 b0 9d cc  ........            128891.1.16                     
+                         00 00 00 3e  e3 c9 00 00  ...>....            128891.1.24                     
+  38.2            RESET                                                128892.1.0(472)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       128893.1.0(472)   usbaudio      
+  38.2            RESET                                                129836.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 b1  f5 07 00 00  ........            129837.1.0        usbaudio      
+                         00 c0 e6 0b  00 00 00 ce  ........            129837.1.8                      
+                         c7 0f 00 00  00 b4 85 13  ........            129837.1.16                     
+                         00 00 00 79  42 17 00 00  ...yB...            129837.1.24                     
+  38.2            USTS   80000300                  bad parameter       129838.1.0(525)   usbaudio      
+  38.2            RESET                                                129839.1.0(525)   usbaudio      
+  38.1      2880  ISOC   00 00 00 7b  24 18 00 00  ....$...            130888.1.0        usbaudio      
+                         00 be 20 15  00 00 00 e0  .. .....            130888.1.8                      
+                         2f 12 00 00  00 9c 04 0f  /.......            130888.1.16                     
+                         00 00 00 8d  16 0c 00 00  ........            130888.1.24                     
+  38.2            USTS   80000300                  bad parameter       130889.1.0(493)   usbaudio      
+  38.2            RESET                                                130890.1.0(493)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       131875.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 70  72 dc 00 00  ...pr...            131876.1.0        usbaudio      
+                         00 16 e5 dc  00 00 00 92  ........            131876.1.8                      
+                         43 dd 00 00  00 06 0d de  C.......            131876.1.16                     
+                         00 00 00 42  8c de 00 00  ...B....            131876.1.24                     
+  38.2            RESET                                                131877.1.0(436)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       131878.1.0(436)   usbaudio      
+  38.1      2880  ISOC   00 00 00 27  54 0d 00 00  ...'T...            132749.1.0        usbaudio      
+                         00 6a 15 0f  00 00 00 b8  .j......            132749.1.8                      
+                         e5 10 00 00  00 30 82 12  .....0..            132749.1.16                     
+                         00 00 00 3e  3b 14 00 00  ...>;...            132749.1.24                     
+  38.2            RESET                                                132750.1.0(550)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       132751.1.0(550)   usbaudio      
+  38.1      2880  ISOC   00 00 00 93  29 12 00 00  ....)...            133850.1.0        usbaudio      
+                         00 df b1 0f  00 00 00 ae  ........            133850.1.8                      
+                         31 0d 00 00  00 07 7d 0a  1.......            133850.1.16                     
+                         00 00 00 78  e0 07 00 00  ...x....            133850.1.24                     
+  38.2            RESET                                                133851.1.0(517)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       133852.1.0(517)   usbaudio      
+  38.1      2880  ISOC   00 00 00 14  29 d3 00 00  ....)...            134885.1.0        usbaudio      
+                         00 0e 06 d5  00 00 00 fb  ........            134885.1.8                      
+                         c7 d6 00 00  00 74 07 d9  .....t..            134885.1.16                     
+                         00 00 00 07  fc da 00 00  ........            134885.1.24                     
+  38.2            RESET                                                134886.1.0(454)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       134887.1.0(454)   usbaudio      
+  38.2            RESET                                                135794.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 76  8c 2a 00 00  ...v.*..            135795.1.0        usbaudio      
+                         00 e0 2f 2a  00 00 00 f3  ../*....            135795.1.8                      
+                         f0 29 00 00  00 f9 37 29  .)....7)            135795.1.16                     
+                         00 00 00 7e  c2 28 00 00  .....(..            135795.1.24                     
+  38.2            USTS   80000300                  bad parameter       135796.1.0(445)   usbaudio      
+  38.2            RESET                                                135797.1.0(445)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       136686.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 27  29 ea 00 00  ...')...            136687.1.0        usbaudio      
+                         00 86 48 e9  00 00 00 a6  ..H.....            136687.1.8                      
+                         58 e8 00 00  00 b4 a5 e7  X.......            136687.1.16                     
+                         00 00 00 5a  cd e6 00 00  ...Z....            136687.1.24                     
+  38.2            RESET                                                136688.1.0(426)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       136689.1.0(426)   usbaudio      
+  38.2            RESET                                                137540.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 de  84 f2 00 00  ........            137541.1.0        usbaudio      
+                         00 f0 9f f3  00 00 00 45  .......E            137541.1.8                      
+                         b4 f4 00 00  00 34 e1 f5  .....4..            137541.1.16                     
+                         00 00 00 1d  eb f6 00 00  ........            137541.1.24                     
+  38.2            USTS   80000300                  bad parameter       137542.1.0(502)   usbaudio      
+  38.2            RESET                                                137543.1.0(502)   usbaudio      
+  38.1      2880  ISOC   00 00 00 97  5f 21 00 00  ...._!..            138546.1.0        usbaudio      
+                         00 af 3a 21  00 00 00 90  ..:!....            138546.1.8                      
+                         19 21 00 00  00 76 9a 20  .!...v.             138546.1.16                     
+                         00 00 00 12  5f 20 00 00  ...._ ..            138546.1.24                     
+  38.2            USTS   80000300                  bad parameter       138547.1.0(468)   usbaudio      
+  38.2            RESET                                                138548.1.0(468)   usbaudio      
+  38.1      2880  ISOC   00 00 00 82  68 37 00 00  ....h7..            139483.1.0        usbaudio      
+                         00 2e 36 35  00 00 00 4d  ..65...M            139483.1.8                      
+                         b2 32 00 00  00 b6 9d 2f  .2...../            139483.1.16                     
+                         00 00 00 7b  6b 2c 00 00  ....k,..            139483.1.24                     
+  38.2            USTS   80000300                  bad parameter       139484.1.0(460)   usbaudio      
+  38.2            RESET                                                139485.1.0(460)   usbaudio      
+  38.1      2880  ISOC   00 00 00 c8  36 d3 00 00  ....6...            140404.1.0        usbaudio      
+                         00 f2 59 d9  00 00 00 61  ..Y....a            140404.1.8                      
+                         bd df 00 00  00 12 a9 e6  ........            140404.1.16                     
+                         00 00 00 37  8d ed 00 00  ...7....            140404.1.24                     
+  38.2            USTS   80000300                  bad parameter       140405.1.0(514)   usbaudio      
+  38.2            RESET                                                140406.1.0(514)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       141433.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 79  aa 35 00 00  ...y.5..            141434.1.0        usbaudio      
+                         00 72 2d 2e  00 00 00 69  .r-....i            141434.1.8                      
+                         94 26 00 00  00 11 6a 1e  .&....j.            141434.1.16                     
+                         00 00 00 74  6c 16 00 00  ...tl...            141434.1.24                     
+  38.2            RESET                                                141435.1.0(520)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       141436.1.0(520)   usbaudio      
+  38.2            RESET                                                142475.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 0a  ed d9 00 00  ........            142476.1.0        usbaudio      
+                         00 f8 b0 e0  00 00 00 9c  ........            142476.1.8                      
+                         60 e7 00 00  00 12 5e ee  `.....^.            142476.1.16                     
+                         00 00 00 65  03 f5 00 00  ...e....            142476.1.24                     
+  38.2            USTS   80000300                  bad parameter       142477.1.0(332)   usbaudio      
+  38.2            RESET                                                142478.1.0(332)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       143141.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 a4  60 ff 00 00  ....`...            143142.1.0        usbaudio      
+                         00 4e 15 fa  00 00 00 02  .N......            143142.1.8                      
+                         e5 f4 00 00  00 69 cb ef  .....i..            143142.1.16                     
+                         00 00 00 f1  e7 ea 00 00  ........            143142.1.24                     
+  38.2            RESET                                                143143.1.0(269)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       143144.1.0(269)   usbaudio      
+  38.1      2880  ISOC   00 00 00 f3  bd 27 00 00  .....'..            143681.1.0        usbaudio      
+                         00 af 25 2b  00 00 00 84  ..%+....            143681.1.8                      
+                         6f 2e 00 00  00 f5 35 31  o.....51            143681.1.16                     
+                         00 00 00 7f  ea 33 00 00  .....3..            143681.1.24                     
+  38.2            RESET                                                143682.1.0(353)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       143683.1.0(353)   usbaudio      
+  38.2            RESET                                                144388.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 cc  ac b5 00 00  ........            144389.1.0        usbaudio      
+                         00 8d 3c b3  00 00 00 06  ..<.....            144389.1.8                      
+                         f1 b0 00 00  00 5b 9b af  .....[..            144389.1.16                     
+                         00 00 00 78  2d ae 00 00  ...x-...            144389.1.24                     
+  38.2            USTS   80000300                  bad parameter       144390.1.0(313)   usbaudio      
+  38.2            RESET                                                144391.1.0(313)   usbaudio      
+  38.1      2880  ISOC   00 00 00 91  11 4e 00 00  .....N..            145016.1.0        usbaudio      
+                         00 37 8b 4f  00 00 00 d4  .7.O....            145016.1.8                      
+                         e1 50 00 00  00 f4 3d 51  .P....=Q            145016.1.16                     
+                         00 00 00 6e  b5 51 00 00  ...n.Q..            145016.1.24                     
+  38.2            USTS   80000300                  bad parameter       145017.1.0(327)   usbaudio      
+  38.2            RESET                                                145018.1.0(327)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       145671.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 6a  6f ba 00 00  ...jo...            145672.1.0        usbaudio      
+                         00 02 d3 b9  00 00 00 7b  ........            145672.1.8                      
+                         56 b9 00 00  00 eb af b9  V.......            145672.1.16                     
+                         00 00 00 0e  e9 b9 00 00  ........            145672.1.24                     
+  38.2            RESET                                                145673.1.0(379)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       145674.1.0(379)   usbaudio      
+  38.1      2880  ISOC   00 00 00 14  0e 2a 00 00  .....*..            146431.1.0        usbaudio      
+                         00 54 6e 29  00 00 00 1e  .Tn)....            146431.1.8                      
+                         a0 28 00 00  00 59 4b 27  .(...YK'            146431.1.16                     
+                         00 00 00 7a  f5 25 00 00  ...z.%..            146431.1.24                     
+  38.2            RESET                                                146432.1.0(369)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       146433.1.0(369)   usbaudio      
+  38.2            RESET                                                147170.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 eb  4f ec 00 00  ....O...            147171.1.0        usbaudio      
+                         00 28 61 ee  00 00 00 38  .(a....8            147171.1.8                      
+                         90 f0 00 00  00 fa f0 f2  ........            147171.1.16                     
+                         00 00 00 c1  59 f5 00 00  ....Y...            147171.1.24                     
+  38.2            USTS   80000300                  bad parameter       147172.1.0(422)   usbaudio      
+  38.2            RESET                                                147173.1.0(422)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       148016.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 3e  79 ff 00 00  ...>y...            148017.1.0        usbaudio      
+                         00 64 23 fc  00 00 00 c6  .d#.....            148017.1.8                      
+                         b9 f8 00 00  00 d5 5b f5  ......[.            148017.1.16                     
+                         00 00 00 5c  e4 f1 00 00  ...\....            148017.1.24                     
+  38.2            RESET                                                148018.1.0(316)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       148019.1.0(316)   usbaudio      
+  38.2            RESET                                                148650.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 09  9d 02 00 00  ........            148651.1.0        usbaudio      
+                         00 45 87 06  00 00 00 ae  .E......            148651.1.8                      
+                         7b 0a 00 00  00 bd 67 0e  ......g.            148651.1.16                     
+                         00 00 00 12  4f 12 00 00  ....O...            148651.1.24                     
+  38.2            USTS   80000300                  bad parameter       148652.1.0(320)   usbaudio      
+  38.2            RESET                                                148653.1.0(320)   usbaudio      
+  38.1      2880  ISOC   00 00 00 76  27 f9 00 00  ...v'...            149292.1.0        usbaudio      
+                         00 7e 82 f5  00 00 00 78  .......x            149292.1.8                      
+                         ec f1 00 00  00 5f 73 ee  ....._s.            149292.1.16                     
+                         00 00 00 6b  00 eb 00 00  ...k....            149292.1.24                     
+  38.2            USTS   80000300                  bad parameter       149293.1.0(272)   usbaudio      
+  38.2            RESET                                                149294.1.0(272)   usbaudio      
+  38.1      2880  ISOC   00 00 00 4c  3e 05 00 00  ...L>...            149837.1.0        usbaudio      
+                         00 a0 ea 07  00 00 00 91  ........            149837.1.8                      
+                         7d 0a 00 00  00 be e8 0c  ........            149837.1.16                     
+                         00 00 00 21  25 0f 00 00  ...!%...            149837.1.24                     
+  38.2            USTS   80000300                  bad parameter       149838.1.0(272)   usbaudio      
+  38.2            RESET                                                149839.1.0(272)   usbaudio      
+  38.1      2880  ISOC   00 00 00 73  e6 ef 00 00  ...s....            150382.1.0        usbaudio      
+                         00 97 ad ee  00 00 00 f2  ........            150382.1.8                      
+                         8f ed 00 00  00 ea a5 ec  ........            150382.1.16                     
+                         00 00 00 29  cb eb 00 00  ...)....            150382.1.24                     
+  38.2            USTS   80000300                  bad parameter       150383.1.0(329)   usbaudio      
+  38.2            RESET                                                150384.1.0(329)   usbaudio      
+  38.1      2880  ISOC   00 00 00 34  bd 16 00 00  ...4....            151041.1.0        usbaudio      
+                         00 3c d3 16  00 00 00 b6  .<......            151041.1.8                      
+                         c6 16 00 00  00 07 6d 16  ......m.            151041.1.16                     
+                         00 00 00 8e  0b 16 00 00  ........            151041.1.24                     
+  38.2            USTS   80000300                  bad parameter       151042.1.0(335)   usbaudio      
+  38.2            RESET                                                151043.1.0(335)   usbaudio      
+  38.1      2880  ISOC   00 00 00 b0  34 dd 00 00  ....4...            151712.1.0        usbaudio      
+                         00 ac e0 dd  00 00 00 a4  ........            151712.1.8                      
+                         99 de 00 00  00 f4 bf df  ........            151712.1.16                     
+                         00 00 00 94  d8 e0 00 00  ........            151712.1.24                     
+  38.2            USTS   80000300                  bad parameter       151713.1.0(411)   usbaudio      
+  38.2            RESET                                                151714.1.0(411)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       152535.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 09  ff 1f 00 00  ........            152536.1.0        usbaudio      
+                         00 32 fa 1e  00 00 00 54  .2.....T            152536.1.8                      
+                         eb 1d 00 00  00 68 90 1c  .....h..            152536.1.16                     
+                         00 00 00 75  4c 1b 00 00  ...uL...            152536.1.24                     
+  38.2            RESET                                                152537.1.0(539)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       152538.1.0(539)   usbaudio      
+  38.2            RESET                                                153615.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 3b  42 e4 00 00  ...;B...            153616.1.0        usbaudio      
+                         00 f3 3a e5  00 00 00 da  ..:.....            153616.1.8                      
+                         47 e6 00 00  00 b3 b1 e7  G.......            153616.1.16                     
+                         00 00 00 0a  fd e8 00 00  ........            153616.1.24                     
+  38.2            USTS   80000300                  bad parameter       153617.1.0(444)   usbaudio      
+  38.2            RESET                                                153618.1.0(444)   usbaudio      
+  38.1      2880  ISOC   00 00 00 a4  47 0a 00 00  ....G...            154505.1.0        usbaudio      
+                         00 55 32 09  00 00 00 c5  .U2.....            154505.1.8                      
+                         07 08 00 00  00 b3 bd 06  ........            154505.1.16                     
+                         00 00 00 cb  79 05 00 00  ....y...            154505.1.24                     
+  38.2            USTS   80000300                  bad parameter       154506.1.0(511)   usbaudio      
+  38.2            RESET                                                154507.1.0(511)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       155528.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 1b  c5 ff 00 00  ........            155529.1.0        usbaudio      
+                         00 f2 0d 01  00 00 00 b0  ........            155529.1.8                      
+                         52 02 00 00  00 ca 90 03  R.......            155529.1.16                     
+                         00 00 00 99  d3 04 00 00  ........            155529.1.24                     
+  38.2            RESET                                                155530.1.0(443)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       155531.1.0(443)   usbaudio      
+  38.2            RESET                                                156416.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 74  76 f3 00 00  ...tv...            156417.1.0        usbaudio      
+                         00 18 02 f2  00 00 00 72  .......r            156417.1.8                      
+                         92 f0 00 00  00 e9 53 ef  ......S.            156417.1.16                     
+                         00 00 00 2a  02 ee 00 00  ...*....            156417.1.24                     
+  38.2            USTS   80000300                  bad parameter       156418.1.0(344)   usbaudio      
+  38.2            RESET                                                156419.1.0(344)   usbaudio      
+  38.1      2880  ISOC   00 00 00 47  5e 0b 00 00  ...G^...            157106.1.0        usbaudio      
+                         00 50 c4 0c  00 00 00 ca  .P......            157106.1.8                      
+                         1f 0e 00 00  00 5a 58 0f  .....ZX.            157106.1.16                     
+                         00 00 00 b4  93 10 00 00  ........            157106.1.24                     
+  38.2            USTS   80000300                  bad parameter       157107.1.0(451)   usbaudio      
+  38.2            RESET                                                157108.1.0(451)   usbaudio      
+  38.1      2880  ISOC   00 00 00 13  72 f2 00 00  ....r...            158009.1.0        usbaudio      
+                         00 92 63 f1  00 00 00 52  ..c....R            158009.1.8                      
+                         59 f0 00 00  00 f3 6e ef  Y.....n.            158009.1.16                     
+                         00 00 00 64  7f ee 00 00  ...d....            158009.1.24                     
+  38.2            USTS   80000300                  bad parameter       158010.1.0(363)   usbaudio      
+  38.2            RESET                                                158011.1.0(363)   usbaudio      
+  38.1      2880  ISOC   00 00 00 f1  dc 06 00 00  ........            158736.1.0        usbaudio      
+                         00 2e 66 07  00 00 00 72  ..f....r            158736.1.8                      
+                         da 07 00 00  00 7b 32 08  ......2.            158736.1.16                     
+                         00 00 00 5b  7c 08 00 00  ...[....            158736.1.24                     
+  38.2            USTS   80000300                  bad parameter       158737.1.0(367)   usbaudio      
+  38.2            RESET                                                158738.1.0(367)   usbaudio      
+  38.1      2880  ISOC   00 00 00 f2  63 f6 00 00  ....c...            159471.1.0        usbaudio      
+                         00 46 8e f6  00 00 00 fb  .F......            159471.1.8                      
+                         b9 f6 00 00  00 f5 02 f7  ........            159471.1.16                     
+                         00 00 00 ee  58 f7 00 00  ....X...            159471.1.24                     
+  38.2            USTS   80000300                  bad parameter       159472.1.0(425)   usbaudio      
+  38.2            RESET                                                159473.1.0(425)   usbaudio      
+  38.1      2880  ISOC   00 00 00 7c  8f 06 00 00  ........            160322.1.0        usbaudio      
+                         00 a0 de 05  00 00 00 b2  ........            160322.1.8                      
+                         27 05 00 00  00 d4 59 04  '.....Y.            160322.1.16                     
+                         00 00 00 ae  7b 03 00 00  ........            160322.1.24                     
+  38.2            USTS   80000300                  bad parameter       160323.1.0(499)   usbaudio      
+  38.2            RESET                                                160324.1.0(499)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       161321.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 7a  c3 f4 00 00  ...z....            161322.1.0        usbaudio      
+                         00 28 bb f5  00 00 00 5d  .(.....]            161322.1.8                      
+                         bb f6 00 00  00 48 da f7  .....H..            161322.1.16                     
+                         00 00 00 4e  e6 f8 00 00  ...N....            161322.1.24                     
+  38.2            RESET                                                161323.1.0(503)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       161324.1.0(503)   usbaudio      
+  38.2            RESET                                                162329.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 0d  6f 06 00 00  ....o...            162330.1.0        usbaudio      
+                         00 27 79 05  00 00 00 08  .'y.....            162330.1.8                      
+                         86 04 00 00  00 f9 82 03  ........            162330.1.16                     
+                         00 00 00 fb  7d 02 00 00  ........            162330.1.24                     
+  38.2            USTS   80000300                  bad parameter       162331.1.0(486)   usbaudio      
+  38.2            RESET                                                162332.1.0(486)   usbaudio      
+  38.1      2880  ISOC   00 00 00 87  a6 f9 00 00  ........            163303.1.0        usbaudio      
+                         00 e6 68 fa  00 00 00 c5  ..h.....            163303.1.8                      
+                         2c fb 00 00  00 f0 03 fc  ,.......            163303.1.16                     
+                         00 00 00 b2  c8 fc 00 00  ........            163303.1.24                     
+  38.2            USTS   80000300                  bad parameter       163304.1.0(552)   usbaudio      
+  38.2            RESET                                                163305.1.0(552)   usbaudio      
+  38.1      2880  ISOC   00 00 00 f9  c7 fc 00 00  ........            164408.1.0        usbaudio      
+                         00 61 36 fc  00 00 00 5d  .a6....]            164408.1.8                      
+                         a2 fb 00 00  00 6f 1c fb  .....o..            164408.1.16                     
+                         00 00 00 1f  99 fa 00 00  ........            164408.1.24                     
+  38.2            USTS   80000300                  bad parameter       164409.1.0(521)   usbaudio      
+  38.2            RESET                                                164410.1.0(521)   usbaudio      
+  38.1      2880  ISOC   00 00 00 b9  fd 04 00 00  ........            165451.1.0        usbaudio      
+                         00 c2 64 05  00 00 00 ec  ..d.....            165451.1.8                      
+                         c3 05 00 00  00 bc 13 06  ........            165451.1.16                     
+                         00 00 00 88  5e 06 00 00  ....^...            165451.1.24                     
+  38.2            USTS   80000300                  bad parameter       165452.1.0(431)   usbaudio      
+  38.2            RESET                                                165453.1.0(431)   usbaudio      
+  38.1      2880  ISOC   00 00 00 8a  07 f4 00 00  ........            166314.1.0        usbaudio      
+                         00 f7 bd f3  00 00 00 c4  ........            166314.1.8                      
+                         75 f3 00 00  00 c1 51 f3  u.....Q.            166314.1.16                     
+                         00 00 00 dc  21 f3 00 00  ....!...            166314.1.24                     
+  38.2            USTS   80000300                  bad parameter       166315.1.0(550)   usbaudio      
+  38.2            RESET                                                166316.1.0(550)   usbaudio      
+  38.1      2880  ISOC   00 00 00 3d  37 08 00 00  ...=7...            167415.1.0        usbaudio      
+                         00 0c 72 08  00 00 00 5c  ..r....\            167415.1.8                      
+                         a1 08 00 00  00 e6 b1 08  ........            167415.1.16                     
+                         00 00 00 c5  bf 08 00 00  ........            167415.1.24                     
+  38.2            USTS   80000300                  bad parameter       167416.1.0(521)   usbaudio      
+  38.2            RESET                                                167417.1.0(521)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       168458.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 7f  97 f6 00 00  ........            168459.1.0        usbaudio      
+                         00 e2 93 f6  00 00 00 da  ........            168459.1.8                      
+                         87 f6 00 00  00 d8 90 f6  ........            168459.1.16                     
+                         00 00 00 e4  97 f6 00 00  ........            168459.1.24                     
+  38.2            RESET                                                168460.1.0(521)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       168461.1.0(521)   usbaudio      
+  38.1      2880  ISOC   00 00 00 05  92 02 00 00  ........            169502.1.0        usbaudio      
+                         00 a9 72 02  00 00 00 b4  ..r.....            169502.1.8                      
+                         40 02 00 00  00 19 02 02  @.......            169502.1.16                     
+                         00 00 00 55  c0 01 00 00  ...U....            169502.1.24                     
+  38.2            RESET                                                169503.1.0(542)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       169504.1.0(542)   usbaudio      
+  38.2            RESET                                                170587.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 ed  40 fc 00 00  ....@...            170588.1.0        usbaudio      
+                         00 8a a3 fc  00 00 00 87  ........            170588.1.8                      
+                         07 fd 00 00  00 46 72 fd  .....Fr.            170588.1.16                     
+                         00 00 00 6a  d8 fd 00 00  ...j....            170588.1.24                     
+  38.2            USTS   80000300                  bad parameter       170589.1.0(468)   usbaudio      
+  38.2            RESET                                                170590.1.0(468)   usbaudio      
+  38.1      2880  ISOC   00 00 00 61  df fe 00 00  ...a....            171525.1.0        usbaudio      
+                         00 e2 5f fe  00 00 00 7c  .._.....            171525.1.8                      
+                         d9 fd 00 00  00 d0 51 fd  ......Q.            171525.1.16                     
+                         00 00 00 c7  bf fc 00 00  ........            171525.1.24                     
+  38.2            USTS   80000300                  bad parameter       171526.1.0(531)   usbaudio      
+  38.2            RESET                                                171527.1.0(531)   usbaudio      
+  38.1      2880  ISOC   00 00 00 39  c6 fd 00 00  ...9....            172588.1.0        usbaudio      
+                         00 35 52 fe  00 00 00 ac  .5R.....            172588.1.8                      
+                         e3 fe 00 00  00 9a 78 ff  ......x.            172588.1.16                     
+                         00 00 00 2e  fb ff 00 00  ........            172588.1.24                     
+  38.2            USTS   80000300                  bad parameter       172589.1.0(522)   usbaudio      
+  38.2            RESET                                                172590.1.0(522)   usbaudio      
+  38.1      2880  ISOC   00 00 00 c1  47 fe 00 00  ....G...            173633.1.0        usbaudio      
+                         00 bf d7 fd  00 00 00 ef  ........            173633.1.8                      
+                         69 fd 00 00  00 6f fe fc  i....o..            173633.1.16                     
+                         00 00 00 3f  8a fc 00 00  ...?....            173633.1.24                     
+  38.2            USTS   80000300                  bad parameter       173634.1.0(486)   usbaudio      
+  38.2            RESET                                                173635.1.0(486)   usbaudio      
+  38.1      2880  ISOC   00 00 00 8f  23 ff 00 00  ....#...            174606.1.0        usbaudio      
+                         00 a0 6c ff  00 00 00 37  ..l....7            174606.1.8                      
+                         b0 ff 00 00  00 7a f7 ff  .....z..            174606.1.16                     
+                         00 00 00 6b  35 00 00 00  ...k5...            174606.1.24                     
+  38.2            USTS   80000300                  bad parameter       174607.1.0(510)   usbaudio      
+  38.2            RESET                                                174608.1.0(510)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       175627.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 49  b4 fb 00 00  ...I....            175628.1.0        usbaudio      
+                         00 75 96 fb  00 00 00 5d  .u.....]            175628.1.8                      
+                         7f fb 00 00  00 f3 75 fb  ......u.            175628.1.16                     
+                         00 00 00 42  61 fb 00 00  ...Ba...            175628.1.24                     
+  38.2            RESET                                                175629.1.0(596)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       175630.1.0(596)   usbaudio      
+  38.2            RESET                                                176821.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 9c  55 02 00 00  ....U...            176822.1.0        usbaudio      
+                         00 53 4f 02  00 00 00 ea  .SO.....            176822.1.8                      
+                         44 02 00 00  00 2b 39 02  D....+9.            176822.1.16                     
+                         00 00 00 23  26 02 00 00  ...#&...            176822.1.24                     
+  38.2            USTS   80000300                  bad parameter       176823.1.0(558)   usbaudio      
+  38.2            RESET                                                176824.1.0(558)   usbaudio      
+  38.1      2880  ISOC   00 00 00 95  7c f9 00 00  ........            177939.1.0        usbaudio      
+                         00 d8 8e f9  00 00 00 4f  .......O            177939.1.8                      
+                         a5 f9 00 00  00 75 d2 f9  .....u..            177939.1.16                     
+                         00 00 00 ae  f5 f9 00 00  ........            177939.1.24                     
+  38.2            USTS   80000300                  bad parameter       177940.1.0(517)   usbaudio      
+  38.2            RESET                                                177941.1.0(517)   usbaudio      
+  38.1      2880  ISOC   00 00 00 c6  6e 02 00 00  ....n...            178974.1.0        usbaudio      
+                         00 10 57 02  00 00 00 e6  ..W.....            178974.1.8                      
+                         3f 02 00 00  00 3e 1a 02  ?....>..            178974.1.16                     
+                         00 00 00 14  e9 01 00 00  ........            178974.1.24                     
+  38.2            USTS   80000300                  bad parameter       178975.1.0(610)   usbaudio      
+  38.2            RESET                                                178976.1.0(610)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       180195.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 d5  a8 fb 00 00  ........            180196.1.0        usbaudio      
+                         00 a6 c6 fb  00 00 00 ad  ........            180196.1.8                      
+                         e6 fb 00 00  00 dc 18 fc  ........            180196.1.16                     
+                         00 00 00 27  41 fc 00 00  ...'A...            180196.1.24                     
+  38.2            RESET                                                180197.1.0(437)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       180198.1.0(437)   usbaudio      
+  38.2            RESET                                                181071.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 07  15 ff 00 00  ........            181072.1.0        usbaudio      
+                         00 65 e9 fe  00 00 00 35  .e.....5            181072.1.8                      
+                         bd fe 00 00  00 c5 94 fe  ........            181072.1.16                     
+                         00 00 00 69  61 fe 00 00  ...ia...            181072.1.24                     
+  38.2            USTS   80000300                  bad parameter       181073.1.0(431)   usbaudio      
+  38.2            RESET                                                181074.1.0(431)   usbaudio      
+  38.1      2880  ISOC   00 00 00 3b  e9 fe 00 00  ...;....            181935.1.0        usbaudio      
+                         00 00 1f ff  00 00 00 65  .......e            181935.1.8                      
+                         50 ff 00 00  00 3f 80 ff  P....?..            181935.1.16                     
+                         00 00 00 ed  ab ff 00 00  ........            181935.1.24                     
+  38.2            USTS   80000300                  bad parameter       181936.1.0(443)   usbaudio      
+  38.2            RESET                                                181937.1.0(443)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       182822.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 c5  19 fd 00 00  ........            182823.1.0        usbaudio      
+                         00 78 dd fc  00 00 00 24  .x.....$            182823.1.8                      
+                         a7 fc 00 00  00 6d 7f fc  .....m..            182823.1.16                     
+                         00 00 00 bc  4c fc 00 00  ....L...            182823.1.24                     
+  38.2            RESET                                                182824.1.0(421)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       182825.1.0(421)   usbaudio      
+  38.2            RESET                                                183666.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 d1  c5 ff 00 00  ........            183667.1.0        usbaudio      
+                         00 85 f3 ff  00 00 00 37  .......7            183667.1.8                      
+                         1b 00 00 00  00 7b 4a 00  ......J.            183667.1.16                     
+                         00 00 00 74  79 00 00 00  ...ty...            183667.1.24                     
+  38.2            USTS   80000300                  bad parameter       183668.1.0(501)   usbaudio      
+  38.2            RESET                                                183669.1.0(501)   usbaudio      
+  38.1      2880  ISOC   00 00 00 82  30 fd 00 00  ....0...            184670.1.0        usbaudio      
+                         00 d6 15 fd  00 00 00 64  .......d            184670.1.8                      
+                         f4 fc 00 00  00 e2 d6 fc  ........            184670.1.16                     
+                         00 00 00 47  b7 fc 00 00  ...G....            184670.1.24                     
+  38.2            USTS   80000300                  bad parameter       184671.1.0(509)   usbaudio      
+  38.2            RESET                                                184672.1.0(509)   usbaudio      
+  38.1      2880  ISOC   00 00 00 41  b1 ff 00 00  ...A....            185689.1.0        usbaudio      
+                         00 a8 b7 ff  00 00 00 a8  ........            185689.1.8                      
+                         b9 ff 00 00  00 7b c3 ff  ........            185689.1.16                     
+                         00 00 00 3d  c9 ff 00 00  ...=....            185689.1.24                     
+  38.2            USTS   80000300                  bad parameter       185690.1.0(503)   usbaudio      
+  38.2            RESET                                                185691.1.0(503)   usbaudio      
+  38.1      2880  ISOC   00 00 00 47  21 fd 00 00  ...G!...            186696.1.0        usbaudio      
+                         00 3f 2a fd  00 00 00 5a  .?*....Z            186696.1.8                      
+                         32 fd 00 00  00 69 43 fd  2....iC.            186696.1.16                     
+                         00 00 00 ed  4f fd 00 00  ....O...            186696.1.24                     
+  38.2            USTS   80000300                  bad parameter       186697.1.0(539)   usbaudio      
+  38.2            RESET                                                186698.1.0(539)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       187775.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 7a  05 00 00 00  ...z....            187776.1.0        usbaudio      
+                         00 b6 ed ff  00 00 00 c3  ........            187776.1.8                      
+                         da ff 00 00  00 76 c9 ff  .....v..            187776.1.16                     
+                         00 00 00 b9  ad ff 00 00  ........            187776.1.24                     
+  38.2            RESET                                                187777.1.0(518)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       187778.1.0(518)   usbaudio      
+  38.2            RESET                                                188813.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 31  10 fd 00 00  ...1....            188814.1.0        usbaudio      
+                         00 cf 20 fd  00 00 00 71  .. ....q            188814.1.8                      
+                         39 fd 00 00  00 d5 64 fd  9.....d.            188814.1.16                     
+                         00 00 00 38  88 fd 00 00  ...8....            188814.1.24                     
+  38.2            USTS   80000300                  bad parameter       188815.1.0(542)   usbaudio      
+  38.2            RESET                                                188816.1.0(542)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       189899.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 9f  a7 ff 00 00  ........            189900.1.0        usbaudio      
+                         00 04 8c ff  00 00 00 10  ........            189900.1.8                      
+                         73 ff 00 00  00 2f 5d ff  s..../].            189900.1.16                     
+                         00 00 00 75  3f ff 00 00  ...u?...            189900.1.24                     
+  38.2            RESET                                                189901.1.0(465)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       189902.1.0(465)   usbaudio      
+  38.1      2880  ISOC   00 00 00 17  25 fe 00 00  ....%...            190831.1.0        usbaudio      
+                         00 d2 42 fe  00 00 00 72  ..B....r            190831.1.8                      
+                         5a fe 00 00  00 6b 72 fe  Z....kr.            190831.1.16                     
+                         00 00 00 a8  85 fe 00 00  ........            190831.1.24                     
+  38.2            RESET                                                190832.1.0(481)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       190833.1.0(481)   usbaudio      
+  38.1      2880  ISOC   00 00 00 b1  6d fe 00 00  ....m...            191794.1.0        usbaudio      
+                         00 2b 56 fe  00 00 00 6a  .+V....j            191794.1.8                      
+                         40 fe 00 00  00 49 34 fe  @....I4.            191794.1.16                     
+                         00 00 00 e4  23 fe 00 00  ....#...            191794.1.24                     
+  38.2            RESET                                                191795.1.0(538)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       191796.1.0(538)   usbaudio      
+  38.2            RESET                                                192871.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 f1  7c ff 00 00  ........            192872.1.0        usbaudio      
+                         00 e9 8d ff  00 00 00 1a  ........            192872.1.8                      
+                         9d ff 00 00  00 61 b0 ff  .....a..            192872.1.16                     
+                         00 00 00 cd  c2 ff 00 00  ........            192872.1.24                     
+  38.2            USTS   80000300                  bad parameter       192873.1.0(464)   usbaudio      
+  38.2            RESET                                                192874.1.0(464)   usbaudio      
+  38.1      2880  ISOC   00 00 00 6c  bc fd 00 00  ...l....            193801.1.0        usbaudio      
+                         00 96 ab fd  00 00 00 60  .......`            193801.1.8                      
+                         95 fd 00 00  00 6c 89 fd  .....l..            193801.1.16                     
+                         00 00 00 6d  7f fd 00 00  ...m....            193801.1.24                     
+  38.2            USTS   80000300                  bad parameter       193802.1.0(526)   usbaudio      
+  38.2            RESET                                                193803.1.0(526)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       194854.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 f6  c7 ff 00 00  ........            194855.1.0        usbaudio      
+                         00 54 d1 ff  00 00 00 7b  .T......            194855.1.8                      
+                         d7 ff 00 00  00 0e df ff  ........            194855.1.16                     
+                         00 00 00 6f  e3 ff 00 00  ...o....            194855.1.24                     
+  38.2            RESET                                                194856.1.0(529)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       194857.1.0(529)   usbaudio      
+  38.2            RESET                                                195914.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 53  ee fd 00 00  ...S....            195915.1.0        usbaudio      
+                         00 b8 ef fd  00 00 00 75  .......u            195915.1.8                      
+                         e5 fd 00 00  00 c7 e0 fd  ........            195915.1.16                     
+                         00 00 00 77  e1 fd 00 00  ...w....            195915.1.24                     
+  38.2            USTS   80000300                  bad parameter       195916.1.0(469)   usbaudio      
+  38.2            RESET                                                195917.1.0(469)   usbaudio      
+  38.1      2880  ISOC   00 00 00 79  87 ff 00 00  ...y....            196854.1.0        usbaudio      
+                         00 03 85 ff  00 00 00 99  ........            196854.1.8                      
+                         84 ff 00 00  00 c4 82 ff  ........            196854.1.16                     
+                         00 00 00 ae  75 ff 00 00  ....u...            196854.1.24                     
+  38.2            USTS   80000300                  bad parameter       196855.1.0(576)   usbaudio      
+  38.2            RESET                                                196856.1.0(576)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       198007.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 2b  4c fe 00 00  ...+L...            198008.1.0        usbaudio      
+                         00 d5 53 fe  00 00 00 c7  ..S.....            198008.1.8                      
+                         5c fe 00 00  00 fd 71 fe  \.....q.            198008.1.16                     
+                         00 00 00 a2  84 fe 00 00  ........            198008.1.24                     
+  38.2            RESET                                                198009.1.0(461)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       198010.1.0(461)   usbaudio      
+  38.2            RESET                                                198931.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 b6  4d ff 00 00  ....M...            198932.1.0        usbaudio      
+                         00 8b 3f ff  00 00 00 cb  ..?.....            198932.1.8                      
+                         2a ff 00 00  00 60 16 ff  *....`..            198932.1.16                     
+                         00 00 00 c0  02 ff 00 00  ........            198932.1.24                     
+  38.2            USTS   80000300                  bad parameter       198933.1.0(459)   usbaudio      
+  38.2            RESET                                                198934.1.0(459)   usbaudio      
+  38.1      2880  ISOC   00 00 00 f2  b3 fe 00 00  ........            199851.1.0        usbaudio      
+                         00 87 c4 fe  00 00 00 a2  ........            199851.1.8                      
+                         d0 fe 00 00  00 18 e2 fe  ........            199851.1.16                     
+                         00 00 00 45  f2 fe 00 00  ...E....            199851.1.24                     
+  38.2            USTS   80000300                  bad parameter       199852.1.0(554)   usbaudio      
+  38.2            RESET                                                199853.1.0(554)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       200960.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 f6  f4 fe 00 00  ........            200961.1.0        usbaudio      
+                         00 33 ea fe  00 00 00 6e  .3.....n            200961.1.8                      
+                         d7 fe 00 00  00 2f c4 fe  ...../..            200961.1.16                     
+                         00 00 00 9c  b2 fe 00 00  ........            200961.1.24                     
+  38.2            RESET                                                200962.1.0(526)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       200963.1.0(526)   usbaudio      
+  38.2            RESET                                                202014.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 d6  32 ff 00 00  ....2...            202015.1.0        usbaudio      
+                         00 87 38 ff  00 00 00 f0  ..8.....            202015.1.8                      
+                         3e ff 00 00  00 93 4d ff  >.....M.            202015.1.16                     
+                         00 00 00 8c  5a ff 00 00  ....Z...            202015.1.24                     
+  38.2            USTS   80000300                  bad parameter       202016.1.0(469)   usbaudio      
+  38.2            RESET                                                202017.1.0(469)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       202954.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 b0  85 fe 00 00  ........            202955.1.0        usbaudio      
+                         00 bd 7d fe  00 00 00 52  .......R            202955.1.8                      
+                         77 fe 00 00  00 b9 74 fe  w.....t.            202955.1.16                     
+                         00 00 00 bb  6b fe 00 00  ....k...            202955.1.24                     
+  38.2            RESET                                                202956.1.0(558)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       202957.1.0(558)   usbaudio      
+  38.2            RESET                                                204072.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 a2  8e ff 00 00  ........            204073.1.0        usbaudio      
+                         00 eb 8d ff  00 00 00 c6  ........            204073.1.8                      
+                         91 ff 00 00  00 9e 99 ff  ........            204073.1.16                     
+                         00 00 00 c5  96 ff 00 00  ........            204073.1.24                     
+  38.2            USTS   80000300                  bad parameter       204074.1.0(460)   usbaudio      
+  38.2            RESET                                                204075.1.0(460)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       204994.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 95  6d fe 00 00  ....m...            204995.1.0        usbaudio      
+                         00 b4 71 fe  00 00 00 4b  ..q....K            204995.1.8                      
+                         73 fe 00 00  00 b1 76 fe  s.....v.            204995.1.16                     
+                         00 00 00 65  74 fe 00 00  ...et...            204995.1.24                     
+  38.2            RESET                                                204996.1.0(403)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       204997.1.0(403)   usbaudio      
+  38.1      2880  ISOC   00 00 00 1a  88 ff 00 00  ........            205802.1.0        usbaudio      
+                         00 e5 80 ff  00 00 00 4e  .......N            205802.1.8                      
+                         75 ff 00 00  00 09 73 ff  u.....s.            205802.1.16                     
+                         00 00 00 c1  74 ff 00 00  ....t...            205802.1.24                     
+  38.2            RESET                                                205803.1.0(376)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       205804.1.0(376)   usbaudio      
+  38.1      2880  ISOC   00 00 00 88  cf fe 00 00  ........            206555.1.0        usbaudio      
+                         00 fb d0 fe  00 00 00 e1  ........            206555.1.8                      
+                         d2 fe 00 00  00 af dd fe  ........            206555.1.16                     
+                         00 00 00 5e  e6 fe 00 00  ...^....            206555.1.24                     
+  38.2            RESET                                                206556.1.0(505)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       206557.1.0(505)   usbaudio      
+  38.1      2880  ISOC   00 00 00 95  3b ff 00 00  ....;...            207566.1.0        usbaudio      
+                         00 67 39 ff  00 00 00 28  .g9....(            207566.1.8                      
+                         34 ff 00 00  00 6d 2a ff  4....m*.            207566.1.16                     
+                         00 00 00 fd  19 ff 00 00  ........            207566.1.24                     
+  38.2            RESET                                                207567.1.0(506)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       207568.1.0(506)   usbaudio      
+  38.1      2880  ISOC   00 00 00 45  25 ff 00 00  ...E%...            208579.1.0        usbaudio      
+                         00 94 2f ff  00 00 00 a2  ../.....            208579.1.8                      
+                         37 ff 00 00  00 3a 3f ff  7....:?.            208579.1.16                     
+                         00 00 00 cb  43 ff 00 00  ....C...            208579.1.24                     
+  38.2            RESET                                                208580.1.0(507)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       208581.1.0(507)   usbaudio      
+  38.2            RESET                                                209594.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 3f  00 ff 00 00  ...?....            209595.1.0        usbaudio      
+                         00 eb 02 ff  00 00 00 38  .......8            209595.1.8                      
+                         01 ff 00 00  00 26 f5 fe  .....&..            209595.1.16                     
+                         00 00 00 a2  e2 fe 00 00  ........            209595.1.24                     
+  38.2            USTS   80000300                  bad parameter       209596.1.0(497)   usbaudio      
+  38.2            RESET                                                209597.1.0(497)   usbaudio      
+  38.1      2880  ISOC   00 00 00 31  51 ff 00 00  ...1Q...            210590.1.0        usbaudio      
+                         00 bd 55 ff  00 00 00 25  ..U....%            210590.1.8                      
+                         5c ff 00 00  00 be 64 ff  \.....d.            210590.1.16                     
+                         00 00 00 a6  68 ff 00 00  ....h...            210590.1.24                     
+  38.2            USTS   80000300                  bad parameter       210591.1.0(524)   usbaudio      
+  38.2            RESET                                                210592.1.0(524)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       211639.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 04  fb fe 00 00  ........            211640.1.0        usbaudio      
+                         00 85 fd fe  00 00 00 0a  ........            211640.1.8                      
+                         fd fe 00 00  00 c2 f9 fe  ........            211640.1.16                     
+                         00 00 00 3d  f4 fe 00 00  ...=....            211640.1.24                     
+  38.2            RESET                                                211641.1.0(484)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       211642.1.0(484)   usbaudio      
+  38.1      2880  ISOC   00 00 00 06  b8 ff 00 00  ........            212609.1.0        usbaudio      
+                         00 c6 b7 ff  00 00 00 8c  ........            212609.1.8                      
+                         b4 ff 00 00  00 d7 b3 ff  ........            212609.1.16                     
+                         00 00 00 92  b4 ff 00 00  ........            212609.1.24                     
+  38.2            RESET                                                212610.1.0(514)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       212611.1.0(514)   usbaudio      
+  38.2            RESET                                                213638.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 c3  80 ff 00 00  ........            213639.1.0        usbaudio      
+                         00 d4 86 ff  00 00 00 78  .......x            213639.1.8                      
+                         8a ff 00 00  00 82 89 ff  ........            213639.1.16                     
+                         00 00 00 27  85 ff 00 00  ...'....            213639.1.24                     
+  38.2            USTS   80000300                  bad parameter       213640.1.0(532)   usbaudio      
+  38.2            RESET                                                213641.1.0(532)   usbaudio      
+  38.1      2880  ISOC   00 00 00 aa  c0 ff 00 00  ........            214704.1.0        usbaudio      
+                         00 9c bd ff  00 00 00 99  ........            214704.1.8                      
+                         b3 ff 00 00  00 66 ae ff  .....f..            214704.1.16                     
+                         00 00 00 53  b1 ff 00 00  ...S....            214704.1.24                     
+  38.2            USTS   80000300                  bad parameter       214705.1.0(443)   usbaudio      
+  38.2            RESET                                                214706.1.0(443)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       215591.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 f6  95 ff 00 00  ........            215592.1.0        usbaudio      
+                         00 b8 8f ff  00 00 00 15  ........            215592.1.8                      
+                         8c ff 00 00  00 82 93 ff  ........            215592.1.16                     
+                         00 00 00 c3  9b ff 00 00  ........            215592.1.24                     
+  38.2            RESET                                                215593.1.0(501)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       215594.1.0(501)   usbaudio      
+  38.2            RESET                                                216595.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 23  b4 ff 00 00  ...#....            216596.1.0        usbaudio      
+                         00 7f ac ff  00 00 00 35  .......5            216596.1.8                      
+                         a7 ff 00 00  00 47 aa ff  .....G..            216596.1.16                     
+                         00 00 00 40  ac ff 00 00  ...@....            216596.1.24                     
+  38.2            USTS   80000300                  bad parameter       216597.1.0(576)   usbaudio      
+  38.2            RESET                                                216598.1.0(576)   usbaudio      
+  38.1      2880  ISOC   00 00 00 23  a8 ff 00 00  ...#....            217749.1.0        usbaudio      
+                         00 a5 a6 ff  00 00 00 90  ........            217749.1.8                      
+                         a5 ff 00 00  00 c9 a8 ff  ........            217749.1.16                     
+                         00 00 00 9b  ab ff 00 00  ........            217749.1.24                     
+  38.2            USTS   80000300                  bad parameter       217750.1.0(507)   usbaudio      
+  38.2            RESET                                                217751.1.0(507)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       218764.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 0f  a3 ff 00 00  ........            218765.1.0        usbaudio      
+                         00 db a7 ff  00 00 00 3f  .......?            218765.1.8                      
+                         a8 ff 00 00  00 bf a3 ff  ........            218765.1.16                     
+                         00 00 00 5d  9d ff 00 00  ...]....            218765.1.24                     
+  38.2            RESET                                                218766.1.0(561)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       218767.1.0(561)   usbaudio      
+  38.2            RESET                                                219888.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 8d  ba ff 00 00  ........            219889.1.0        usbaudio      
+                         00 b2 bb ff  00 00 00 63  .......c            219889.1.8                      
+                         b9 ff 00 00  00 4c b9 ff  .....L..            219889.1.16                     
+                         00 00 00 93  bb ff 00 00  ........            219889.1.24                     
+  38.2            USTS   80000300                  bad parameter       219890.1.0(516)   usbaudio      
+  38.2            RESET                                                219891.1.0(516)   usbaudio      
+  38.1      2880  ISOC   00 00 00 84  aa ff 00 00  ........            220922.1.0        usbaudio      
+                         00 2f a6 ff  00 00 00 3f  ./.....?            220922.1.8                      
+                         a0 ff 00 00  00 23 a0 ff  .....#..            220922.1.16                     
+                         00 00 00 75  a3 ff 00 00  ...u....            220922.1.24                     
+  38.2            USTS   80000300                  bad parameter       220923.1.0(501)   usbaudio      
+  38.2            RESET                                                220924.1.0(501)   usbaudio      
+  38.1      2880  ISOC   00 00 00 3d  be ff 00 00  ...=....            221925.1.0        usbaudio      
+                         00 d1 bf ff  00 00 00 52  .......R            221925.1.8                      
+                         bf ff 00 00  00 94 be ff  ........            221925.1.16                     
+                         00 00 00 c6  bc ff 00 00  ........            221925.1.24                     
+  38.2            USTS   80000300                  bad parameter       221926.1.0(598)   usbaudio      
+  38.2            RESET                                                221927.1.0(598)   usbaudio      
+  38.1      2880  ISOC   00 00 00 82  a8 ff 00 00  ........            223122.1.0        usbaudio      
+                         00 bf aa ff  00 00 00 cd  ........            223122.1.8                      
+                         ab ff 00 00  00 9a ab ff  ........            223122.1.16                     
+                         00 00 00 c2  a9 ff 00 00  ........            223122.1.24                     
+  38.2            USTS   80000300                  bad parameter       223123.1.0(480)   usbaudio      
+  38.2            RESET                                                223124.1.0(480)   usbaudio      
+  38.1      2880  ISOC   00 00 00 a4  c1 ff 00 00  ........            224083.1.0        usbaudio      
+                         00 38 c4 ff  00 00 00 b0  .8......            224083.1.8                      
+                         bf ff 00 00  00 38 ba ff  .....8..            224083.1.16                     
+                         00 00 00 4d  b9 ff 00 00  ...M....            224083.1.24                     
+  38.2            USTS   80000300                  bad parameter       224084.1.0(471)   usbaudio      
+  38.2            RESET                                                224085.1.0(471)   usbaudio      
+  38.1      2880  ISOC   00 00 00 01  b2 ff 00 00  ........            225026.1.0        usbaudio      
+                         00 c1 b7 ff  00 00 00 e9  ........            225026.1.8                      
+                         b7 ff 00 00  00 fb b2 ff  ........            225026.1.16                     
+                         00 00 00 f6  ae ff 00 00  ........            225026.1.24                     
+  38.2            USTS   80000300                  bad parameter       225027.1.0(536)   usbaudio      
+  38.2            RESET                                                225028.1.0(536)   usbaudio      
+  38.1      2880  ISOC   00 00 00 5b  d0 ff 00 00  ...[....            226099.1.0        usbaudio      
+                         00 7e cf ff  00 00 00 b1  ........            226099.1.8                      
+                         d1 ff 00 00  00 ef d4 ff  ........            226099.1.16                     
+                         00 00 00 29  d3 ff 00 00  ...)....            226099.1.24                     
+  38.2            USTS   80000300                  bad parameter       226100.1.0(397)   usbaudio      
+  38.2            RESET                                                226101.1.0(397)   usbaudio      
+  38.1      2880  ISOC   00 00 00 04  cd ff 00 00  ........            226894.1.0        usbaudio      
+                         00 f3 ca ff  00 00 00 7c  ........            226894.1.8                      
+                         cb ff 00 00  00 a3 cf ff  ........            226894.1.16                     
+                         00 00 00 1a  d2 ff 00 00  ........            226894.1.24                     
+  38.2            USTS   80000300                  bad parameter       226895.1.0(518)   usbaudio      
+  38.2            RESET                                                226896.1.0(518)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       227931.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 41  d0 ff 00 00  ...A....            227932.1.0        usbaudio      
+                         00 77 d1 ff  00 00 00 fa  .w......            227932.1.8                      
+                         cf ff 00 00  00 9a ce ff  ........            227932.1.16                     
+                         00 00 00 1f  cf ff 00 00  ........            227932.1.24                     
+  38.2            RESET                                                227933.1.0(469)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       227934.1.0(469)   usbaudio      
+  38.1      2880  ISOC   00 00 00 0b  d2 ff 00 00  ........            228871.1.0        usbaudio      
+                         00 81 d2 ff  00 00 00 17  ........            228871.1.8                      
+                         d4 ff 00 00  00 43 d5 ff  .....C..            228871.1.16                     
+                         00 00 00 a5  d4 ff 00 00  ........            228871.1.24                     
+  38.2            RESET                                                228872.1.0(434)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       228873.1.0(434)   usbaudio      
+  38.1      2880  ISOC   00 00 00 4d  d3 ff 00 00  ...M....            229740.1.0        usbaudio      
+                         00 64 d0 ff  00 00 00 d2  .d......            229740.1.8                      
+                         cd ff 00 00  00 49 cf ff  .....I..            229740.1.16                     
+                         00 00 00 f9  d0 ff 00 00  ........            229740.1.24                     
+  38.2            RESET                                                229741.1.0(476)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       229742.1.0(476)   usbaudio      
+  38.1      2880  ISOC   00 00 00 f2  d6 ff 00 00  ........            230693.1.0        usbaudio      
+                         00 15 da ff  00 00 00 6e  .......n            230693.1.8                      
+                         da ff 00 00  00 28 d8 ff  .....(..            230693.1.16                     
+                         00 00 00 1e  d6 ff 00 00  ........            230693.1.24                     
+  38.2            RESET                                                230694.1.0(425)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       230695.1.0(425)   usbaudio      
+  38.2            RESET                                                231544.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 e5  d2 ff 00 00  ........            231545.1.0        usbaudio      
+                         00 32 d4 ff  00 00 00 f1  .2......            231545.1.8                      
+                         d3 ff 00 00  00 a7 d2 ff  ........            231545.1.16                     
+                         00 00 00 b3  d1 ff 00 00  ........            231545.1.24                     
+  38.2            USTS   80000300                  bad parameter       231546.1.0(430)   usbaudio      
+  38.2            RESET                                                231547.1.0(430)   usbaudio      
+  38.1      2880  ISOC   00 00 00 81  d9 ff 00 00  ........            232406.1.0        usbaudio      
+                         00 df da ff  00 00 00 81  ........            232406.1.8                      
+                         da ff 00 00  00 5a d9 ff  .....Z..            232406.1.16                     
+                         00 00 00 1b  d8 ff 00 00  ........            232406.1.24                     
+  38.2            USTS   80000300                  bad parameter       232407.1.0(472)   usbaudio      
+  38.2            RESET                                                232408.1.0(472)   usbaudio      
+  38.1      2880  ISOC   00 00 00 ef  d6 ff 00 00  ........            233351.1.0        usbaudio      
+                         00 d0 d6 ff  00 00 00 a1  ........            233351.1.8                      
+                         d5 ff 00 00  00 63 d5 ff  .....c..            233351.1.16                     
+                         00 00 00 4a  d6 ff 00 00  ...J....            233351.1.24                     
+  38.2            USTS   80000300                  bad parameter       233352.1.0(492)   usbaudio      
+  38.2            RESET                                                233353.1.0(492)   usbaudio      
+  38.1      2880  ISOC   00 00 00 d9  d7 ff 00 00  ........            234336.1.0        usbaudio      
+                         00 0b da ff  00 00 00 3e  .......>            234336.1.8                      
+                         da ff 00 00  00 f5 d8 ff  ........            234336.1.16                     
+                         00 00 00 9d  d7 ff 00 00  ........            234336.1.24                     
+  38.2            USTS   80000300                  bad parameter       234337.1.0(509)   usbaudio      
+  38.2            RESET                                                234338.1.0(509)   usbaudio      
+  38.1      2880  ISOC   00 00 00 69  d7 ff 00 00  ...i....            235355.1.0        usbaudio      
+                         00 a0 d9 ff  00 00 00 08  ........            235355.1.8                      
+                         dd ff 00 00  00 1b dd ff  ........            235355.1.16                     
+                         00 00 00 6e  d9 ff 00 00  ...n....            235355.1.24                     
+  38.2            USTS   80000300                  bad parameter       235356.1.0(456)   usbaudio      
+  38.2            RESET                                                235357.1.0(456)   usbaudio      
+  38.1      2880  ISOC   00 00 00 ef  d8 ff 00 00  ........            236268.1.0        usbaudio      
+                         00 9d db ff  00 00 00 1a  ........            236268.1.8                      
+                         dc ff 00 00  00 d9 d9 ff  ........            236268.1.16                     
+                         00 00 00 6e  d7 ff 00 00  ...n....            236268.1.24                     
+  38.2            USTS   80000300                  bad parameter       236269.1.0(412)   usbaudio      
+  38.2            RESET                                                236270.1.0(412)   usbaudio      
+  38.1      2880  ISOC   00 00 00 13  de ff 00 00  ........            237093.1.0        usbaudio      
+                         00 25 dd ff  00 00 00 74  .%.....t            237093.1.8                      
+                         db ff 00 00  00 eb db ff  ........            237093.1.16                     
+                         00 00 00 94  dd ff 00 00  ........            237093.1.24                     
+  38.2            USTS   80000300                  bad parameter       237094.1.0(419)   usbaudio      
+  38.2            RESET                                                237095.1.0(419)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       237932.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 7c  d9 ff 00 00  ........            237933.1.0        usbaudio      
+                         00 43 da ff  00 00 00 eb  .C......            237933.1.8                      
+                         dc ff 00 00  00 db dd ff  ........            237933.1.16                     
+                         00 00 00 79  da ff 00 00  ...y....            237933.1.24                     
+  38.2            RESET                                                237934.1.0(483)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       237935.1.0(483)   usbaudio      
+  38.2            RESET                                                238900.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 b2  dd ff 00 00  ........            238901.1.0        usbaudio      
+                         00 9b dd ff  00 00 00 02  ........            238901.1.8                      
+                         de ff 00 00  00 e1 de ff  ........            238901.1.16                     
+                         00 00 00 f6  de ff 00 00  ........            238901.1.24                     
+  38.2            USTS   80000300                  bad parameter       238902.1.0(458)   usbaudio      
+  38.2            RESET                                                238903.1.0(458)   usbaudio      
+  38.1      2880  ISOC   00 00 00 27  de ff 00 00  ...'....            239818.1.0        usbaudio      
+                         00 68 df ff  00 00 00 3f  .h.....?            239818.1.8                      
+                         dc ff 00 00  00 cd d8 ff  ........            239818.1.16                     
+                         00 00 00 78  d9 ff 00 00  ...x....            239818.1.24                     
+  38.2            USTS   80000300                  bad parameter       239819.1.0(519)   usbaudio      
+  38.2            RESET                                                239820.1.0(519)   usbaudio      
+  38.1      2880  ISOC   00 00 00 f3  dd ff 00 00  ........            240857.1.0        usbaudio      
+                         00 37 de ff  00 00 00 19  .7......            240857.1.8                      
+                         e1 ff 00 00  00 57 e3 ff  .....W..            240857.1.16                     
+                         00 00 00 ed  e1 ff 00 00  ........            240857.1.24                     
+  38.2            USTS   80000300                  bad parameter       240858.1.0(510)   usbaudio      
+  38.2            RESET                                                240859.1.0(510)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       241878.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 26  df ff 00 00  ...&....            241879.1.0        usbaudio      
+                         00 5e de ff  00 00 00 1d  .^......            241879.1.8                      
+                         de ff 00 00  00 e6 de ff  ........            241879.1.16                     
+                         00 00 00 12  e0 ff 00 00  ........            241879.1.24                     
+  38.2            RESET                                                241880.1.0(550)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       241881.1.0(550)   usbaudio      
+  38.2            RESET                                                242980.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 95  e1 ff 00 00  ........            242981.1.0        usbaudio      
+                         00 27 e3 ff  00 00 00 07  .'......            242981.1.8                      
+                         e1 ff 00 00  00 ae dd ff  ........            242981.1.16                     
+                         00 00 00 7c  dd ff 00 00  ........            242981.1.24                     
+  38.2            USTS   80000300                  bad parameter       242982.1.0(522)   usbaudio      
+  38.2            RESET                                                242983.1.0(522)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       244026.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 6d  e1 ff 00 00  ...m....            244027.1.0        usbaudio      
+                         00 c2 e3 ff  00 00 00 c9  ........            244027.1.8                      
+                         e2 ff 00 00  00 5a e0 ff  .....Z..            244027.1.16                     
+                         00 00 00 da  df ff 00 00  ........            244027.1.24                     
+  38.2            RESET                                                244028.1.0(425)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       244029.1.0(425)   usbaudio      
+  38.1      2880  ISOC   00 00 00 91  df ff 00 00  ........            244878.1.0        usbaudio      
+                         00 b9 e1 ff  00 00 00 94  ........            244878.1.8                      
+                         e4 ff 00 00  00 c8 e4 ff  ........            244878.1.16                     
+                         00 00 00 b8  e0 ff 00 00  ........            244878.1.24                     
+  38.2            RESET                                                244879.1.0(398)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       244880.1.0(398)   usbaudio      
+  38.2            RESET                                                245675.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 8e  e3 ff 00 00  ........            245676.1.0        usbaudio      
+                         00 a5 e2 ff  00 00 00 e4  ........            245676.1.8                      
+                         e1 ff 00 00  00 11 e3 ff  ........            245676.1.16                     
+                         00 00 00 5d  e4 ff 00 00  ...]....            245676.1.24                     
+  38.2            USTS   80000300                  bad parameter       245677.1.0(394)   usbaudio      
+  38.2            RESET                                                245678.1.0(394)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       246465.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 63  e3 ff 00 00  ...c....            246466.1.0        usbaudio      
+                         00 1a e4 ff  00 00 00 d5  ........            246466.1.8                      
+                         e4 ff 00 00  00 83 e4 ff  ........            246466.1.16                     
+                         00 00 00 aa  e2 ff 00 00  ........            246466.1.24                     
+  38.2            RESET                                                246467.1.0(249)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       246468.1.0(249)   usbaudio      
+  38.1      2880  ISOC   00 00 00 ac  e5 ff 00 00  ........            246965.1.0        usbaudio      
+                         00 29 e7 ff  00 00 00 8f  .)......            246965.1.8                      
+                         e6 ff 00 00  00 85 e5 ff  ........            246965.1.16                     
+                         00 00 00 41  e5 ff 00 00  ...A....            246965.1.24                     
+  38.2            RESET                                                246966.1.0(252)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       246967.1.0(252)   usbaudio      
+  38.2            RESET                                                247470.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 7a  df ff 00 00  ...z....            247471.1.0        usbaudio      
+                         00 f7 e0 ff  00 00 00 83  ........            247471.1.8                      
+                         e6 ff 00 00  00 9b e9 ff  ........            247471.1.16                     
+                         00 00 00 69  e6 ff 00 00  ...i....            247471.1.24                     
+  38.2            USTS   80000300                  bad parameter       247472.1.0(253)   usbaudio      
+  38.2            RESET                                                247473.1.0(253)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       247978.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 7f  e9 ff 00 00  ........            247979.1.0        usbaudio      
+                         00 24 e7 ff  00 00 00 7b  .$......            247979.1.8                      
+                         e3 ff 00 00  00 0f e4 ff  ........            247979.1.16                     
+                         00 00 00 be  e7 ff 00 00  ........            247979.1.24                     
+  38.2            RESET                                                247980.1.0(247)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       247981.1.0(247)   usbaudio      
+  38.1      2880  ISOC   00 00 00 b0  e9 ff 00 00  ........            248474.1.0        usbaudio      
+                         00 b8 e9 ff  00 00 00 fb  ........            248474.1.8                      
+                         e5 ff 00 00  00 1f e4 ff  ........            248474.1.16                     
+                         00 00 00 f1  e5 ff 00 00  ........            248474.1.24                     
+  38.2            RESET                                                248475.1.0(249)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       248476.1.0(249)   usbaudio      
+  38.2            RESET                                                248973.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 db  e4 ff 00 00  ........            248974.1.0        usbaudio      
+                         00 5d e8 ff  00 00 00 49  .].....I            248974.1.8                      
+                         e9 ff 00 00  00 5f e6 ff  ....._..            248974.1.16                     
+                         00 00 00 71  e4 ff 00 00  ...q....            248974.1.24                     
+  38.2            USTS   80000300                  bad parameter       248975.1.0(215)   usbaudio      
+  38.2            RESET                                                248976.1.0(215)   usbaudio      
+  38.2            USTS   80000300                  bad parameter       249405.1.0        usbaudio      
+  38.1      2880  ISOC   00 00 00 00  00 00 00 00  ........            249406.1.0(2)     usbaudio      
+                         00 00 00 00  00 00 00 00  ........            249406.1.8                      
+                         00 00 00 00  00 00 00 00  ........            249406.1.16                     
+                         00 00 00 00  00 00 00 00  ........            249406.1.24                     
+  38.0            CTL    01 0b 00 00  01 00 00 00  SET INTERFACE       249408.1.0        usbaudio      

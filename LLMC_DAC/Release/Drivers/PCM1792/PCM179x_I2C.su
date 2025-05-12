@@ -1,0 +1,2 @@
+PCM179x_I2C.c:6:5:PCM179x_write_reg	32	static
+PCM179x_I2C.c:16:5:PCM179x_read_reg	40	static

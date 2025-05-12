@@ -1,0 +1,54 @@
+/*
+ * Config_params.h
+ *
+ *  Created on: Sep 5, 2023
+ *      Author: cpholzn
+ */
+
+#ifndef CONFIG_PARAMS_H_
+#define CONFIG_PARAMS_H_
+
+#include <stdint.h>
+
+#ifndef FREERTOS
+#define FREERTOS 1
+#define USE_MUTEX_ON_CFG 1
+#endif
+#include "audio_settings.h"
+#include "audio_buffers.h"
+#include "touch_HR2046.h"
+// by default use EEPROM 24C64 with 8KBytes capacity
+//#define USE_24C_EEPROM
+//#define USE_STM32_FLASH_EEPROM
+#define USE_STM32_FATFS
+#define FS_PATH_CONFIG_FILE L"0:/sys/config"
+/* do not use float parameters */
+// type of variables: uint8_t, int, char
+#define CONFIG_VAR_NAME_LEN 32
+#define CONFIG_BYTESTRING_LEN 32
+#define CONFIG_BYTESTRING_LONG_LEN 256
+
+#define CONFIG_NUM_OF_VARS 3
+
+typedef struct
+{
+    // check if storage is valid
+    char sValid[CONFIG_BYTESTRING_LEN];
+    // TSCalib
+    TouchScreenCalibrationInfo_t TSCalibInfo;
+    /* Audio params */
+    audio_sample_rate_t audio_sample_rate; // use enum type
+    uint8_t audio_bit_depth;
+    //
+    uint16_t audio_connections[N_OUTPUTS];
+
+    uint8_t nVolume100_decoder, nVolume100_encoder, nVolume100_FS;
+
+} Config; // size of config is around 192Bytes
+
+
+
+extern Config cfg;
+
+
+#endif /* CONFIG_PARAMS_H_ */

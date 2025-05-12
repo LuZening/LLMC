@@ -1,0 +1,62 @@
+################################################################################
+# Automatically-generated file. Do not edit!
+# Toolchain: GNU Tools for STM32 (9-2020-q2-update)
+################################################################################
+
+# Add inputs and outputs from these tool invocations to the build variables 
+C_SRCS += \
+../Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_1.c \
+../Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_10.c \
+../Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_11.c \
+../Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_12.c \
+../Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_13.c \
+../Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_14.c \
+../Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_15.c \
+../Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_2.c \
+../Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_3.c \
+../Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_4.c \
+../Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_5.c \
+../Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_6.c \
+../Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_7.c \
+../Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_8.c \
+../Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_9.c 
+
+OBJS += \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_1.o \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_10.o \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_11.o \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_12.o \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_13.o \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_14.o \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_15.o \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_2.o \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_3.o \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_4.o \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_5.o \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_6.o \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_7.o \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_8.o \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_9.o 
+
+C_DEPS += \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_1.d \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_10.d \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_11.d \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_12.d \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_13.d \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_14.d \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_15.d \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_2.d \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_3.d \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_4.d \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_5.d \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_6.d \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_7.d \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_8.d \
+./Middlewares/Third_Party/lvgl/examples/styles/lv_example_style_9.d 
+
+
+# Each subdirectory must supply rules for building sources it contributes
+Middlewares/Third_Party/lvgl/examples/styles/%.o: ../Middlewares/Third_Party/lvgl/examples/styles/%.c Middlewares/Third_Party/lvgl/examples/styles/subdir.mk
+	arm-none-eabi-gcc -fshort-wchar "$<" -mcpu=cortex-m7 -std=gnu11 -DFREERTOS -DPROFILER -DARM_MATH_DSP -D__VFP_FP__ -D__FPU_PRESENT=1 -DUSE_HAL_DRIVER -DSTM32H7B0xx -DARM_MATH_CM7 -c -I../Core/Inc -I"E:/Projects/You/LLMC/LLMC_DAC/MyUSBClass/MY_MSC/Inc" -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../FATFS/Target -I../FATFS/App -I../Middlewares/Third_Party/FatFs/src -I"E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/ButtonDebouncer" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/RotEnc" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/kfifo_DMA" -I../Middlewares/ST/ARM/DSP/Inc -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/SD_card" -I"E:/Projects/You/LLMC/LLMC_DAC/MyUSBClass/MY_UAC1_0/Inc" -I"E:/Projects/You/LLMC/LLMC_DAC/Core/Inc/Audio" -I"E:/Projects/You/LLMC/LLMC_DAC/MyUSBClass" -I"E:/Projects/You/LLMC/LLMC_DAC/MyUSBClass/MY_UAC1_0" -I"E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl" -I"E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/misc" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/double_buffer" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/PCM1792" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/TLV320ADCx120" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/Config" -I"E:/Projects/You/LLMC/LLMC_DAC/Core/Inc/GUI" -I"E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers" -I"E:/Projects/You/LLMC/LLMC_DAC/Middlewares/ST/ARM/DSP/Lib" -I"E:/Projects/You/LLMC/LLMC_DAC/Middlewares" -I"E:/Projects/You/LLMC/LLMC_DAC/MyUSBDevice/Target" -I"E:/Projects/You/LLMC/LLMC_DAC/MyUSBDevice/App" -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I"E:/Projects/You/LLMC/LLMC_DAC/Core/Inc/GUI/assets" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/Profiler" -I"E:/Projects/You/LLMC/LLMC_DAC/Middlewares" -I"E:/Projects/You/LLMC/LLMC_DAC/Core/Inc/encoding" -O2 -ffunction-sections -fdata-sections -Wall -fshort-wchar -Wno-unused-variable -Wno-unused-function -fstack-usage -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@"  -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "$@"
+

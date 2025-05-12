@@ -1,0 +1,2 @@
+assembly.h:232:21:CLZ	24	static
+dequant.c:73:5:xmp3_Dequantize	104	static

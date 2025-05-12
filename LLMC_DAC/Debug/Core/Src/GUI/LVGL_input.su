@@ -1,0 +1,7 @@
+LVGL_input.c:59:6:init_LVGL_input	24	static
+LVGL_input.c:78:6:start_LVGL_input_tasks	24	static
+LVGL_input.c:94:6:start_calibrate_touchscreen	8	static
+LVGL_input.c:102:6:task_touch_screen_calibrate	24	static
+LVGL_input.c:193:13:insertionSort	32	static
+LVGL_input.c:208:6:lvGetTouchscreenXY	48	static
+LVGL_input.c:256:6:lvGetRotEnc	16	static

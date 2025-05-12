@@ -1,0 +1,71 @@
+################################################################################
+# Automatically-generated file. Do not edit!
+# Toolchain: GNU Tools for STM32 (9-2020-q2-update)
+################################################################################
+
+# Add inputs and outputs from these tool invocations to the build variables 
+C_SRCS += \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_buf_vg_lite.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_arc.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_border.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_box_shadow.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_fill.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_img.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_label.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_layer.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_line.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_mask_rect.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_triangle.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_vector.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_vg_lite_decoder.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_vg_lite_grad.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_vg_lite_math.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_vg_lite_path.c \
+../Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_vg_lite_utils.c 
+
+OBJS += \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_buf_vg_lite.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_arc.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_border.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_box_shadow.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_fill.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_img.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_label.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_layer.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_line.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_mask_rect.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_triangle.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_vector.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_vg_lite_decoder.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_vg_lite_grad.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_vg_lite_math.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_vg_lite_path.o \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_vg_lite_utils.o 
+
+C_DEPS += \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_buf_vg_lite.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_arc.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_border.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_box_shadow.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_fill.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_img.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_label.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_layer.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_line.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_mask_rect.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_triangle.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_draw_vg_lite_vector.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_vg_lite_decoder.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_vg_lite_grad.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_vg_lite_math.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_vg_lite_path.d \
+./Middlewares/Third_Party/lvgl/src/draw/vg_lite/lv_vg_lite_utils.d 
+
+
+# Each subdirectory must supply rules for building sources it contributes
+Middlewares/Third_Party/lvgl/src/draw/vg_lite/%.o: ../Middlewares/Third_Party/lvgl/src/draw/vg_lite/%.c Middlewares/Third_Party/lvgl/src/draw/vg_lite/subdir.mk
+	arm-none-eabi-gcc  "$<" -mcpu=cortex-m7 -std=gnu11 -g -DFREERTOS -DTEST_DSP -DDEBUG -DPROFILER -DARM_MATH_DSP -D__VFP_FP__ -D__FPU_PRESENT=1 -DUSE_HAL_DRIVER -DSTM32H7B0xx -DARM_MATH_CM7 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -c -I../Core/Inc -I"E:/Projects/You/LLMC/LLMC_DAC/MyUSBClass/MY_MSC/Inc" -I../Drivers/STM32H7xx_HAL_Driver/Inc -I../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I../FATFS/Target -I../FATFS/App -I../Middlewares/Third_Party/FatFs/src -I"E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/ButtonDebouncer" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/RotEnc" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/kfifo_DMA" -I../Middlewares/ST/ARM/DSP/Inc -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/SD_card" -I"E:/Projects/You/LLMC/LLMC_DAC/MyUSBClass/MY_UAC1_0/Inc" -I"E:/Projects/You/LLMC/LLMC_DAC/Core/Inc/Audio" -I"E:/Projects/You/LLMC/LLMC_DAC/MyUSBClass" -I"E:/Projects/You/LLMC/LLMC_DAC/MyUSBClass/MY_UAC1_0" -I"E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl" -I"E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/misc" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/double_buffer" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/PCM1792" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/TLV320ADCx120" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/Config" -I"E:/Projects/You/LLMC/LLMC_DAC/Core/Inc/GUI" -I"E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers" -I"E:/Projects/You/LLMC/LLMC_DAC/Middlewares/ST/ARM/DSP/Lib" -I"E:/Projects/You/LLMC/LLMC_DAC/Middlewares" -I"E:/Projects/You/LLMC/LLMC_DAC/MyUSBDevice/Target" -I"E:/Projects/You/LLMC/LLMC_DAC/MyUSBDevice/App" -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I"E:/Projects/You/LLMC/LLMC_DAC/Core/Inc/GUI/assets" -I"E:/Projects/You/LLMC/LLMC_DAC/Drivers/Profiler" -I"E:/Projects/You/LLMC/LLMC_DAC/Middlewares" -I"E:/Projects/You/LLMC/LLMC_DAC/Core/Inc/encoding" -O0 -ffunction-sections -fdata-sections -Wall -fshort-wchar -Wno-unused-variable -Wno-unused-function -fstack-usage -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@"  -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -o "$@"
+

@@ -1,0 +1,9 @@
+touch_HR2046.c:165:17:touch_read_data	48	static
+touch_HR2046.c:101:13:ols_1_var_with_const.constprop	40	static
+touch_HR2046.c:27:6:init_touch_screen_calib_info	0	static
+touch_HR2046.c:192:6:touch_set_calibrate	24	static
+touch_HR2046.c:227:5:touch_read_XY_ADC	16	static
+touch_HR2046.c:245:5:touch_convert_XY_ADC_to_physical	16	static
+touch_HR2046.c:269:5:touch_read_XY_physical	40	static
+touch_HR2046.c:277:5:touch_read_VBAT_mv	8	static
+touch_HR2046.c:285:5:touch_read_temperature	16	static

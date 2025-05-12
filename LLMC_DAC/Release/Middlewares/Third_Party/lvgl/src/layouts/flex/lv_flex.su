@@ -1,0 +1,16 @@
+lv_area.h:139:23:lv_area_get_width	0	static
+lv_area.h:149:23:lv_area_get_height	0	static
+lv_flex.c:470:13:place_content	8	static
+lv_obj_style_gen.h:179:23:lv_obj_get_style_margin_top	16	static
+lv_obj_style_gen.h:185:23:lv_obj_get_style_margin_bottom	16	static
+lv_obj_style_gen.h:191:23:lv_obj_get_style_margin_left	16	static
+lv_obj_style_gen.h:197:23:lv_obj_get_style_margin_right	16	static
+lv_flex.c:531:16:lv_obj_get_height_with_margin	24	static
+lv_flex.c:524:16:lv_obj_get_width_with_margin	24	static
+lv_flex.c:510:19:get_next_item.isra.0	0	static
+lv_flex.c:234:16:find_track_end	64	static
+lv_flex.c:127:13:flex_update	216	static
+lv_flex.c:95:6:lv_flex_init	0	static
+lv_flex.c:102:6:lv_obj_set_flex_flow	8	static
+lv_flex.c:108:6:lv_obj_set_flex_align	16	static
+lv_flex.c:117:6:lv_obj_set_flex_grow	8	static

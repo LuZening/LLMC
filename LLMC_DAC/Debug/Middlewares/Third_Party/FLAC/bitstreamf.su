@@ -1,0 +1,11 @@
+bitstreamf.h:28:32:swap16	16	static
+bitstreamf.h:37:31:swap32	24	static
+bitstreamf.h:90:26:unaligned32	16	static
+bitstreamf.h:155:21:unaligned32_be	16	static
+bitstreamf.h:202:21:get_bits_count	16	static
+bitstreamf.h:216:30:get_bits	32	static
+bitstreamf.h:226:30:show_bits	32	static
+bitstreamf.h:235:22:skip_bits	16	static
+bitstreamf.c:39:14:get_bits_long	24	static
+bitstreamf.c:50:14:show_bits_long	48	static
+bitstreamf.c:60:6:align_get_bits	24	static

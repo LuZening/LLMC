@@ -1,0 +1,3 @@
+MyUSB.c:17:6:USB_my_init_no_cache_memory	8	static
+MyUSB.c:29:6:USB_switch_to_configuration	16	static
+MyUSB.c:43:8:USBD_my_static_malloc	16	static

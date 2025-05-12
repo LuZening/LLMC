@@ -1,0 +1,5 @@
+lv_color.h:288:26:lv_color_make	24	static
+lv_color.h:424:26:lv_color_black	16	static
+lv_palette.c:35:12:lv_palette_main	24	static
+lv_palette.c:54:12:lv_palette_lighten	24	static
+lv_palette.c:93:12:lv_palette_darken	24	static

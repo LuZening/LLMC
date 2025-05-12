@@ -1,0 +1,10 @@
+PCM179x.c:73:5:PCM179x_set_attenuation	16	static
+PCM179x.c:114:9:PCM179x_set_attenuation_async	4	static
+PCM179x.c:156:5:PCM179x_set_format	4	static
+PCM179x.c:170:5:PCM179x_set_mute	4	static
+PCM179x.c:188:9:PCM179x_set_mute_async	8	static
+PCM179x.c:207:5:PCM179x_set_sample_rate	0	static
+PCM179x.c:213:5:PCM179x_set_oversample_multiplier	0	static
+PCM179x.c:234:6:pcm179x_hw_reset	8	static
+PCM179x.c:250:5:pcm179x_test	16	static
+PCM179x.c:268:5:pcm179x_init	24	static

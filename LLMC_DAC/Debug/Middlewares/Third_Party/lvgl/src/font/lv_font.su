@@ -1,0 +1,5 @@
+lv_text.h:230:20:_lv_text_is_marker	16	static
+lv_font.c:45:14:lv_font_get_glyph_bitmap	32	static
+lv_font.c:53:6:lv_font_get_glyph_dsc	48	static
+lv_font.c:111:10:lv_font_get_glyph_width	48	static
+lv_font.c:123:6:lv_font_set_kerning	16	static
