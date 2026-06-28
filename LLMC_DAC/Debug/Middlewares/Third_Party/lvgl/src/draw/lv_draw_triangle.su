@@ -1,7 +1,0 @@
-lv_color.h:288:26:lv_color_make	24	static
-lv_color.h:415:26:lv_color_white	16	static
-lv_color.h:424:26:lv_color_black	16	static
-lv_string.h:65:20:lv_memzero	16	static
-lv_draw_triangle.c:39:6:lv_draw_triangle_dsc_init	24	static
-lv_draw_triangle.c:52:26:lv_draw_task_get_triangle_dsc	16	static
-lv_draw_triangle.c:57:6:lv_draw_triangle	40	static

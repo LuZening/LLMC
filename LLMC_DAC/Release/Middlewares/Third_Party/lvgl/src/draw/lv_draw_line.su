@@ -1,3 +1,0 @@
-lv_draw_line.c:38:28:lv_draw_line_dsc_init	8	static
-lv_draw_line.c:46:22:lv_draw_task_get_line_dsc	0	static
-lv_draw_line.c:51:28:lv_draw_line	40	static

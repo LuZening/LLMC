@@ -185,7 +185,7 @@ SECTIONS
   	
     *fatfs*.o(.bss* .data* COMMON)
     KEEP (*(.DMA_no_cache))
-    . = ORIGIN(RAM) + 256K + 32K + 16K;
+    . = ORIGIN(RAM) + 256K + 64K;
   } >RAM AT>FLASH
   
   . = ALIGN(4);

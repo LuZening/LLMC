@@ -144,7 +144,7 @@ void audio_sinc_resampler_init(audio_sinc_resampler_t* rs, float* coeffs, uint32
 void audio_sinc_resampler_process(audio_sinc_resampler_t* rs,
                       float* output,
                       const float* input, size_t in_cnt_each_ch,
-					  /* outs */
+                      /* outs */
                       size_t* out_generated, size_t* in_consumed)
 {
 //    int phases = rs->input_phase_step;
@@ -153,17 +153,17 @@ void audio_sinc_resampler_process(audio_sinc_resampler_t* rs,
     // each channel
     for(int c = 0; c < rs->nch; c++)
     {
-		// build history buffer
-		float *history = rs->histories[c];
-		if((rs->phase_pos_int  == 0) && (rs->phase_pos_frac == 0)) // very fisrt input, fill history with 0
-		{
-			memset(history, 0, HISTORY_COUNT * sizeof(float));
-			// move the phase pose - make sure the very 1st input sample point aligned with the middle of the SINC scope
-			rs->phase_pos_int = HISTORY_COUNT;
-			rs->phase_pos_frac = 0;
-		}
-		// the history buffer is made of HISTORY_COUNT of history data and N_SINC_TAPS of new data
-		memcpy(history + HISTORY_COUNT, input + c * in_cnt_each_ch, MIN(N_SINC_TAPS, in_cnt_each_ch) * sizeof(float)); // copy deinterlaced input by channel
+        // build history buffer
+        float *history = rs->histories[c];
+        if((rs->phase_pos_int  == 0) && (rs->phase_pos_frac == 0)) // very fisrt input, fill history with 0
+        {
+            memset(history, 0, HISTORY_COUNT * sizeof(float));
+            // move the phase pose - make sure the very 1st input sample point aligned with the middle of the SINC scope
+            rs->phase_pos_int = HISTORY_COUNT;
+            rs->phase_pos_frac = 0;
+        }
+        // the history buffer is made of HISTORY_COUNT of history data and N_SINC_TAPS of new data
+        memcpy(history + HISTORY_COUNT, input + c * in_cnt_each_ch, MIN(N_SINC_TAPS, in_cnt_each_ch) * sizeof(float)); // copy deinterlaced input by channel
     }
 
 
@@ -178,7 +178,7 @@ void audio_sinc_resampler_process(audio_sinc_resampler_t* rs,
         left = input_pos - N_SINC_TAPS_HALF + 1; // left most
 
         // 检查边界
-        if(left < 0 || (left + N_SINC_TAPS) > total_avail)
+        if((left < 0 ) || ((left + N_SINC_TAPS) > total_avail) )
         	break;
         right = left + N_SINC_TAPS;
 //        const float* coeff = rs->coeffs + rs->phase_pos_frac * N_SINC_TAPS;
@@ -190,15 +190,15 @@ void audio_sinc_resampler_process(audio_sinc_resampler_t* rs,
         {
         	// find the input view
         	const float* in_view;
-			if(left < HISTORY_COUNT) // all data needed is in the history buffer, use data stored in the ehistory buffer
-				in_view = rs->histories[c] + left;
-			else // all data needed is in the input buffer
-				in_view = input + c * in_cnt_each_ch + left - HISTORY_COUNT;
+            if(left < HISTORY_COUNT) // all data needed is in the history buffer, use data stored in the history buffer
+                in_view = rs->histories[c] + left;
+            else // all data needed is in the input buffer
+                in_view = input + c * in_cnt_each_ch + left - HISTORY_COUNT;
 
-			// 卷积计算
-			float sum;
+            // 卷积计算
+            float sum;
         	arm_dot_prod_f32(in_view, coeff, N_SINC_TAPS, &sum);
-			output[c * expected_out_len + gen] = sum; // output length may be smaller than out_max of each channel, so this operation will leave some bubble between channels
+            output[c * expected_out_len + gen] = sum; // output length may be smaller than out_max of each channel, so this operation will leave some bubble between channels
         }
         gen++;
 
@@ -215,13 +215,16 @@ void audio_sinc_resampler_process(audio_sinc_resampler_t* rs,
 
     // update the history buffer
     int input_used = right - HISTORY_COUNT; // excluding history, only counting the usage of the newly input data. input_used should be equal to in_len
-    int rollback = input_used;
-    rs->phase_pos_int -= rollback;
-	for(int c = 0; c < rs->nch; ++c)
-	{
-		float* history = rs->histories[c];
-		memcpy(history, input + c * in_cnt_each_ch + input_used - HISTORY_COUNT,  HISTORY_COUNT * sizeof(float));
-	}
+    if(input_used > 0) {
+        int rollback = input_used;
+        rs->phase_pos_int -= rollback;
+        for(int c = 0; c < rs->nch; ++c)
+        {
+            float* history = rs->histories[c];
+            // replace history data with new input data
+            memcpy(history, input + c * in_cnt_each_ch + input_used - HISTORY_COUNT,  HISTORY_COUNT * sizeof(float));
+        }
+    }
 
     *in_consumed = input_used;
     *out_generated = gen;

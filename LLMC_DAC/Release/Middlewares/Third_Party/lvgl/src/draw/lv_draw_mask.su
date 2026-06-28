@@ -1,3 +1,0 @@
-lv_draw_mask.c:39:28:lv_draw_mask_rect_dsc_init	0	static
-lv_draw_mask.c:44:27:lv_draw_task_get_mask_rect_dsc	0	static
-lv_draw_mask.c:49:28:lv_draw_mask_rect	24	static

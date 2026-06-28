@@ -17,9 +17,9 @@
 //extern unsigned int audio_sample_rate_SAI; //unit Hz, e.g. 96000U
 typedef enum
 {
-	AUDIO_SAMPLE_RATE_44K1 = 0,
-	AUDIO_SAMPLE_RATE_48K,
-	AUDIO_SAMPLE_RATE_96K,
+    AUDIO_SAMPLE_RATE_44K1 = 0,
+    AUDIO_SAMPLE_RATE_48K,
+    AUDIO_SAMPLE_RATE_96K,
 } audio_sample_rate_t;
 
 #define N_VALID_AUDIO_SAMPLE_RATES 3U

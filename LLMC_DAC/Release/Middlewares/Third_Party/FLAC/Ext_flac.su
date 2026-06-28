@@ -1,2 +1,0 @@
-Ext_flac.c:39:6:flac_dump_headers	8	static
-Ext_flac.c:54:5:parse_flac	48	static

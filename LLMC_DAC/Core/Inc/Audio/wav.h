@@ -12,24 +12,24 @@
 #include <stdbool.h>
 typedef struct
 {
-	/* 44 BEGIN */
-	// 16
-	char fileformat[4]; // "RIFF"
-	uint32_t file_size; // len(file) - 8
-	char subformat[4]; // "WAVE"
-	char subformat_id[4];
-	// 16
-	uint16_t audio_format;    					// little or big endian
-	uint16_t num_channels;     				// 2 here for left and right
-	uint32_t sample_rate;						// sample_rate denotes the sampling rate.
-	// 12
-	uint32_t byte_rate;           					// bytes  per second
-	uint16_t bytes_per_frame;  						// bytes per frame = bitdepth x nChannels / 8
-	uint16_t bits_per_sample;
-	/* 40 END */
+    /* 44 BEGIN */
+    // 16
+    char fileformat[4]; // "RIFF"
+    uint32_t file_size; // len(file) - 8
+    char subformat[4]; // "WAVE"
+    char subformat_id[4];
+    // 16
+    uint16_t audio_format;    					// little or big endian
+    uint16_t num_channels;     				// 2 here for left and right
+    uint32_t sample_rate;						// sample_rate denotes the sampling rate.
+    // 12
+    uint32_t byte_rate;           					// bytes  per second
+    uint16_t bytes_per_frame;  						// bytes per frame = bitdepth x nChannels / 8
+    uint16_t bits_per_sample;
+    /* 40 END */
 
-	uint32_t data_size;
-	uint32_t data_begin;
+    uint32_t data_size;
+    uint32_t data_begin;
 
 }  wav_header_t;
 

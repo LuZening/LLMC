@@ -10,17 +10,19 @@
 #include "audio_DSP.h"
 
 const audio_reverb_cfg_t audio_reverb_cfg_default = {
-		.predelay_ms = 50,
-		.decay_ms = 100,
-		.feedback = 0.5,
+        .predelay_ms = 50,
+        .decay_ms = 100,
+        .feedback = 0.5,
 };
 
 void audio_reverb_init(audio_reverb_t *p, audio_reverb_cfg_t *pcfg)
 {
-	if(pcfg)
-		p->cfg = *pcfg;
-	if(p->cfg.predelay_ms > REVERB_PREDELAY_MS_MAX)
-		p->cfg.predelay_ms = REVERB_PREDELAY_MS_MAX;
+    if(pcfg)
+        p->cfg = *pcfg;
+    if(p->cfg.predelay_ms > REVERB_PREDELAY_MS_MAX)
+        p->cfg.predelay_ms = REVERB_PREDELAY_MS_MAX;
+    if(p->cfg.predelay_ms < 1)
+        p->cfg.predelay_ms = 1;
     p->num_predelay_samples = p->cfg.predelay_ms * AUDIO_DSP_SAMPLE_RATE_IN_MS;
     p->decay_factor = powf(0.001f, 1.f / (p->cfg.decay_ms * AUDIO_DSP_SAMPLE_RATE_IN_MS));
 
@@ -32,13 +34,15 @@ void audio_reverb_init(audio_reverb_t *p, audio_reverb_cfg_t *pcfg)
 
 void audio_reverb_modify_params(audio_reverb_t *p, audio_reverb_cfg_t* pnewcfg)
 {
-	__disable_irq();
-	if(&(p->cfg) != pnewcfg)
-	{
-		p->cfg = *pnewcfg;
-	}
-	if(p->cfg.predelay_ms > REVERB_PREDELAY_MS_MAX)
-			p->cfg.predelay_ms = REVERB_PREDELAY_MS_MAX;
+    __disable_irq();
+    if(&(p->cfg) != pnewcfg)
+    {
+        p->cfg = *pnewcfg;
+    }
+    if(p->cfg.predelay_ms > REVERB_PREDELAY_MS_MAX)
+            p->cfg.predelay_ms = REVERB_PREDELAY_MS_MAX;
+    if(p->cfg.predelay_ms < 1)
+        p->cfg.predelay_ms = 1;
     p->num_predelay_samples = p->cfg.predelay_ms * AUDIO_DSP_SAMPLE_RATE_IN_MS;
     p->decay_factor = powf(0.001f, 1.f / (p->cfg.decay_ms * AUDIO_DSP_SAMPLE_RATE_IN_MS));
     __enable_irq();

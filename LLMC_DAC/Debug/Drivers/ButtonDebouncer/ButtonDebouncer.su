@@ -1,4 +1,0 @@
-ButtonDebouncer.c:12:6:btndeb_init	24	static
-ButtonDebouncer.c:27:6:btndeb_interrupt	16	static
-ButtonDebouncer.c:41:6:btndeb_register_flip_callback	16	static
-ButtonDebouncer.c:47:6:btndeb_tick	24	static

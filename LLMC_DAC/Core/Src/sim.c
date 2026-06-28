@@ -48,8 +48,8 @@ int f_read(FIL* p, uint8_t* buf, size_t len, size_t* lenRead)
 
 int f_write(FIL* p, uint8_t* buf, size_t len, size_t* lenWritten)
 {
-	*lenWritten = fwrite(buf, 1, len, p->f);
-	return 0;
+    *lenWritten = fwrite(buf, 1, len, p->f);
+    return 0;
 }
 
 int f_lseek(FIL* p, size_t offset)
@@ -89,7 +89,7 @@ FRESULT f_readdir(DIR* dp, FILINFO* fno)
 {
     static counter = 0;
     const int N = 2;
-    const TCHAR* fnames[] = { L"003-иые╝ртио╓на╣╓╛╓╥╓©╓╓.wav", L"028-⌡Ф║а.wav"};
+    const TCHAR* fnames[] = { L"003-О©╫О©╫е╝О©╫О©╫О©╫о╓О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫.wav", L"028-О©╫О©╫О©╫.wav"};
 
     if (counter < N)
     {

@@ -1,4 +1,0 @@
-lv_area.h:126:20:lv_area_copy	16	static
-lv_area.h:139:23:lv_area_get_width	16	static
-lv_area.h:149:23:lv_area_get_height	16	static
-lv_draw_sw_fill.c:45:6:lv_draw_sw_fill	248	static

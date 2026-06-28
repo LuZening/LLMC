@@ -1,3 +1,0 @@
-imdct.c:132:13:WinPrevious	48	static
-imdct.c:185:12:FreqInvertRescale	40	static
-imdct.c:717:5:xmp3_IMDCT	344	static

@@ -112,7 +112,7 @@ int main(void)
 //  ret=W25Q128_OSPI_Read(&hospi1, rxbuf, 0, 100);
 //  ret=W25Q128_OSPI_Write(&hospi1,txbuf,0,sizeof(txbuf));
 //  ret=W25Q128_OSPI_Read(&hospi1, rxbuf, 0, 100);
-  ret=W25Q128_OSPI_EnableMemoryMappedMode(&hospi1);
+//  ret=W25Q128_OSPI_EnableMemoryMappedMode(&hospi1);
   /* USER CODE END 2 */
 
   /* Infinite loop */

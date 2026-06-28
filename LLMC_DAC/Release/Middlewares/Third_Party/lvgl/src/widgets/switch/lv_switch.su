@@ -1,7 +1,0 @@
-lv_switch.c:215:13:lv_switch_anim_completed	0	static
-lv_switch.c:205:13:lv_switch_anim_exec_cb	0	static
-lv_switch.c:101:13:lv_switch_destructor	0	static
-lv_switch.c:146:13:draw_main	304	static
-lv_switch.c:85:13:lv_switch_constructor	16	static
-lv_switch.c:109:13:lv_switch_event	112	static
-lv_switch.c:73:12:lv_switch_create	8	static

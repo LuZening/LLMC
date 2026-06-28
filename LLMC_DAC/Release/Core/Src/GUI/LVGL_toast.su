@@ -1,5 +1,0 @@
-LVGL_toast.c:23:13:toast_timer_callback	24	static
-LVGL_toast.c:11:13:toast_anim_out_ready	0	static
-LVGL_toast.c:5:13:toast_anim_in_exec	0	static
-LVGL_toast.c:17:13:toast_anim_out_exec	0	static
-LVGL_toast.c:40:6:show_toast	104	static

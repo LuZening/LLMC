@@ -190,7 +190,7 @@ void SystemInit (void)
   if(FLASH_LATENCY_DEFAULT  > (READ_BIT((FLASH->ACR), FLASH_ACR_LATENCY)))
   {
     /* Program the new number of wait states to the LATENCY bits in the FLASH_ACR register */
-	MODIFY_REG(FLASH->ACR, FLASH_ACR_LATENCY, (uint32_t)(FLASH_LATENCY_DEFAULT));
+    MODIFY_REG(FLASH->ACR, FLASH_ACR_LATENCY, (uint32_t)(FLASH_LATENCY_DEFAULT));
   }
 
   /* Set HSION bit */
@@ -206,7 +206,7 @@ void SystemInit (void)
   if(FLASH_LATENCY_DEFAULT  < (READ_BIT((FLASH->ACR), FLASH_ACR_LATENCY)))
   {
     /* Program the new number of wait states to the LATENCY bits in the FLASH_ACR register */
-	MODIFY_REG(FLASH->ACR, FLASH_ACR_LATENCY, (uint32_t)(FLASH_LATENCY_DEFAULT));
+    MODIFY_REG(FLASH->ACR, FLASH_ACR_LATENCY, (uint32_t)(FLASH_LATENCY_DEFAULT));
   }
 
 #if defined(D3_SRAM_BASE)
@@ -303,13 +303,13 @@ void SystemInit (void)
 #endif /*DUAL_CORE && CORE_CM4*/
   /* User added BEGIN*/
 
-	// set vector table at DTCMRAM1
-	const size_t addrFlash = 0x90000000;
+    // set vector table at DTCMRAM1
+    const size_t addrFlash = 0x90000000;
 //	RCC->CFGR = 0;
-	memcpy((void*)isr_vector_RAM, (void*)addrFlash, sizeof(isr_vector_RAM));
-	SCB->VTOR = (uint32_t)isr_vector_RAM;
+    memcpy((void*)isr_vector_RAM, (void*)addrFlash, sizeof(isr_vector_RAM));
+    SCB->VTOR = (uint32_t)isr_vector_RAM;
 //	__enable_irq();
-	  /* User added END*/
+      /* User added END*/
 }
 
 /**

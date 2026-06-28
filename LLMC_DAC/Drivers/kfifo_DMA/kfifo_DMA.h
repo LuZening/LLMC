@@ -3,15 +3,16 @@
 #include <stdint.h>
 #include <string.h>
 #include "main.h"
+#include <assert.h>
 #define KFIFO_DMA_OK 0
 #define KFIFO_DMA_UNDERRUN 1
 //#define KFIFO_DMA_OVERRUN 2
-
+#define IS_POWER_OF_TWO_U(x)  ((x) != 0 && (((x) & ((x) - 1)) == 0))
 //声明 一个 结构体 kfifo
 struct KFIFO_DMA
 {
     unsigned char *buffer;    /* the buffer holding the data */
-    size_t size;            /* the size of the allocated buffer */
+    size_t size;            /* the size of the allocated buffer, must be power of 2 */
     uint32_t mask_size;
     size_t half;
     volatile unsigned int in;                /* data is added at offset (in % size) */
@@ -29,7 +30,7 @@ struct KFIFO_DMA
 
 typedef struct KFIFO_DMA KFIFO_DMA;
 
-void kfifo_DMA_static_init(KFIFO_DMA* p, uint8_t* buf, size_t size, size_t dmastep);
+void kfifo_DMA_static_init(KFIFO_DMA* p, uint8_t* buf, size_t size /* must be power of 2*/, size_t dmastep);
 
 
 int kfifo_DMA_HalfCplt_cb(KFIFO_DMA* p);

@@ -1,4 +1,0 @@
-LVGL_GUI_signal_path.c:61:13:input_btns_click_cb	8	static
-LVGL_GUI_signal_path.c:71:6:dismiss_audio_signal_path_screen	16	static
-LVGL_GUI_signal_path.c:32:13:switch_audio_connections_cb	24	static
-LVGL_GUI_signal_path.c:86:6:display_audio_signal_path_screen	64	static

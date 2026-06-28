@@ -64,7 +64,7 @@ int UTF16ToUTF8(const UTF16* pUTF16Start, const UTF16* pUTF16End, UTF8* pUTF8Sta
 
 int UTF8ToUTF16(const UTF8* pUTF8Start, const UTF8* pUTF8End, UTF16* pUTF16Start, UTF16* pUTF16End)
 {
-	// little-endian by default
+    // little-endian by default
      UTF16* pTempUTF16 = pUTF16Start;
      const UTF8* pTempUTF8 = pUTF8Start;
 
@@ -105,12 +105,12 @@ int UTF8ToUTF16(const UTF8* pUTF8Start, const UTF8* pUTF8End, UTF16* pUTF16Start
 size_t strnlen_TCHAR(const TCHAR* wcs, size_t maxcnt)
 {
 
-	size_t len = 0;
-	while((len < maxcnt) && wcs[len])
-	{
-		len++;
-	}
-	return len;
+    size_t len = 0;
+    while((len < maxcnt) && wcs[len])
+    {
+        len++;
+    }
+    return len;
 }
 
 
@@ -130,19 +130,19 @@ const TCHAR* strncpy_TCHAR(TCHAR* dst, const TCHAR* src, size_t maxcnt)
 
 const TCHAR* strnchr_TCHAR( const TCHAR* s, const TCHAR to_find, size_t maxcnt)
 {
-	TCHAR* found = NULL;
+    TCHAR* found = NULL;
 
-	while(maxcnt > 0)
-	{
-		if(*s == to_find)
-		{
-			found = s;
-			break;
-		}
-		s++;
-		maxcnt--;
-	}
-	return found;
+    while(maxcnt > 0)
+    {
+        if(*s == to_find)
+        {
+            found = s;
+            break;
+        }
+        s++;
+        maxcnt--;
+    }
+    return found;
 }
 
 bool endswith_TCHAR(const TCHAR* sEnd, size_t countEnd, const TCHAR* path, size_t countPath)

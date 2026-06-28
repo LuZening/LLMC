@@ -261,7 +261,7 @@ static void lv_simple_file_explorer_unicode_constructor(const lv_obj_class_t * c
 
 static void init_style(lv_obj_t * obj)
 {
-	lv_simple_file_explorer_unicode_t * explorer = (lv_simple_file_explorer_unicode_t *)obj;
+    lv_simple_file_explorer_unicode_t * explorer = (lv_simple_file_explorer_unicode_t *)obj;
 
     /*lv_file_explorer obj style*/
     lv_obj_set_style_radius(obj, 0, 0);
@@ -305,14 +305,14 @@ static void init_style(lv_obj_t * obj)
 
 static void browser_file_event_handler(lv_event_t * e)
 {
-	static char full_path[LV_FILE_EXPLORER_PATH_MAX_LEN];
+    static char full_path[LV_FILE_EXPLORER_PATH_MAX_LEN];
     lv_event_code_t code = lv_event_get_code(e);
     lv_obj_t * obj = lv_event_get_user_data(e);
     
 
     lv_simple_file_explorer_unicode_t * explorer = (lv_simple_file_explorer_unicode_t *)obj;
 
-	/* when selected, will firstly update file_name by the newly selected cell */
+    /* when selected, will firstly update file_name by the newly selected cell */
     if((code & (LV_EVENT_VALUE_CHANGED)) != 0)
     {
         const char * str_fn = NULL;
@@ -331,59 +331,59 @@ static void browser_file_event_handler(lv_event_t * e)
         if((lv_strcmp(str_fn, "返回上级") == 0))
         {
         	// only when the current path is not the root folder
-			if(countPath > 3)
-			{
-				/*Remove the last '/' character*/
-				if(explorer->current_path[countPath - 1] == '/')
-					strip_slash(explorer->current_path);
-				/* Remove the last segment */
-				strip_slash(explorer->current_path);
-				// recount the path length after stripping
-				countPath = strnlen_TCHAR(explorer->current_path, LV_FILE_EXPLORER_PATH_MAX_LEN);
-				// convert wchar current_path to UTF8
-				show_dir(obj, explorer->current_path);
-				lv_obj_send_event(explorer, LV_EVENT_VALUE_CHANGED, "folder");
-			}
+            if(countPath > 3)
+            {
+                /*Remove the last '/' character*/
+                if(explorer->current_path[countPath - 1] == '/')
+                    strip_slash(explorer->current_path);
+                /* Remove the last segment */
+                strip_slash(explorer->current_path);
+                // recount the path length after stripping
+                countPath = strnlen_TCHAR(explorer->current_path, LV_FILE_EXPLORER_PATH_MAX_LEN);
+                // convert wchar current_path to UTF8
+                show_dir(obj, explorer->current_path);
+                lv_obj_send_event(explorer, LV_EVENT_VALUE_CHANGED, "folder");
+            }
         }
         /* otherwise, treat the selected path as a FOLDER or a FILE */
         else
         {
 #if _LFN_UNICODE
-			// concat current PATH(folder) and the selected PATH(either folder or file)
-			int sizeUTF8 = UTF16ToUTF8((UTF16*)explorer->current_path, (UTF16*)explorer->current_path + countPath,
-					(UTF8*)bufUTF8, (UTF8*)(bufUTF8 + sizeof(bufUTF8)));
-			char* current_path_UTF8 = bufUTF8;
+            // concat current PATH(folder) and the selected PATH(either folder or file)
+            int sizeUTF8 = UTF16ToUTF8((UTF16*)explorer->current_path, (UTF16*)explorer->current_path + countPath,
+                    (UTF8*)bufUTF8, (UTF8*)(bufUTF8 + sizeof(bufUTF8)));
+            char* current_path_UTF8 = bufUTF8;
 #else
             int sizeUTF8 = strlen(explorer->current_path);
-			char* current_path_UTF8 = explorer->current_path;
+            char* current_path_UTF8 = explorer->current_path;
 #endif
-			//lv_snprintf((char *)file_name, sizeof(file_name), "%s%s", current_path_UTF8, str_fn);
-			strncpy(full_path, current_path_UTF8, sizeof(full_path));
-			if (sizeUTF8 < sizeof(full_path))
-			{
-				strncpy(full_path + sizeUTF8, str_fn, sizeof(full_path) - sizeUTF8);
-			}
-	        // convert file_name from utf8 to wide char
-	        DIR dir;
-	        size_t cntFullPath = UTF8ToUTF16((UTF8*)full_path,(UTF8*)full_path + strnlen(full_path,sizeof(full_path)), (UTF16*)bufUTF16, ((UTF16*)bufUTF16) + sizeof(bufUTF16) / sizeof(TCHAR));
-	        TCHAR* wcs_full_path = bufUTF16;
-			/* CASE: DIRECTORY */
-	        if (f_opendir(&dir, wcs_full_path) == FR_OK)
-	        {
-	            f_closedir(&dir);
-	            // remove trailling '/'
-	            if((cntFullPath > 0) && wcs_full_path[cntFullPath - 1] == _T('/'))
-	            	wcs_full_path[cntFullPath - 1] = 0;
-	            show_dir(obj, wcs_full_path);
-	            lv_obj_send_event(explorer, LV_EVENT_VALUE_CHANGED, "folder");
-	        }
-			/* CASE: FILE */
-	        else
-	        {
-	            // only change the filename, skip the folder part by forwarding the ptr by countPath
-	            strncpy_TCHAR(explorer->sel_filename, wcs_full_path + countPath,  _MAX_LFN);
-	            lv_obj_send_event(explorer, LV_EVENT_VALUE_CHANGED, "file");
-	        }
+            //lv_snprintf((char *)file_name, sizeof(file_name), "%s%s", current_path_UTF8, str_fn);
+            strncpy(full_path, current_path_UTF8, sizeof(full_path));
+            if (sizeUTF8 < sizeof(full_path))
+            {
+                strncpy(full_path + sizeUTF8, str_fn, sizeof(full_path) - sizeUTF8);
+            }
+            // convert file_name from utf8 to wide char
+            DIR dir;
+            size_t cntFullPath = UTF8ToUTF16((UTF8*)full_path,(UTF8*)full_path + strnlen(full_path,sizeof(full_path)), (UTF16*)bufUTF16, ((UTF16*)bufUTF16) + sizeof(bufUTF16) / sizeof(TCHAR));
+            TCHAR* wcs_full_path = bufUTF16;
+            /* CASE: DIRECTORY */
+            if (f_opendir(&dir, wcs_full_path) == FR_OK)
+            {
+                f_closedir(&dir);
+                // remove trailling '/'
+                if((cntFullPath > 0) && wcs_full_path[cntFullPath - 1] == _T('/'))
+                	wcs_full_path[cntFullPath - 1] = 0;
+                show_dir(obj, wcs_full_path);
+                lv_obj_send_event(explorer, LV_EVENT_VALUE_CHANGED, "folder");
+            }
+            /* CASE: FILE */
+            else
+            {
+                // only change the filename, skip the folder part by forwarding the ptr by countPath
+                strncpy_TCHAR(explorer->sel_filename, wcs_full_path + countPath,  _MAX_LFN);
+                lv_obj_send_event(explorer, LV_EVENT_VALUE_CHANGED, "file");
+            }
 
         }
     }
@@ -487,8 +487,8 @@ static void show_dir(lv_obj_t * obj, const TCHAR * wcsPath)
     // sometimes the function parameter is just explorer->current_path it self, then no need to copy
     if(wcsPath != explorer->current_path)
     {
-		strncpy_TCHAR(explorer->current_path, wcsPath,
-				sizeof(explorer->current_path) / sizeof(TCHAR));
+        strncpy_TCHAR(explorer->current_path, wcsPath,
+                sizeof(explorer->current_path) / sizeof(TCHAR));
     }
 
     // convert wchar wcsPath to utf8
@@ -515,7 +515,7 @@ static void show_dir(lv_obj_t * obj, const TCHAR * wcsPath)
 /*Remove the right-most slash suffix and content after it*/
 void strip_slash(TCHAR * dir)
 {
-	size_t countDir = strnlen_TCHAR(dir, _MAX_LFN);
+    size_t countDir = strnlen_TCHAR(dir, _MAX_LFN);
     TCHAR * end = dir + countDir;
 
     while(end >= dir && *end != _T('/')) {
@@ -533,11 +533,11 @@ void strip_slash(TCHAR * dir)
 
 size_t concat_full_path(const TCHAR* wcsFolder, const TCHAR* wcsFilename, /* out */ TCHAR* wcsOut, size_t cntMax)
 {
-	const TCHAR* s = strncpy_TCHAR(wcsOut, wcsFolder, cntMax);
-	size_t cntFolder = s - wcsOut;
-	s = strncpy_TCHAR(wcsOut + cntFolder, wcsFilename, cntMax - cntFolder);
-	wcsOut[cntMax - 1] = 0; // terminate the strung
-	return s - wcsOut;
+    const TCHAR* s = strncpy_TCHAR(wcsOut, wcsFolder, cntMax);
+    size_t cntFolder = s - wcsOut;
+    s = strncpy_TCHAR(wcsOut + cntFolder, wcsFilename, cntMax - cntFolder);
+    wcsOut[cntMax - 1] = 0; // terminate the strung
+    return s - wcsOut;
 }
 
 

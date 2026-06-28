@@ -1,22 +1,4 @@
-帮我用lvgl实现一个调节DSP参数的用户界面，屏幕尺寸为480*272像素，界面包含如下内容：
-关闭窗口按钮，位于屏幕最左上方；
-预设文件代码设置，范围为1~9，位于关闭窗口按钮旁边，留合适间距避免误触 关闭按钮；
-8段图形均衡器的增益调节，位于界面左半区，要有合理的间距和控件大小，使用用户触屏操作，用一个可点击的LED控件指示该效果器是否被用户使能，参数存在如下结构体中typedef struct
-{
-	float gains_db[N_EQ_SEGMENTS];
-} audio_EQ_cfg_t;；
-compress效果器的参数调节，用一个可点击的LED控件指示该效果器是否被用户使能，，位于屏幕右上半区，调节范围按业界常用参数范围为限，参数存在如下结构体中typedef struct
-{
-	float attack_time_ms;
-	float release_time_ms;
-	float threshold_db;
-	float makeup_gain_db;
-	float ratio;
-} audio_compress_cfg_t;
-reverb混响器的参数调节，用一个可点击的LED控件指示该效果器是否被用户使能，位于屏幕右下半区，调节范围按业界常用参数范围为限，predelay_ms不得超过PREDELAY_MS_MAX，参数存在如下结构体中typedef struct
-{
-	uint16_t predelay_ms : 50;
-	uint16_t decay_ms : 150;
-} audio_reverb_cfg_t;
-这些结构体在"audio_DSP.h"头文件中声明过了，不要再重复声明。注释请用英文。
+你先清除一下我代码中audio_player中现有的mp3和flac解码依赖代码，帮我检查一下代码中audio_player的部分，是否有加入mp3解码和flac解码更好的办法
 
+
+基于 STM32H7B0 平台实现一套通用、可扩展的音频流式播放框架，统一基于 FatFS 文件系统分块读取音频文件，原生支持 WAV、MP3、FLAC 三种音频格式解码，将所有音源统一重采样为 48kHz 16bit 立体声 PCM 后输出至音频外设。

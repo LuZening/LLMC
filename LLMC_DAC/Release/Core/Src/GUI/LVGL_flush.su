@@ -1,2 +1,0 @@
-LVGL_flush.c:46:6:DMA2D_XferCpltCallback	0	static
-LVGL_flush.c:53:6:LTDC_flush_cb	16	static,ignoring_inline_asm

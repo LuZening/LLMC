@@ -22,17 +22,17 @@ static void toast_anim_out_exec(void *obj, int32_t value)
 
 static void toast_timer_callback(lv_timer_t *t)
 {
-	lv_obj_t *obj = (lv_obj_t *)t->user_data;
-	// 淡出动画
-	static lv_anim_t anim_out;
-	lv_anim_init(&anim_out);
-	lv_anim_set_var(&anim_out, obj);
-	lv_anim_set_values(&anim_out, 255, 0);
-	lv_anim_set_path_cb(&anim_out, lv_anim_path_ease_in_out);
-	lv_anim_set_time(&anim_out, 500);
-	lv_anim_set_exec_cb(&anim_out, toast_anim_out_exec);
-	lv_anim_set_completed_cb(&anim_out, toast_anim_out_ready);
-	lv_anim_start(&anim_out);
+    lv_obj_t *obj = (lv_obj_t *)t->user_data;
+    // 淡出动画
+    static lv_anim_t anim_out;
+    lv_anim_init(&anim_out);
+    lv_anim_set_var(&anim_out, obj);
+    lv_anim_set_values(&anim_out, 255, 0);
+    lv_anim_set_path_cb(&anim_out, lv_anim_path_ease_in_out);
+    lv_anim_set_time(&anim_out, 500);
+    lv_anim_set_exec_cb(&anim_out, toast_anim_out_exec);
+    lv_anim_set_completed_cb(&anim_out, toast_anim_out_ready);
+    lv_anim_start(&anim_out);
 }
 
 

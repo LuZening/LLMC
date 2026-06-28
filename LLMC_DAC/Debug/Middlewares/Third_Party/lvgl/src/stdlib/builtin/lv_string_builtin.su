@@ -1,8 +1,0 @@
-lv_string_builtin.c:56:30:lv_memcpy	48	static
-lv_string_builtin.c:118:28:lv_memset	40	static
-lv_string_builtin.c:148:30:lv_memmove	40	static
-lv_string_builtin.c:175:8:lv_strlen	24	static
-lv_string_builtin.c:183:8:lv_strncpy	32	static
-lv_string_builtin.c:193:8:lv_strcpy	24	static
-lv_string_builtin.c:200:9:lv_strcmp	16	static
-lv_string_builtin.c:209:8:lv_strdup	24	static

@@ -243,52 +243,37 @@ int8_t STORAGE_IsWriteProtected_HS(uint8_t lun)
   * @param  blk_len: .
   * @retval USBD_OK if all operations are OK else USBD_FAIL
   */
+/* Busy-wait for SD card to be ready with a poll counter.
+ * HAL_GetTick() cannot be used here because USB ISR priority (3/6)
+ * is higher than SysTick (15), so the tick interrupt is blocked.
+ * A volatile loop counter prevents hang regardless of interrupt context. */
+#define SD_READY_POLL_LIMIT 20000000
+
+static int8_t SD_WaitReady(void)
+{
+	for (volatile uint32_t poll = 0; poll < SD_READY_POLL_LIMIT; poll++) {
+		if (HAL_SD_GetState(&hsd1) != HAL_SD_STATE_BUSY &&
+			HAL_SD_GetCardState(&hsd1) == HAL_SD_CARD_TRANSFER)
+			return USBD_OK;
+	}
+	return USBD_FAIL;
+}
+
 int8_t STORAGE_Read_HS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t blk_len)
 {
   /* USER CODE BEGIN 13 */
+	if (blk_len > MSC_MEDIA_PACKET / BLOCKSIZE) return USBD_FAIL;
 	static uint8_t __attribute__((section(".DMA_no_cache"))) buf4DMA[MSC_MEDIA_PACKET];
-//	int r = HAL_SD_ReadBlocks(&hsd1, buf, blk_addr, blk_len, -1);
-    while (HAL_SD_GetState(&hsd1) == HAL_SD_STATE_BUSY) {
-//        	if((osKernelGetSysTimerCount() - tick) > SYSTICK_COUNT_TIMEOUT)
-//        	{
-//        		// timeout
-//        		return USBD_FAIL;
-//        	}
-    };
-    while (HAL_SD_GetCardState(&hsd1) != HAL_SD_CARD_TRANSFER) {
-//        	if((osKernelGetSysTimerCount() - tick) > SYSTICK_COUNT_TIMEOUT)
-//        	{
-//        		// timeout
-//        		return USBD_FAIL;
-//        	}
-    };
+	if (SD_WaitReady() != USBD_OK) return USBD_FAIL;
+
 	int r = HAL_SD_ReadBlocks_DMA(&hsd1, buf4DMA, blk_addr, blk_len);
 	if(r == HAL_OK)
 	{
-//		uint32_t tick = osKernelGetSysTimerCount();
-        while (HAL_SD_GetState(&hsd1) == HAL_SD_STATE_BUSY) {
-//        	if((osKernelGetSysTimerCount() - tick) > SYSTICK_COUNT_TIMEOUT)
-//        	{
-//        		// timeout
-//        		return USBD_FAIL;
-//        	}
-        };
-        while (HAL_SD_GetCardState(&hsd1) != HAL_SD_CARD_TRANSFER) {
-//        	if((osKernelGetSysTimerCount() - tick) > SYSTICK_COUNT_TIMEOUT)
-//        	{
-//        		// timeout
-//        		return USBD_FAIL;
-//        	}
-        };
-        memcpy(buf, buf4DMA, blk_len * BLOCKSIZE);
-        return USBD_OK;
+		if (SD_WaitReady() != USBD_OK) return USBD_FAIL;
+		memcpy(buf, buf4DMA, blk_len * BLOCKSIZE);
+		return USBD_OK;
 	}
-	else
-	{
-		return USBD_FAIL;
-	}
-//	return (SD_Driver.disk_read(lun, buf, blk_addr, blk_len)); // OS MessageQueueGet unavailable under ISR
-//  return (r == HAL_OK)?(USBD_OK):(USBD_FAIL);
+	return USBD_FAIL;
   /* USER CODE END 13 */
 }
 
@@ -304,54 +289,24 @@ int8_t STORAGE_Write_HS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t b
 {
   /* USER CODE BEGIN 14 */
 	static uint8_t __attribute__((section(".DMA_no_cache"))) buf4DMA[MSC_MEDIA_PACKET];
-    uint32_t tick = osKernelGetSysTimerCount();
-    while (HAL_SD_GetState(&hsd1) == HAL_SD_STATE_BUSY) {
-//    	if((osKernelGetSysTimerCount() - tick) > SYSTICK_COUNT_TIMEOUT)
-//    	{
-//    		// timeout
-//    		break;
-//    	}
-    };
-    while (HAL_SD_GetCardState(&hsd1) != HAL_SD_CARD_TRANSFER) {
-//    	if((osKernelGetSysTimerCount() - tick) > SYSTICK_COUNT_TIMEOUT)
-//    	{
-//    		// timeout
-//    		break;
-//    	}
-    };
-    while(g_SDCard_transmitting)
-    {
-//    	if((osKernelGetSysTimerCount() - tick) > SYSTICK_COUNT_TIMEOUT)
-//    	{
-//    		// timeout
-//    		break;
-//    	}
-    }
+	if (blk_len > MSC_MEDIA_PACKET / BLOCKSIZE) return USBD_FAIL;
+
+	/* Wait for previous transmission to finish (poll counter, not HAL_GetTick;
+	 * USB ISR priority blocks SysTick). */
+	for (volatile uint32_t poll = 0; poll < SD_READY_POLL_LIMIT; poll++) {
+		if (!g_SDCard_transmitting) break;
+		if (poll == SD_READY_POLL_LIMIT - 1) return USBD_FAIL;
+	}
+	if (SD_WaitReady() != USBD_OK) return USBD_FAIL;
+
 	memcpy(buf4DMA, buf, blk_len * BLOCKSIZE);
 	int r = HAL_SD_WriteBlocks_DMA(&hsd1, buf4DMA, blk_addr, blk_len);
-//	int r = HAL_SD_WriteBlocks(&hsd1, buf4DMA, blk_addr, blk_len, 10000);
 	if(r == HAL_OK)
 	{
 		g_SDCard_transmitting = true;
-//	    while (HAL_SD_GetState(&hsd1) == HAL_SD_STATE_BUSY) {};
-//	    while (HAL_SD_GetCardState(&hsd1) != HAL_SD_CARD_TRANSFER) {};
-//	    int r = HAL_SD_ReadBlocks_DMA(&hsd1, buf4DMA, blk_addr, blk_len);
-//	    while (HAL_SD_GetState(&hsd1) == HAL_SD_STATE_BUSY) {};
-//	    while (HAL_SD_GetCardState(&hsd1) != HAL_SD_CARD_TRANSFER) {};
-//	    int cmp = memcmp(buf, buf4DMA, blk_len * BLOCKSIZE);
-//	    if(cmp != 0)
-//	    {
-//	    	return USBD_BUSY;
-//	    }
 		return USBD_OK;
 	}
-	else
-		return USBD_FAIL;
-//		int r =HAL_SD_WriteBlocks(&hsd1, buf, blk_addr, blk_len, -1);
-
-
-//	return (SD_Driver.disk_write( lun, buf,blk_addr,blk_len));
-// OS MessageQueueGet unavailable unser ISR
+	return USBD_FAIL;
   /* USER CODE END 14 */
 }
 

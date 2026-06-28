@@ -1,4 +1,0 @@
-audio_DSP_EQ.c:20:13:calculate_biquad_coeffs.constprop	64	static
-audio_DSP_EQ.c:84:6:audio_EQ_modify_gain	24	static,ignoring_inline_asm
-audio_DSP_EQ.c:97:6:audio_EQ_init	24	static
-audio_DSP_EQ.c:111:6:audio_EQ	4	static

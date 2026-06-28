@@ -26,21 +26,21 @@ void playlist_test();
 
 typedef struct
 {
-	int prevpos;
-	int begin;
-	size_t len;
-	int nextpos;
+    int prevpos;
+    int begin;
+    size_t len;
+    int nextpos;
 } playlist_node_t;
 
 typedef struct
 {
-	FIL* fp;
-	uint8_t is_modified;
-	TCHAR filepath[_MAX_LFN+1];
-	TCHAR  buf[PLAYLIST_MAX_STR_COUNT];
-	int posRowBegin; // point to the byte position in the file of the line head
-	size_t cntRow; //row length, not counting the trailing '\n'
-	int seed;
+    FIL* fp;
+    uint8_t is_modified;
+    TCHAR filepath[_MAX_LFN+1];
+    TCHAR  buf[PLAYLIST_MAX_STR_COUNT];
+    int posRowBegin; // point to the byte position in the file of the line head
+    size_t cntRow; //row length, not counting the trailing '\n'
+    int seed;
 } playlist_t;
 
 /* WARNING: all the playlist function must be protected by a mutex*/

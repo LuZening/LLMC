@@ -1,4 +1,0 @@
-lv_area.h:139:23:lv_area_get_width	16	static
-lv_string.h:65:20:lv_memzero	16	static
-lv_draw_sw_letter.c:52:6:lv_draw_sw_label	24	static
-lv_draw_sw_letter.c:65:35:draw_letter_cb	96	static

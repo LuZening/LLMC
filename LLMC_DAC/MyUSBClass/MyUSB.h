@@ -17,8 +17,8 @@ void USB_my_init_no_cache_memory();
 
 typedef enum
 {
-	USB_CFG_DESC_UAC1_0,
-	USB_CFG_DESC_MASS_STORAGE,
+    USB_CFG_DESC_UAC1_0,
+    USB_CFG_DESC_MASS_STORAGE,
 } USBCfgDescSelector_t;
 
 
@@ -26,4 +26,10 @@ extern int USBD_MAX_NUM_INTERFACES_1;
 
 void USB_switch_to_configuration(USBCfgDescSelector_t sel);
 
+/* Hot-switch USB configuration without rebooting.
+ * Safely tears down the current config and re-initializes as the new one.
+ * Host will see a disconnect/reconnect (~1-2s re-enumeration). */
+void USB_switch_configuration_hot(USBCfgDescSelector_t new_sel);
+
 void * USBD_my_static_malloc(uint32_t size);
+void USB_stop(void); /* tear down USB so FatFS can access SD card */

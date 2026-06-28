@@ -34,7 +34,7 @@ extern osMutexId_t mtxTouchScreen;
 #define FS_PATH_MUSIC_FOLDER _T("E:/Projects/You/LLMC/FS_SD/test")
 #endif
 #define FS_FNAME_PLAYLSIT_TEMP _T("temp.pl")
-	// acuqire this mutex before modifying LVGL GUI contents
+    // acuqire this mutex before modifying LVGL GUI contents
 #define LV_HOR_RES_MAX 480U
 #define LV_VER_RES_MAX 272U
 #define DEGREE_SIGN "°"
@@ -66,6 +66,7 @@ extern osThreadId_t TouchScreenCalibTaskHandle;
 #define TOUCH_SCREEN_PENIRQ_SIGNAL 0b10
 // call in EXTI IRQ service for PENIRQ pin
 extern void send_touch_screen_penirq_signal();
+extern void refresh_main_player_button(void);
 
 #endif
 extern lv_indev_t* encoder_indev;
@@ -145,9 +146,9 @@ extern lv_style_t lvStyleImageBtn;
  ****************************************************************/
 // return the length of
 uint8_t number2text(char* dest,
-	int number, // value without decimal point
-	uint8_t decimal, // digits of decimals (0: integer, 1: 1.1, 2: 1.10)
-	char suffix);
+    int number, // value without decimal point
+    uint8_t decimal, // digits of decimals (0: integer, 1: 1.1, 2: 1.10)
+    char suffix);
 
 void my_utoa(char* dest, uint32_t num);
 void my_i16toa(char* dest, int16_t num);
@@ -202,11 +203,11 @@ void display_volume_control_screen();
 // track_info must be static,
 typedef struct
 {
-	char sTitle[128];
-	char sAuthor[32];
-	char sGenre[32];
-	bool is_in_playlist;
-	uint32_t duration_ms;
+    char sTitle[128];
+    char sAuthor[32];
+    char sGenre[32];
+    bool is_in_playlist;
+    uint32_t duration_ms;
 } track_info_t;
 
 extern track_info_t track_info;

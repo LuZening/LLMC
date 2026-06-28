@@ -41,15 +41,15 @@ extern SPI_HandleTypeDef hspi1;
 
 typedef struct
 {
-	bool isCalibrated;
-	// UL, UR, LL, LR, Center
-	int real_X[5];
-	int real_Y[5]; // real pixel positions, originate at the upper-left corner
-	// UL, UR, LL, LR, Center
-	int ADC_X[5];
-	int ADC_Y[5]; // 5 point calibration info
-	// calibration parameters y = p0 + p1x1 + p2x2 where x1 is ADC_X, x2 is ADC_Y
-	float params_X[3], params_Y[3];
+    bool isCalibrated;
+    // UL, UR, LL, LR, Center
+    int real_X[5];
+    int real_Y[5]; // real pixel positions, originate at the upper-left corner
+    // UL, UR, LL, LR, Center
+    int ADC_X[5];
+    int ADC_Y[5]; // 5 point calibration info
+    // calibration parameters y = p0 + p1x1 + p2x2 where x1 is ADC_X, x2 is ADC_Y
+    float params_X[3], params_Y[3];
 } TouchScreenCalibrationInfo_t;
 
 // allocate pTSCalib somewhere in main program
@@ -64,9 +64,9 @@ void init_touch_screen_calib_info(TouchScreenCalibrationInfo_t *p);
 // @param ADC_X, ADC_Y: the ADC readings of 5 points when calibratings
 // @retval result: a place to store calibration info
 bool touch_set_calibrate(int real_X[5], int real_Y[5],
-		int ADC_X[5], int ADC_Y[5],
-		TouchScreenCalibrationInfo_t *result
-		);
+        int ADC_X[5], int ADC_Y[5],
+        TouchScreenCalibrationInfo_t *result
+        );
 
 // read x,y as original ADC values, and return pressure value
 int touch_read_XY_ADC(int *pX_orig, int *pY_orig);
@@ -75,7 +75,7 @@ int touch_read_XY_ADC(int *pX_orig, int *pY_orig);
 int touch_read_XY_physical(int *pX, int *pY);
 
 int touch_convert_XY_ADC_to_physical(int ADC_X,int ADC_Y,int ADC_Z,
-		int* pX, int* pY, int* pZ);
+        int* pX, int* pY, int* pZ);
 
 int touch_read_VBAT_mv();
 

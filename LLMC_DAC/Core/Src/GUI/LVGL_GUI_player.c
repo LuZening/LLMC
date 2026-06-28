@@ -85,8 +85,8 @@ static void dismiss_FS_player_screen(void)
     if(isFSPlayerScreenCreated)
     {
     	deregister_group_without_del(lvGroupFSPlayerScreen);
-		lv_obj_add_flag(lvMainContFS, LV_OBJ_FLAG_HIDDEN);
-		isFSPlayerScreenHidden = true;
+        lv_obj_add_flag(lvMainContFS, LV_OBJ_FLAG_HIDDEN);
+        isFSPlayerScreenHidden = true;
     }
 
     /* delete GUI widgets */
@@ -122,21 +122,21 @@ static void file_explorer_event_handler_cb(lv_event_t * e)
             // concat folder and filename to full_path
             if((cntFolderPath > 0) && (cntFilename > 3))
             {
-			    #ifndef LVGL_SIM
-			    // change song
-			    FS_player_change_track(cur_path, sel_fn);
-			    #else
-			    // concat full path to the FS player
-			    memcpy(wcsFullPath, cur_path, cntFolderPath * sizeof(TCHAR));
-			    memcpy(wcsFullPath + cntFolderPath, sel_fn, cntFilename * sizeof(TCHAR));
-			    wcsFullPath[cntFolderPath + cntFilename] = 0U; // terminate with \0\0
+                #ifndef LVGL_SIM
+                // change song
+                FS_player_change_track(cur_path, sel_fn);
+                #else
+                // concat full path to the FS player
+                memcpy(wcsFullPath, cur_path, cntFolderPath * sizeof(TCHAR));
+                memcpy(wcsFullPath + cntFolderPath, sel_fn, cntFilename * sizeof(TCHAR));
+                wcsFullPath[cntFolderPath + cntFilename] = 0U; // terminate with \0\0
                 // copy file name to an independant memory
                 memcpy(wcsFilename, sel_fn, cntFilename * sizeof(TCHAR));
                 wcsFilename[cntFilename] = 0U;
                 lv_lock();
                 GUI_notify_change_track(&track_info, 60000, wcsFilename, cntFilename, wcsFullPath, cntFolderPath + cntFilename);
                 lv_unlock();
-			    #endif
+                #endif
 
             }
         }
@@ -148,8 +148,8 @@ static void loop_icon_change(lv_obj_t* icon, FS_play_mode_t mode)
     switch(mode)
     {
     case FS_PLAY_MODE_ONE_SHOT:
-		lv_image_set_src(icon, LV_SYMBOL_MINUS);
-		break;
+        lv_image_set_src(icon, LV_SYMBOL_MINUS);
+        break;
     case FS_PLAY_MODE_ONE_LOOP:
     	lv_image_set_src(icon, LV_SYMBOL_LOOP);
     	break;
@@ -192,9 +192,15 @@ static void loop_event_handler_cb(lv_event_t* e)
 
 static void prev_event_handler_cb(lv_event_t* e)
 {
-    lv_event_code_t code = lv_event_get_code(e);
-    lv_obj_t* obj = lv_event_get_target(e);
-    
+    if(lv_event_get_code(e) == LV_EVENT_CLICKED) {
+#ifndef LVGL_SIM
+        osMutexAcquire(mtxFSPlayer, osWaitForever);
+        int32_t current_ms = (samplesPerMs > 0) ? (int32_t)(samplesPlayed / samplesPerMs) : 0;
+        osMutexRelease(mtxFSPlayer);
+        uint32_t new_ms = (current_ms > 10000) ? (uint32_t)(current_ms - 10000) : 0;
+        FS_player_signal_seek(new_ms);
+#endif
+    }
 }
 
 bool isPlay_lvgl = false;
@@ -202,9 +208,9 @@ static void play_pause_event_handler_cb(lv_event_t* e)
 {
     lv_event_code_t code = lv_event_get_code(e);
     lv_obj_t* obj = lv_event_get_target(e);
-    
+
     // TODO: play_pause_event_handler_cb
-	// CASE: to pause
+    // CASE: to pause
     if (isPlay_lvgl)
     {
 #ifndef LVGL_SIM
@@ -212,7 +218,7 @@ static void play_pause_event_handler_cb(lv_event_t* e)
 #endif
     }
     // CASE: to play
-    else 
+    else
     {
         // send resume signal
 #ifndef LVGL_SIM
@@ -223,11 +229,26 @@ static void play_pause_event_handler_cb(lv_event_t* e)
 
 static void next_event_handler_cb(lv_event_t* e)
 {
-    lv_event_code_t code = lv_event_get_code(e);
-    lv_obj_t* obj = lv_event_get_target(e);
-
+    if(lv_event_get_code(e) == LV_EVENT_CLICKED) {
+#ifndef LVGL_SIM
+        osMutexAcquire(mtxFSPlayer, osWaitForever);
+        int32_t current_ms = (samplesPerMs > 0) ? (int32_t)(samplesPlayed / samplesPerMs) : 0;
+        osMutexRelease(mtxFSPlayer);
+        FS_player_signal_seek((uint32_t)(current_ms + 10000));
+#endif
+    }
 }
 
+
+static void slider_seek_event_cb(lv_event_t *e)
+{
+    if(lv_event_get_code(e) == LV_EVENT_VALUE_CHANGED) {
+        int32_t ms = lv_slider_get_value(lv_event_get_target(e));
+#ifndef LVGL_SIM
+        FS_player_signal_seek((uint32_t)ms);
+#endif
+    }
+}
 static void del_counter_timer_event_cb(lv_event_t* e)
 {
     lv_event_code_t code = lv_event_get_code(e);
@@ -240,7 +261,7 @@ static lv_obj_t * create_player_cont(lv_obj_t * parent)
 {
     /*A transparent container in which the player section will be scrolled */
 #if 0
-	lv_obj_t* main_cont = lv_obj_create(parent);
+    lv_obj_t* main_cont = lv_obj_create(parent);
     lv_obj_remove_flag(main_cont, LV_OBJ_FLAG_CLICKABLE);
     lv_obj_remove_flag(main_cont, LV_OBJ_FLAG_SCROLL_ELASTIC);
     lv_obj_remove_style_all(main_cont);                            /*Make it transparent*/
@@ -372,7 +393,6 @@ static lv_obj_t * create_player_ctrl_box(lv_obj_t * parent)
     LV_IMAGE_DECLARE(img_slider_knob);
     slider_obj = lv_slider_create(cont);
 //    lv_obj_set_style_anim_duration(slider_obj, 100, 0);
-    lv_obj_remove_flag(slider_obj, LV_OBJ_FLAG_CLICKABLE); /*No input from the slider*/
     lv_obj_set_height(slider_obj, 3);
     lv_obj_set_grid_cell(slider_obj, LV_GRID_ALIGN_STRETCH, 0, 4, LV_GRID_ALIGN_CENTER, 1, 1);
     lv_obj_set_style_bg_image_src(slider_obj, LV_SYMBOL_BELL, LV_PART_KNOB);
@@ -384,6 +404,7 @@ static lv_obj_t * create_player_ctrl_box(lv_obj_t * parent)
     lv_obj_set_style_bg_grad_color(slider_obj, lv_color_hex(0xa666f1), LV_PART_INDICATOR);
     lv_obj_set_style_outline_width(slider_obj, 0, 0);
     lv_obj_add_event_cb(slider_obj, del_counter_timer_event_cb, LV_EVENT_DELETE, NULL);
+    lv_obj_add_event_cb(slider_obj, slider_seek_event_cb, LV_EVENT_VALUE_CHANGED, NULL);
 
     /* time indicator */
     elapsed_time_label = lv_label_create(cont);
@@ -532,9 +553,9 @@ static lv_obj_t* create_player_playlist_indicator(lv_obj_t* parent)
 
 static void duration_timer_cb(lv_timer_t* t)
 {
-	// update progress bar
-	// estimate progress by calculating the portion of data decoded by the FS player
-	// variables are from FS player
+    // update progress bar
+    // estimate progress by calculating the portion of data decoded by the FS player
+    // variables are from FS player
 #ifndef LVGL_SIM
     osMutexAcquire(mtxFSPlayer, 100);
     if(samplesPerMs > 0)
@@ -553,33 +574,33 @@ static TCHAR wcsFolder[_MAX_LFN + 1];
 void display_FS_player_screen()
 {
 
-	// just hidden, no need to rebuild the contents
-	if(isFSPlayerScreenCreated)
-	{
-		if(isFSPlayerScreenHidden)
-		{
-			// remove hide flag, so we can reveal the existing content
-			lv_obj_remove_flag(lvMainContFS, LV_OBJ_FLAG_HIDDEN);
-			register_group(lvGroupFSPlayerScreen);
-			lv_group_set_default(lvGroupFSPlayerScreen);
-			isFSPlayerScreenHidden = false;
-		}
-		goto EXIT_FS_PLAYER_SCREEN;
-	}
+    // just hidden, no need to rebuild the contents
+    if(isFSPlayerScreenCreated)
+    {
+        if(isFSPlayerScreenHidden)
+        {
+            // remove hide flag, so we can reveal the existing content
+            lv_obj_remove_flag(lvMainContFS, LV_OBJ_FLAG_HIDDEN);
+            register_group(lvGroupFSPlayerScreen);
+            lv_group_set_default(lvGroupFSPlayerScreen);
+            isFSPlayerScreenHidden = false;
+        }
+        goto EXIT_FS_PLAYER_SCREEN;
+    }
 
 
-	// 创建外部输入group，并聚焦
-	if(lvGroupFSPlayerScreen == NULL)
-	{
-		lvGroupFSPlayerScreen = lv_group_create();
-		register_group(lvGroupFSPlayerScreen);
-		lv_group_set_default(lvGroupFSPlayerScreen);
-	}
+    // 创建外部输入group，并聚焦
+    if(lvGroupFSPlayerScreen == NULL)
+    {
+        lvGroupFSPlayerScreen = lv_group_create();
+        register_group(lvGroupFSPlayerScreen);
+        lv_group_set_default(lvGroupFSPlayerScreen);
+    }
 
     /* Create background container BEGIN */
-	lv_obj_t* scr = lv_scr_act();
-	lvMainContFS = lv_obj_create(scr);
-	lv_obj_set_size(lvMainContFS, LV_PCT(100), LV_PCT(100));
+    lv_obj_t* scr = lv_scr_act();
+    lvMainContFS = lv_obj_create(scr);
+    lv_obj_set_size(lvMainContFS, LV_PCT(100), LV_PCT(100));
     lv_obj_remove_flag(lvMainContFS, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_remove_flag(lvMainContFS, LV_OBJ_FLAG_CLICKABLE);
     //lv_obj_set_style_margin_all(lvMainContFS, 0, 0);
@@ -587,46 +608,46 @@ void display_FS_player_screen()
     lv_obj_add_style(lvMainContFS, &lvStyleInvisibleCont, 0);
     /* Create background container END */
 
-	/* File Exp Part BEGIN */
+    /* File Exp Part BEGIN */
     // LHS
 //	lv_obj_set_layout(lvCont, LV_LAYOUT_GRID);
-	const uint16_t COL_WIDTH = LV_HOR_RES_MAX / 2;
-	const uint16_t ROW_HEIGHT =LV_VER_RES_MAX;
+    const uint16_t COL_WIDTH = LV_HOR_RES_MAX / 2;
+    const uint16_t ROW_HEIGHT =LV_VER_RES_MAX;
 //	static int32_t column_dsc[] = {COL_WIDTH, COL_WIDTH, LV_GRID_TEMPLATE_LAST};   /*4 columns with 100 and 400 ps width*/
 //	static int32_t row_dsc[] = {ROW_HEIGHT,LV_GRID_TEMPLATE_LAST}; /*3 100 px tall rows*/
 //	lv_obj_set_grid_dsc_array(lvCont, column_dsc, row_dsc);
 
-	lv_obj_t* lvContFileExp = lv_obj_create(lvMainContFS);
-	lv_obj_set_size(lvContFileExp, COL_WIDTH, ROW_HEIGHT);
-	lv_obj_align(lvContFileExp, LV_ALIGN_LEFT_MID, 0, 0);
+    lv_obj_t* lvContFileExp = lv_obj_create(lvMainContFS);
+    lv_obj_set_size(lvContFileExp, COL_WIDTH, ROW_HEIGHT);
+    lv_obj_align(lvContFileExp, LV_ALIGN_LEFT_MID, 0, 0);
     lv_obj_add_style(lvMainContFS, &lvStyleInvisibleCont, 0);
 
-	// NOTE: NO NEED TO ADD TO GROUP AGAIN, will be added to the default group automatically
-	lv_obj_t* lvFileExp = lv_simple_file_explorer_unicode_create(lvContFileExp);   
+    // NOTE: NO NEED TO ADD TO GROUP AGAIN, will be added to the default group automatically
+    lv_obj_t* lvFileExp = lv_simple_file_explorer_unicode_create(lvContFileExp);   
     // cast obj to a more meaningful type
     lv_simple_file_explorer_unicode_t* explorer = (lv_simple_file_explorer_unicode_t*)lvFileExp;
     lv_obj_add_style(explorer->cont, &lvStyleInvisibleCont, 0);
 
-	lv_obj_add_event_cb(lvFileExp, file_explorer_event_handler_cb,  LV_EVENT_VALUE_CHANGED, NULL);
+    lv_obj_add_event_cb(lvFileExp, file_explorer_event_handler_cb,  LV_EVENT_VALUE_CHANGED, NULL);
     // set initially showed directory
-	// make music dir if not exist
-	FRESULT fr;
+    // make music dir if not exist
+    FRESULT fr;
 #ifndef LVGL_SIM
-	DIR dir;
-	fr = f_opendir(&dir, FS_PATH_MUSIC_FOLDER);
-	if(fr == FR_OK)
-		f_closedir(&dir);
-	else
-	{
-		// make dir
-		fr = f_mkdir(FS_PATH_MUSIC_FOLDER);
-		if(fr != FR_OK)
-			show_toast("Music folder not found!");
-	}
+    DIR dir;
+    fr = f_opendir(&dir, FS_PATH_MUSIC_FOLDER);
+    if(fr == FR_OK)
+        f_closedir(&dir);
+    else
+    {
+        // make dir
+        fr = f_mkdir(FS_PATH_MUSIC_FOLDER);
+        if(fr != FR_OK)
+            show_toast("Music folder not found!");
+    }
 #endif
-	lv_simple_file_explorer_unicode_open_dir(lvFileExp, FS_PATH_MUSIC_FOLDER);
+    lv_simple_file_explorer_unicode_open_dir(lvFileExp, FS_PATH_MUSIC_FOLDER);
 
-	/*File Exp Part END */
+    /*File Exp Part END */
 
 
     /* Player Part BEGIN */ // RHS
@@ -693,7 +714,7 @@ void display_FS_player_screen()
         size_t cntFullPath = strnlen_TCHAR(wcsFullPath, _MAX_LFN);
         size_t cntFname = strnlen_TCHAR(wcsFilename, _MAX_LFN);
         // extract folder from fullpath
-		strncpy_TCHAR(wcsFolder, wcsFullPath, cntFullPath - cntFname);
+        strncpy_TCHAR(wcsFolder, wcsFullPath, cntFullPath - cntFname);
         // switch to the first track in playlist
 //        GUI_notify_change_track(&track_info, wcsFilename, cntFname, wcsFullPath, cntFullPath);
 #ifndef LVGL_SIM
@@ -706,7 +727,7 @@ void display_FS_player_screen()
         size_t cntFullPath = strnlen_TCHAR(wcsFullPath, _MAX_LFN);
         size_t cntFname = strnlen_TCHAR(wcsFilename, _MAX_LFN);
         // extract folder from fullpath
-		strncpy_TCHAR(wcsFolder, wcsFullPath, cntFullPath - cntFname);
+        strncpy_TCHAR(wcsFolder, wcsFullPath, cntFullPath - cntFname);
 //        GUI_notify_change_track(&track_info, wcsFilename, cntFname, wcsFullPath, cntFullPath);
 #ifndef LVGL_SIM
         FS_player_change_track(wcsFolder, wcsFilename);
@@ -722,12 +743,12 @@ void display_FS_player_screen()
     // protedted: mtxFSPlayer END
     /*Player Part END*/
 
-	/* back button */
-	lv_obj_t* lvBtnBack=create_back_button(lvMainContFS, lvGroupFSPlayerScreen, dismiss_FS_player_screen);
+    /* back button */
+    lv_obj_t* lvBtnBack=create_back_button(lvMainContFS, lvGroupFSPlayerScreen, dismiss_FS_player_screen);
 
-	isFSPlayerScreenCreated = true;
+    isFSPlayerScreenCreated = true;
 EXIT_FS_PLAYER_SCREEN:
-	return;
+    return;
 }
 
 /* MAIN　CONTENT END */
@@ -736,19 +757,19 @@ EXIT_FS_PLAYER_SCREEN:
 
 int GUI_notify_change_track(track_info_t* p, size_t duration_ms, const TCHAR* wcsFname, size_t cntFname, const TCHAR* wcsFullPath, size_t cntFullPath)
 {
-	// note: must be protected by mtxFSPlayer or called from FS Player task, for playlist will be modified
-	// do not call in LVGL routines
-	// can only be called from external tasks
+    // note: must be protected by mtxFSPlayer or called from FS Player task, for playlist will be modified
+    // do not call in LVGL routines
+    // can only be called from external tasks
     int r = 0;
-	if(isFSPlayerScreenCreated)
-	{
+    if(isFSPlayerScreenCreated)
+    {
         // set GUI title displays
         UTF16ToUTF8(wcsFname, wcsFname + cntFname, (UTF8*)track_info.sTitle, (UTF8*)track_info.sTitle + sizeof(track_info.sTitle));
-		lv_label_set_text_static(title_label, p->sTitle);
-		p->duration_ms = duration_ms;
-		lv_slider_set_range(slider_obj, 0, p->duration_ms);
-		lv_slider_set_value(slider_obj, 0, LV_ANIM_OFF);
-		lv_label_set_text_fmt(duration_time_label, "%"LV_PRIu32":%02"LV_PRIu32, p->duration_ms / 60000, p->duration_ms % 60000 / 1000);
+        lv_label_set_text_static(title_label, p->sTitle);
+        p->duration_ms = duration_ms;
+        lv_slider_set_range(slider_obj, 0, p->duration_ms);
+        lv_slider_set_value(slider_obj, 0, LV_ANIM_OFF);
+        lv_label_set_text_fmt(duration_time_label, "%"LV_PRIu32":%02"LV_PRIu32, p->duration_ms / 60000, p->duration_ms % 60000 / 1000);
         // light up the playlist indicator if the track is in
         if (isOpen_PL)
         {
@@ -774,52 +795,52 @@ int GUI_notify_change_track(track_info_t* p, size_t duration_ms, const TCHAR* wc
                 }
             }
         }
-	}
-	return r;
+    }
+    return r;
 }
 
 void GUI_notify_play_pause(uint8_t state)
 {
-	// note: must be protected by lv_lock
-	// need lvlock
-	if(state) // now start to play ,switch button to the pause symbol
-	{
+    // note: must be protected by lv_lock
+    // need lvlock
+    if(state) // now start to play ,switch button to the pause symbol
+    {
         // to play
-		if (isFSPlayerScreenCreated)
-		{
-			lv_image_set_src(play_obj, LV_SYMBOL_PAUSE);
-			lv_timer_resume(duration_update_timer); // resume timer
-		}
-        isPlay_lvgl = true;
-	}
-	else // to pause ,switch button to the play symbol
-	{
-		// to pause
         if (isFSPlayerScreenCreated)
         {
-			lv_image_set_src(play_obj, LV_SYMBOL_PLAY);
-			lv_timer_pause(duration_update_timer); // pause timer
+            lv_image_set_src(play_obj, LV_SYMBOL_PAUSE);
+            lv_timer_resume(duration_update_timer); // resume timer
+        }
+        isPlay_lvgl = true;
+    }
+    else // to pause ,switch button to the play symbol
+    {
+        // to pause
+        if (isFSPlayerScreenCreated)
+        {
+            lv_image_set_src(play_obj, LV_SYMBOL_PLAY);
+            lv_timer_pause(duration_update_timer); // pause timer
         }
         isPlay_lvgl = false;
-	}
+    }
 }
 
 void GUI_notify_sample_rate_and_bitdepth(uint32_t fsHz, uint8_t bitdepth)
 {
-	// note: must be protected by lv_lock
-	// need lvlock
-	if(!isFSPlayerScreenCreated)
-		return;
-	char sValue[16];
-	if(fsHz > 0 && fsHz < 999999)
-	{
-		uint8_t n = number2text(sValue, fsHz / 100, 1, 'k'); // 44100->44.1k
-		sValue[n++] = 'H';
-		sValue[n++] = 'z';
-		sValue[n++] = '@';
-		number2text(sValue+n, bitdepth, 0, 0);
-		lv_label_set_text(sample_rate_label, sValue);
-	}
+    // note: must be protected by lv_lock
+    // need lvlock
+    if(!isFSPlayerScreenCreated)
+        return;
+    char sValue[16];
+    if(fsHz > 0 && fsHz < 999999)
+    {
+        uint8_t n = number2text(sValue, fsHz / 100, 1, 'k'); // 44100->44.1k
+        sValue[n++] = 'H';
+        sValue[n++] = 'z';
+        sValue[n++] = '@';
+        number2text(sValue+n, bitdepth, 0, 0);
+        lv_label_set_text(sample_rate_label, sValue);
+    }
 
 
 }

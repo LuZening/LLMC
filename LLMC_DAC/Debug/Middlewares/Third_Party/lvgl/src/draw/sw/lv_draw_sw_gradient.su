@@ -1,5 +1,0 @@
-lv_color.h:288:26:lv_color_make	24	static
-lv_draw_sw_gradient.c:42:20:allocate_item	40	static
-lv_draw_sw_gradient.c:62:13:lv_gradient_get	48	static
-lv_draw_sw_gradient.c:82:28:lv_gradient_color_calculate	72	static
-lv_draw_sw_gradient.c:135:6:lv_gradient_cleanup	16	static

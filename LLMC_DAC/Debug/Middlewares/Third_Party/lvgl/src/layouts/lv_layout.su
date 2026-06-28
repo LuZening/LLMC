@@ -1,5 +1,0 @@
-lv_obj_style_gen.h:623:24:lv_obj_get_style_layout	24	static
-lv_layout.c:39:6:_lv_layout_init	8	static
-lv_layout.c:53:6:_lv_layout_deinit	8	static
-lv_layout.c:58:10:lv_layout_register	16	static
-lv_layout.c:68:6:_lv_layout_apply	24	static

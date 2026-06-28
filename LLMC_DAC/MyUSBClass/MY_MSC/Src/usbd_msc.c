@@ -154,7 +154,7 @@ __ALIGN_BEGIN  uint8_t USBD_MSC_CfgHSDesc[USB_MSC_CONFIG_DESC_SIZ]  __ALIGN_END 
   0x05,                                            /* Endpoint descriptor type */
   MSC_EPIN_ADDR,                                   /* Endpoint address (IN, address 1) */
   0x02,                                            /* Bulk endpoint type */
-  LOBYTE(MSC_MAX_HS_PACKET),						/* Packet Size */
+  LOBYTE(MSC_MAX_HS_PACKET),                        /* Packet Size */
   HIBYTE(MSC_MAX_HS_PACKET),
   0x00,                                            /* Polling interval in milliseconds */
 

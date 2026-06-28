@@ -1,5 +1,0 @@
-LVGL_GUI_settings.c:262:13:dismiss_sub_page_buffer_dashboard_event_cb	8	static
-LVGL_GUI_settings.c:205:13:buffer_dashboard_timer_cb	24	static
-LVGL_GUI_settings.c:162:6:back_event_cb	24	static
-LVGL_GUI_settings.c:54:13:menu_settings_event_cb	8	static,ignoring_inline_asm
-LVGL_GUI_settings.c:401:6:display_settings_screen	88	static

@@ -1,5 +1,0 @@
-usbd_msc_scsi.c:1054:15:SCSI_ProcessRead	40	static
-usbd_msc_scsi.c:1096:15:SCSI_ProcessWrite	40	static
-usbd_msc_scsi.c:1146:15:SCSI_UpdateBotData.part.0	0	static
-usbd_msc_scsi.c:121:8:SCSI_ProcessCmd	40	static
-usbd_msc_scsi.c:581:6:SCSI_SenseCode	16	static

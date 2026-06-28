@@ -1,8 +1,0 @@
-lv_theme_default.c:720:13:theme_apply	32	static
-lv_theme_default.c:205:19:grey_filter_cb	48	static
-lv_theme_default.c:199:19:dark_color_filter_cb	16	static
-lv_theme_default.c:1209:13:style_init_reset	0	static
-lv_theme_default.c:634:14:lv_theme_default_init	112	static
-lv_theme_default.c:687:6:lv_theme_default_deinit	16	static
-lv_theme_default.c:704:14:lv_theme_default_get	0	static
-lv_theme_default.c:713:6:lv_theme_default_is_inited	0	static

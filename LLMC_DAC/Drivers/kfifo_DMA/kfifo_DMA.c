@@ -40,7 +40,7 @@ bool is_pow_of_2(uint32_t n )
 
 void kfifo_DMA_static_init(KFIFO_DMA* p, uint8_t* buf, size_t size, size_t dmastep)
 {
-
+    assert(IS_POWER_OF_TWO_U(size));
 	p->in = 0;
 	p->out = 0;
 	p->size = size;

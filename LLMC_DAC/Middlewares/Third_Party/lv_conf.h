@@ -42,7 +42,7 @@
 
 #if LV_USE_STDLIB_MALLOC == LV_STDLIB_BUILTIN
     /*Size of the memory available for `lv_malloc()` in bytes (>= 2kB)*/
-    #define LV_MEM_SIZE (100U * 1024U)          /*[100K bytes]*/
+    #define LV_MEM_SIZE (80U * 1024U)          /*[100K bytes]*/
 
     /*Size of the memory expand for `lv_malloc()` in bytes*/
     #define LV_MEM_POOL_EXPAND_SIZE 0
@@ -113,7 +113,7 @@
      * and can't be drawn in chunks. */
 
     /*The target buffer size for simple layer chunks.*/
-    #define LV_DRAW_SW_LAYER_SIMPLE_BUF_SIZE    (24 * 1024)   /*[bytes]*/
+    #define LV_DRAW_SW_LAYER_SIMPLE_BUF_SIZE    (16 * 1024)   /*[bytes]*/
 
     /* 0: use a simple renderer capable of drawing only simple rectangles with gradient, images, texts, and straight lines only
      * 1: use a complex renderer capable of drawing rounded corners, shadow, skew lines, and arcs too */
@@ -280,7 +280,7 @@
  *Used by image decoders such as `lv_lodepng` to keep the decoded image in the memory.
  *If size is not set to 0, the decoder will fail to decode when the cache is full.
  *If size is 0, the cache function is not enabled and the decoded mem will be released immediately after use.*/
-#define LV_CACHE_DEF_SIZE       24U * 1024U // For 100x100x16b picture
+#define LV_CACHE_DEF_SIZE       16U * 1024U // For 100x100x16b picture
 
 /*Default number of image header cache entries. The cache is used to store the headers of images
  *The main logic is like `LV_CACHE_DEF_SIZE` but for image headers.*/
@@ -359,8 +359,11 @@
 #define LV_ATTRIBUTE_LARGE_RAM_ARRAY __attribute__((section(".bss")))
 
 /*Place performance critical functions into a faster memory (e.g RAM)*/
+#if defined(DEBUG)
+#define LV_ATTRIBUTE_FAST_MEM
+#else
 #define LV_ATTRIBUTE_FAST_MEM  __attribute__((section(".ITCMRAM_heap")))
-
+#endif
 /*Export integer constant to binding. This macro is used with constants in the form of LV_<CONST> that
  *should also appear on LVGL binding API such as Micropython.*/
 #define LV_EXPORT_CONST_INT(int_value) struct _silence_gcc_warning /*The default value just prevents GCC warning*/

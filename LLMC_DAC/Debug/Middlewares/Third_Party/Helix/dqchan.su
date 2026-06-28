@@ -1,3 +1,0 @@
-assembly.h:232:21:CLZ	24	static
-dqchan.c:132:12:DequantBlock	80	static
-dqchan.c:244:5:xmp3_DequantChannel	96	static

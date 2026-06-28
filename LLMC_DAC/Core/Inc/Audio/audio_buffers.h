@@ -118,7 +118,7 @@ extern float volumef_USB_playback;
 
 
 extern audio_interpolator_t arr_audio_interpolator_48K_to_96K_USB_playback[MAX_CHANNELS];
-extern float32_t __attribute__((section(".DTCMRAM1_heap"))) bufsInterpolatorState_USB_playback[MAX_CHANNELS][COUNT_FIR_BUF]; // 1KB
+extern float32_t  bufsInterpolatorState_USB_playback[MAX_CHANNELS][COUNT_FIR_BUF]; // 1KB
 
 void init_USB_player();
 void USB_player_task_start();
@@ -166,14 +166,14 @@ extern uint8_t enable_to_USB_record;
 // when output fifo half filled, set ready flag for users to absorb
 extern uint8_t ready_for_output_USB_record;
 extern size_t sizePreheatBytes_USB_record;
-#define USB_RECORDER_BUF_SIZE  64U * 1024U // 64KBytes
+#define USB_RECORDER_BUF_SIZE  32U * 1024U // 32KBytes
 extern uint8_t bufUSBRecord[];
 extern KFIFO_DMA fifo_to_USB_record;
 extern uint32_t fifoOverflowCounter_USB_record;
 extern uint32_t fifoUnderflowCounter_USB_record;
 extern uint32_t channels_connected_to_USB_record;
 extern audio_decimator_t arr_audio_decimator_96K_to_48K_USB_record[MAX_CHANNELS];
-extern float32_t __attribute__((section(".DTCMRAM1_heap"))) bufsDecimatorState_USB_record[MAX_CHANNELS][COUNT_FIR_BUF]; // 1KB
+extern float32_t bufsDecimatorState_USB_record[MAX_CHANNELS][COUNT_FIR_BUF]; // 1KB
 extern float volumef_USB_record; // scale the USB record output, set by USB host
 void output_to_usb_init();
 void output_to_usb_start();

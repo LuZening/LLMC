@@ -65,6 +65,7 @@ extern DMA_HandleTypeDef hdma_i2c1_tx;
 extern DMA_HandleTypeDef hdma_i2c1_rx;
 extern DMA_HandleTypeDef hdma_sai2_a;
 extern DMA_HandleTypeDef hdma_sai2_b;
+extern ADC_HandleTypeDef hadc2;
 extern SAI_HandleTypeDef hsai_BlockA2;
 extern SAI_HandleTypeDef hsai_BlockB2;
 extern SD_HandleTypeDef hsd1;
@@ -195,11 +196,11 @@ void EXTI9_5_IRQHandler(void)
   /* USER CODE BEGIN EXTI9_5_IRQn 0 */
 
   /* USER CODE END EXTI9_5_IRQn 0 */
-	for(int i = 5; i <= 9; ++i)
-	{
-		if((EXTI->PR1 & (EXTI_PR1_PR0 << i)) != 0)
-		  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0 << i);
-	}
+    for(int i = 5; i <= 9; ++i)
+    {
+        if((EXTI->PR1 & (EXTI_PR1_PR0 << i)) != 0)
+          HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0 << i);
+    }
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */
 
   /* USER CODE END EXTI9_5_IRQn 1 */
@@ -210,11 +211,11 @@ void EXTI15_10_IRQHandler(void)
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
 
   /* USER CODE END EXTI15_10_IRQn 0 */
-	for(int i = 10; i <= 15; ++i)
-	{
-		if((EXTI->PR1 & (EXTI_PR1_PR0 << i)) != 0)
-		  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0 << i);
-	}
+    for(int i = 10; i <= 15; ++i)
+    {
+        if((EXTI->PR1 & (EXTI_PR1_PR0 << i)) != 0)
+          HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0 << i);
+    }
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 
   /* USER CODE END EXTI15_10_IRQn 1 */
@@ -435,6 +436,9 @@ void MDMA_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-
+void ADC_IRQHandler(void)
+{
+    HAL_ADC_IRQHandler(&hadc2);
+}
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

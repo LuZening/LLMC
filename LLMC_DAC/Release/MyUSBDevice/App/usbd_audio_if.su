@@ -1,9 +1,0 @@
-usbd_audio_if.c:157:15:AUDIO_Init_HS	0	static
-usbd_audio_if.c:170:15:AUDIO_DeInit_HS	0	static
-usbd_audio_if.c:185:15:AUDIO_AudioCmd_HS	0	static
-usbd_audio_if.c:237:15:AUDIO_MuteCtl_HS	0	static
-usbd_audio_if.c:304:15:AUDIO_GetState_HS	0	static
-usbd_audio_if.c:208:15:AUDIO_VolumeCtl_HS	16	static
-usbd_audio_if.c:290:15:AUDIO_PeriodicTC_HS	0	static
-usbd_audio_if.c:315:6:TransferComplete_CallBack_HS	0	static
-usbd_audio_if.c:326:6:HalfTransfer_CallBack_HS	0	static

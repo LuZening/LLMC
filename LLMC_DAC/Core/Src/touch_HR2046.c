@@ -26,7 +26,7 @@ static void reverse_ols_1_var_with_const(int* X1, float* params,/* out */ int* Y
 
 void init_touch_screen_calib_info(TouchScreenCalibrationInfo_t *p)
 {
-	p->isCalibrated = false;
+    p->isCalibrated = false;
 }
 
 
@@ -164,134 +164,132 @@ static void reverse_ols_1_var_with_const(int* X1, float* params,/* out */ int* Y
  * */
 static uint16_t touch_read_data(uint8_t cmd)
 {
+    // enable CS
+    HAL_GPIO_WritePin(T_CSX_GPIO_Port, T_CSX_Pin, GPIO_PIN_RESET);
 
-	// enable CS
-	HAL_GPIO_WritePin(T_CSX_GPIO_Port, T_CSX_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(T_CSX_GPIO_Port, T_CSX_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(T_CSX_GPIO_Port, T_CSX_Pin, GPIO_PIN_RESET);
-	//HAL_Delay(1);
-	// write command
-	uint8_t res = HAL_SPI_Transmit(&hspi, &cmd, 1, HAL_MAX_DELAY);
-	UNUSED(res);
-	// read value
-	uint8_t h, l;
-	static uint8_t txData = 0xff;
-	res = HAL_SPI_TransmitReceive(&hspi, &txData, &h, 1, HAL_MAX_DELAY);
-	res = HAL_SPI_TransmitReceive(&hspi, &txData, &l, 1, HAL_MAX_DELAY);
-	uint16_t r = (((uint16_t)(h & 0x7f) << 8) | l) >> 3; // the very 1st and last 3 received bit is invalid, should drop
-	// disable CS
-	HAL_GPIO_WritePin(T_CSX_GPIO_Port, T_CSX_Pin, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(T_CSX_GPIO_Port, T_CSX_Pin, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(T_CSX_GPIO_Port, T_CSX_Pin, GPIO_PIN_SET);
-	return r;
+    // write command
+    uint8_t res = HAL_SPI_Transmit(&hspi, &cmd, 1, HAL_MAX_DELAY);
+    UNUSED(res);
+
+    // read 2 data bytes in one transfer (MOSI clocks with 0xFF)
+    uint8_t buf[2];
+    static const uint8_t txDummy[2] = {0xFF, 0xFF};
+    res = HAL_SPI_TransmitReceive(&hspi, (uint8_t *)txDummy, buf, 2, HAL_MAX_DELAY);
+    UNUSED(res);
+    // The first byte's MSB and last 3 bits of the 12-bit result are invalid
+    uint16_t r = (((uint16_t)(buf[0] & 0x7F) << 8) | buf[1]) >> 3;
+
+    // disable CS
+    HAL_GPIO_WritePin(T_CSX_GPIO_Port, T_CSX_Pin, GPIO_PIN_SET);
+    return r;
 }
 
 
 
 
 bool touch_set_calibrate(int real_X[5], int real_Y[5],
-		int ADC_X[5], int ADC_Y[5],
-		TouchScreenCalibrationInfo_t *result
-		)
+        int ADC_X[5], int ADC_Y[5],
+        TouchScreenCalibrationInfo_t *result
+        )
 {
-	/* 2 variable OLS
-	 * x_phy = px0 + px1 * ADC_x + px2 * ADC_y
-	 * y_phy = py0 + py1 * ADC_x + py2 * ADC_y
-	 */
-	bool r;
-	// solve for X axis
+    /* 2 variable OLS
+     * x_phy = px0 + px1 * ADC_x + px2 * ADC_y
+     * y_phy = py0 + py1 * ADC_x + py2 * ADC_y
+     */
+    bool r;
+    // solve for X axis
 //	r = ols_2_var_with_const(real_X, ADC_X, ADC_Y, 5, result->params_X);
-	r = ols_1_var_with_const(real_X, ADC_X, 5, result->params_X);
-	if(!r)
-		return false;
-	// solve for Y axis
+    r = ols_1_var_with_const(real_X, ADC_X, 5, result->params_X);
+    if(!r)
+        return false;
+    // solve for Y axis
 //	r = ols_2_var_with_const(real_Y, ADC_X, ADC_Y, 5, result->params_Y);
-	r = ols_1_var_with_const(real_Y, ADC_Y, 5, result->params_Y);
-	if(!r)
-		return false;
+    r = ols_1_var_with_const(real_Y, ADC_Y, 5, result->params_Y);
+    if(!r)
+        return false;
 
-	if(ADC_X != result->ADC_X)
-		memcpy(result->ADC_X, ADC_X, 5*sizeof(uint16_t));
-	if(ADC_Y != result->ADC_Y)
-		memcpy(result->ADC_Y, ADC_Y, 5*sizeof(uint16_t));
-	if(real_X != result->real_X)
-		memcpy(result->real_X, real_X, 5*sizeof(uint16_t));
-	if(real_Y != result->real_Y)
-		memcpy(result->real_Y, real_Y, 5*sizeof(uint16_t));
-	result->isCalibrated = true;
-	if(pTSCalib == NULL)
-		pTSCalib = result;
-	return true;
+    if(ADC_X != result->ADC_X)
+        memcpy(result->ADC_X, ADC_X, 5*sizeof(uint16_t));
+    if(ADC_Y != result->ADC_Y)
+        memcpy(result->ADC_Y, ADC_Y, 5*sizeof(uint16_t));
+    if(real_X != result->real_X)
+        memcpy(result->real_X, real_X, 5*sizeof(uint16_t));
+    if(real_Y != result->real_Y)
+        memcpy(result->real_Y, real_Y, 5*sizeof(uint16_t));
+    result->isCalibrated = true;
+    if(pTSCalib == NULL)
+        pTSCalib = result;
+    return true;
 }
 
 int touch_read_XY_ADC(int *pX_orig, int *pY_orig)
 {
-	// read pressure
-	int Z1,Z2,Z;
+    // read pressure
+    int Z1,Z2,Z;
 
-	Z1 = touch_read_data(HR2046_CMD_READ_Z1);
-	Z2 = touch_read_data(HR2046_CMD_READ_Z2);
-	// of the touch pressure
-	Z = (4095 - Z2) + Z1;
-	if(Z < 0)
-		Z = -Z;
-	// read X
-	*pX_orig = touch_read_data(HR2046_CMD_READ_X);
-	// read Y
-	*pY_orig = touch_read_data(HR2046_CMD_READ_Y);
-	return Z;
+    Z1 = touch_read_data(HR2046_CMD_READ_Z1);
+    Z2 = touch_read_data(HR2046_CMD_READ_Z2);
+    // of the touch pressure
+    Z = (4095 - Z2) + Z1;
+    if(Z < 0)
+        Z = -Z;
+    // read X
+    *pX_orig = touch_read_data(HR2046_CMD_READ_X);
+    // read Y
+    *pY_orig = touch_read_data(HR2046_CMD_READ_Y);
+    return Z;
 }
 
 int touch_convert_XY_ADC_to_physical(int ADC_X,int ADC_Y,int ADC_Z,
-		int* pX, int* pY, int* pZ)
+        int* pX, int* pY, int* pZ)
 {
-	if(pTSCalib != NULL && pTSCalib->isCalibrated)
-	{
-		// ADC_X[4]: X_Center
+    if(pTSCalib != NULL && pTSCalib->isCalibrated)
+    {
+        // ADC_X[4]: X_Center
 //		*pX = pTSCalib->params_X[0] + pTSCalib->params_X[1] * ADC_X + pTSCalib->params_X[2] * ADC_Y;
-		*pX = pTSCalib->params_X[0] + pTSCalib->params_X[1] * ADC_X;
-		// ADC_Y[4]: Y_Center
+        *pX = pTSCalib->params_X[0] + pTSCalib->params_X[1] * ADC_X;
+        // ADC_Y[4]: Y_Center
 //		*pY = pTSCalib->params_Y[0] + pTSCalib->params_Y[1] * ADC_X + pTSCalib->params_Y[2] * ADC_Y;
-		*pY = pTSCalib->params_Y[0] + pTSCalib->params_Y[1] * ADC_Y;
-		*pZ = (ADC_Z > 400)?(1):(0);
-	}
-	else // uncalibrated
-	{
-		*pX = UINT16_MAX;
-		*pY = UINT16_MAX;
-		*pZ = 0;
-	}
-	return *pZ;
+        *pY = pTSCalib->params_Y[0] + pTSCalib->params_Y[1] * ADC_Y;
+        *pZ = (ADC_Z > 400)?(1):(0);
+    }
+    else // uncalibrated
+    {
+        *pX = UINT16_MAX;
+        *pY = UINT16_MAX;
+        *pZ = 0;
+    }
+    return *pZ;
 
 }
 
 
 int touch_read_XY_physical(int *pX, int* pY)
 {
-	int Z;
-	int ADC_X, ADC_Y, ADC_Z;
-	ADC_Z = touch_read_XY_ADC(&ADC_X, &ADC_Y);
-	return touch_convert_XY_ADC_to_physical(ADC_X, ADC_Y, ADC_Z, pX, pY, &Z);
+    int Z;
+    int ADC_X, ADC_Y, ADC_Z;
+    ADC_Z = touch_read_XY_ADC(&ADC_X, &ADC_Y);
+    return touch_convert_XY_ADC_to_physical(ADC_X, ADC_Y, ADC_Z, pX, pY, &Z);
 }
 
 int touch_read_VBAT_mv()
 {
-	int vADC = touch_read_data(HR2046_CMD_READ_VBAT);
-	int mv = (vADC * HR2046_VREF_MV * 4) / (0xFFFFU >> (16 - 12));
-	return mv;
+    int vADC = touch_read_data(HR2046_CMD_READ_VBAT);
+    int mv = (vADC * HR2046_VREF_MV * 4) / (0xFFFFU >> (16 - 12));
+    return mv;
 }
 
 
 int touch_read_temperature()
 {
-	int vADC = touch_read_data(HR2046_CMD_READ_TEMP);
-	int vADC_91 = touch_read_data(HR2046_CMD_READ_TEMP_91);
-	int delta_mv;
-	if(vADC_91 > vADC)
-		delta_mv = ((vADC_91 - vADC) * HR2046_VREF_MV) / (0xFFFFU >> (16 - 12));
-	else
-		delta_mv = 0;
-	int temp_C_0_001 = delta_mv * 2573 - 273000;
-	return temp_C_0_001 / 1000;
+    int vADC = touch_read_data(HR2046_CMD_READ_TEMP);
+    int vADC_91 = touch_read_data(HR2046_CMD_READ_TEMP_91);
+    int delta_mv;
+    if(vADC_91 > vADC)
+        delta_mv = ((vADC_91 - vADC) * HR2046_VREF_MV) / (0xFFFFU >> (16 - 12));
+    else
+        delta_mv = 0;
+    int temp_C_0_001 = delta_mv * 2573 - 273000;
+    return temp_C_0_001 / 1000;
 }
 

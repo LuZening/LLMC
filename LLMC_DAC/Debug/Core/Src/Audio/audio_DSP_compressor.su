@@ -1,6 +1,0 @@
-audio_DSP_compressor.c:20:14:db_to_linear	16	static
-audio_DSP_compressor.c:26:14:linear_to_db	16	static
-audio_DSP_compressor.c:31:6:audio_compress_init	24	static
-audio_DSP_compressor.c:46:6:audio_compress_modify_params	24	static,ignoring_inline_asm
-audio_DSP_compressor.c:63:22:calculate_rms	24	static
-audio_DSP_compressor.c:71:6:audio_compress	56	static

@@ -1,3 +1,0 @@
-LVGL_flush.c:23:13:DMA2D_MemCopy	24	static
-LVGL_flush.c:46:6:DMA2D_XferCpltCallback	16	static
-LVGL_flush.c:53:6:LTDC_flush_cb	88	static,ignoring_inline_asm

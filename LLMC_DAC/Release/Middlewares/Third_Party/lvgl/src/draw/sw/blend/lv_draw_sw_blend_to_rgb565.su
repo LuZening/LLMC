@@ -1,3 +1,0 @@
-lv_draw_sw_blend_to_rgb565.c:423:35:rgb888_image_blend	80	static
-lv_draw_sw_blend_to_rgb565.c:139:28:lv_draw_sw_blend_color_to_rgb565	72	static
-lv_draw_sw_blend_to_rgb565.c:290:28:lv_draw_sw_blend_image_to_rgb565	72	static

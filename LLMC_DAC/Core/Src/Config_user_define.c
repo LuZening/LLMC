@@ -28,7 +28,7 @@ config_var_map_t configNameMapper[CONFIG_NUM_OF_VARS] = {
 //	{"label.4", &(cfg.sAntNames[3]), CONFIG_VAR_BYTESTRING_LONG},
 //	{"label.5", &(cfg.sAntNames[4]), CONFIG_VAR_BYTESTRING_LONG},
 //	{"label.6", &(cfg.sAntNames[5]), CONFIG_VAR_BYTESTRING_LONG},
-		0
+        0
 
 };
 
@@ -55,8 +55,9 @@ void init_config(Config *p)
     memset(p->audio_connections , 0 , sizeof(p->audio_connections));
     memset(p->outputs_dsp_usage, 0, sizeof(p->outputs_dsp_usage));
     memset(p->dsp_preset_ids, 0, sizeof(p->dsp_preset_ids));
-    p->usbCfgDescSelector = USB_CFG_DESC_MASS_STORAGE;
-    p->USB_record_audio_sample_rate_Hz = DEFAULT_SAMPLE_RATE_HZ;
+//    p->usbCfgDescSelector = USB_CFG_DESC_MASS_STORAGE;
+    p->usbCfgDescSelector = USB_CFG_DESC_UAC1_0;
+    p->USB_record_audio_sample_rate_Hz = 48000U;
     p->USB_record_audio_bit_depth = 24U;
 
     p->USB_volume_control = 0; // do not allow volume control through USB
@@ -70,34 +71,34 @@ bool config_check_valid(Config* p)
 {
 
     // VALID STRING
-	uint8_t check = strncmp(p->sValid, VALID_STRING, sizeof(p->sValid));
-	if(check != 0)
-		goto CONFIG_CHECK_FAILED;
+    uint8_t check = strncmp(p->sValid, VALID_STRING, sizeof(p->sValid));
+    if(check != 0)
+        goto CONFIG_CHECK_FAILED;
 
-	// sample rate
-	int i;
-	for(i = 0; i < N_VALID_AUDIO_SAMPLE_RATES; ++i)
-	{
-		if(cfg.USB_record_audio_sample_rate_Hz == arr_valid_audio_sample_rates_Hz[i])
-			break;
-	}
-	if(i >= N_VALID_AUDIO_SAMPLE_RATES)
-		goto CONFIG_CHECK_FAILED;
+    // sample rate
+    int i;
+    for(i = 0; i < N_VALID_AUDIO_SAMPLE_RATES; ++i)
+    {
+        if(p->USB_record_audio_sample_rate_Hz == arr_valid_audio_sample_rates_Hz[i])
+            break;
+    }
+    if(i >= N_VALID_AUDIO_SAMPLE_RATES)
+        goto CONFIG_CHECK_FAILED;
 
-	// bit depth
-	for(i = 0; i < N_VALID_AUDIO_BIT_DEPTHS; ++i)
-	{
-		if(cfg.USB_record_audio_bit_depth == arr_valid_audio_bit_depths[i])
-			break;
-	}
-	if(i >= N_VALID_AUDIO_BIT_DEPTHS)
-		goto CONFIG_CHECK_FAILED;
+    // bit depth
+    for(i = 0; i < N_VALID_AUDIO_BIT_DEPTHS; ++i)
+    {
+        if(p->USB_record_audio_bit_depth == arr_valid_audio_bit_depths[i])
+            break;
+    }
+    if(i >= N_VALID_AUDIO_BIT_DEPTHS)
+        goto CONFIG_CHECK_FAILED;
 
-	/* DSP setting */
-	// EQ
+    /* DSP setting */
+    // EQ
 
 
-	return true;
+    return true;
 CONFIG_CHECK_FAILED:
     return false;
 

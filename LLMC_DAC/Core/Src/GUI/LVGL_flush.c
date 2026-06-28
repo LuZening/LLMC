@@ -15,7 +15,7 @@ lv_display_t* display;
 
 // ONE FULL FRAMEBUFFER FOR LTDC
 uint16_t __attribute__((section(".framebuffer1"))) framebuf1[LV_HOR_RES_MAX * LV_VER_RES_MAX];
-// TWO HALF FRAMEBUFFERS FOR LVGL, cached
+// ONE HALF FRAMEBUFFERS FOR LVGL, cached
 uint16_t __attribute__((section(".framebuffer2"))) framebuf2A[LV_HOR_RES_MAX * LV_VER_RES_MAX];
 //uint16_t __attribute__((section(".framebuffer2"))) framebuf2B[LV_HOR_RES_MAX * LV_VER_RES_MAX / 2];
 
@@ -45,43 +45,43 @@ static void DMA2D_MemCopy(uint32_t pixelFormat, void * pSrc, void * pDst, int xS
 
 void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef *hdma2d)
 {
-	 /* Inform the graphics library that you are ready with the flushing*/
-	g_gpu_state = 0;
-	lv_display_flush_ready(display);
+     /* Inform the graphics library that you are ready with the flushing*/
+    g_gpu_state = 0;
+    lv_display_flush_ready(display);
 }
 
 void LTDC_flush_cb(lv_display_t * disp, const lv_area_t * area, uint8_t * px_map)
 {
-	/* A: transfer each part*/
+    /* A: transfer each part*/
 //	  const int bytesPerPx = 2;
 //	  int w = area->x2 - area->x1 + 1;
 //	  int h = area->y2 - area->y1 + 1;
 //	  size_t offset = bytesPerPx*(LV_HOR_RES_MAX * area->y1 + area->x1);
 //	  uint16_t lineoffset = LV_HOR_RES_MAX - w;
-	if(lv_display_flush_is_last(disp))
-	{
+    if(lv_display_flush_is_last(disp))
+    {
 
-	/* B: only transfer the full screen by DMA2D at the last flush*/
-	  int w = LV_HOR_RES_MAX;
-	  int h = LV_VER_RES_MAX;
-	  size_t offset = 0;
-	  uint16_t lineoffset = 0;
+    /* B: only transfer the full screen by DMA2D at the last flush*/
+      int w = LV_HOR_RES_MAX;
+      int h = LV_VER_RES_MAX;
+      size_t offset = 0;
+      uint16_t lineoffset = 0;
 
-	  size_t addrSrc = (size_t)px_map + offset;
-	  size_t addrDst = (size_t)framebuf1 + offset;
-	  uint16_t skipPxSrc = 0;
+      size_t addrSrc = (size_t)px_map + offset;
+      size_t addrDst = (size_t)framebuf1 + offset;
+      uint16_t skipPxSrc = 0;
 
-		// note: framebuffer2 is cached, must invalidate first before DMA2D
-	  SCB_CleanDCache_by_Addr((uint8_t*)framebuf2A, sizeof(framebuf2A));
-	  DMA2D_MemCopy(LTDC_PIXEL_FORMAT_RGB565, (void*)addrSrc, (void*)addrDst,
-			w,h, lineoffset, lineoffset);
+        // note: framebuffer2 is cached, must invalidate first before DMA2D
+      SCB_CleanDCache_by_Addr((uint8_t*)framebuf2A, sizeof(framebuf2A));
+      DMA2D_MemCopy(LTDC_PIXEL_FORMAT_RGB565, (void*)addrSrc, (void*)addrDst,
+            w,h, lineoffset, lineoffset);
 
-	  /* IMPORTANT!!! NO BLOCKING, do not call here
-	   * Inform the graphics library that you are ready with the flushing*/
-	  //  lv_display_flush_ready(disp);
-	}
-	else
-	{
-		lv_display_flush_ready(disp); // fake a flush ready signal when not the last one
-	}
+      /* IMPORTANT!!! NO BLOCKING, do not call here
+       * Inform the graphics library that you are ready with the flushing*/
+      //  lv_display_flush_ready(disp);
+    }
+    else
+    {
+        lv_display_flush_ready(disp); // fake a flush ready signal when not the last one
+    }
 }

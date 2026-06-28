@@ -1,2 +1,0 @@
-audio_DSP_preset.c:11:5:save_DSP_preset	288	static
-audio_DSP_preset.c:74:5:load_and_apply_DSP_preset	232	static,ignoring_inline_asm

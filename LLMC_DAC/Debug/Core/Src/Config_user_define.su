@@ -1,2 +1,0 @@
-Config_user_define.c:35:6:init_config	16	static
-Config_user_define.c:69:6:config_check_valid	24	static

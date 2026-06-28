@@ -1,3 +1,0 @@
-stproc.c:64:6:xmp3_MidSideProc	32	static
-stproc.c:106:6:xmp3_IntensityProcMPEG1	128	static
-stproc.c:212:6:xmp3_IntensityProcMPEG2	176	static

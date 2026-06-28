@@ -1,8 +1,0 @@
-lv_color.h:349:46:lv_color_16_16_mix	32	static
-lv_draw_sw_blend_to_rgb565.c:139:28:lv_draw_sw_blend_color_to_rgb565	96	static
-lv_draw_sw_blend_to_rgb565.c:290:28:lv_draw_sw_blend_image_to_rgb565	16	static
-lv_draw_sw_blend_to_rgb565.c:315:35:rgb565_image_blend	88	static
-lv_draw_sw_blend_to_rgb565.c:423:35:rgb888_image_blend	80	static
-lv_draw_sw_blend_to_rgb565.c:531:35:argb8888_image_blend	80	static
-lv_draw_sw_blend_to_rgb565.c:644:46:lv_color_24_16_mix	24	static
-lv_draw_sw_blend_to_rgb565.c:661:44:drawbuf_next_row	16	static

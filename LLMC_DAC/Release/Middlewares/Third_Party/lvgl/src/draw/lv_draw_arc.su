@@ -1,4 +1,0 @@
-lv_draw_arc.c:38:6:lv_draw_arc_dsc_init	8	static
-lv_draw_arc.c:46:21:lv_draw_task_get_arc_dsc	0	static
-lv_draw_arc.c:51:6:lv_draw_arc	40	static
-lv_draw_arc.c:74:6:lv_draw_arc_get_area	64	static

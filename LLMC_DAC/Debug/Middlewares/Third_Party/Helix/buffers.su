@@ -1,3 +1,0 @@
-buffers.c:81:6:ClearBuffer	24	static
-buffers.c:110:13:xmp3_AllocateBuffers	16	static
-buffers.c:202:6:xmp3_FreeBuffers	16	static

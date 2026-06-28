@@ -61,13 +61,14 @@ extern "C" {
 
 // NOTE: OVERRIDE usbd_conf.h
 #include "audio_settings.h"
-#define USBD_AUDIO_FREQ_DEFAULT						48000U
-#define USBD_AUDIO_FREQ_SPEAKER_DEFAULT				48000U
-#define USB_AUDIO_BIT_DEPTH_DEFAULT					DEFAULT_BIT_DEPTH
-#define USB_AUDIO_PREHEAT_MS_RECORD						20U
-#define USB_AUDIO_PREHEAT_MS_PLAYBACK					20U
-#define USB_MAX_IN_PACKET_SIZE_EXPANSION_DENOMINATOR	    5U  // max_size = normal_size + normal_size / denominator
-#define USB_MAX_OUT_PACKET_SIZE_EXPANSION_DENOMINATOR	10U  // max_size = normal_size + normal_size / denominator
+#define USBD_AUDIO_FREQ_DEFAULT                        48000U
+#define USBD_AUDIO_FREQ_MIC_DEFAULT                        48000U
+#define USBD_AUDIO_FREQ_SPEAKER_DEFAULT                48000U
+#define USB_AUDIO_BIT_DEPTH_DEFAULT                    DEFAULT_BIT_DEPTH
+#define USB_AUDIO_PREHEAT_MS_RECORD                        20U
+#define USB_AUDIO_PREHEAT_MS_PLAYBACK                    20U
+#define USB_MAX_IN_PACKET_SIZE_EXPANSION_DENOMINATOR        8U  // max_size = normal_size + normal_size / denominator
+#define USB_MAX_OUT_PACKET_SIZE_EXPANSION_DENOMINATOR    10U  // max_size = normal_size + normal_size / denominator
 #define CALC_AUDIO_PACKET_SIZE_FS(frq, bitdep, ch) ((uint16_t)((frq) * ((bitdep) >> 3U) * (ch) / 1000U))
 
 #ifndef AUDIO_HS_BINTERVAL
@@ -81,8 +82,8 @@ extern "C" {
 #define AUDIO_SPEAKER_OUT_EP                             0x01U
 #define AUDIO_SPEAKER_SYNC_EP                            (0x80U | 0x02U)
 /* bRefresh feedback at an interval of 2^x millisecs 1<=x<=9, thus the interval ranges from 2ms to 512ms*/
-#define AUDIO_FEEDBACK_BINTERVAL						 6U // 64ms,
-#define AUDIO_FEEDBACK_PERIOD_MS 						(1U << AUDIO_FEEDBACK_BINTERVAL)
+#define AUDIO_FEEDBACK_BINTERVAL                         6U // 64ms,
+#define AUDIO_FEEDBACK_PERIOD_MS                         (1U << AUDIO_FEEDBACK_BINTERVAL)
 #define AUDIO_MIC_IN_EP                                  (0x80U | 0x01U)
 //#define USB_AUDIO_CONFIG_DESC_SIZ                     0x6DU
 #define AUDIO_INTERFACE_DESC_SIZE                     0x0AU // 10 BYTES
@@ -123,9 +124,9 @@ extern "C" {
 #define AUDIO_REQ_GET_CUR                             0x81U
 #define AUDIO_REQ_SET_CUR                             0x01U
 
-#define AUDIO_SPEAKER_FEATURE_UNIT						0x02U
+#define AUDIO_SPEAKER_FEATURE_UNIT                        0x02U
 #define AUDIO_OUT_STREAMING_CTRL                      AUDIO_SPEAKER_FEATURE_UNIT
-#define AUDIO_MIC_FEATURE_UNIT						0x05U
+#define AUDIO_MIC_FEATURE_UNIT                        0x05U
 
 #define AUDIO_OUT_TC                                  0x01U
 #define AUDIO_IN_TC                                   0x02U
@@ -134,7 +135,7 @@ extern "C" {
 
 
 #define AUDIO_OUT_PACKET_MAX                           CALC_AUDIO_PACKET_SIZE_FS((USBD_AUDIO_FREQ_SPEAKER_DEFAULT + USBD_AUDIO_FREQ_SPEAKER_DEFAULT / USB_MAX_OUT_PACKET_SIZE_EXPANSION_DENOMINATOR) , MAX_BIT_DEPTH, MAX_CHANNELS )
-#define AUDIO_IN_PACKET_MAX                           CALC_AUDIO_PACKET_SIZE_FS((USBD_AUDIO_FREQ_DEFAULT + USBD_AUDIO_FREQ_DEFAULT / USB_MAX_IN_PACKET_SIZE_EXPANSION_DENOMINATOR) , MAX_BIT_DEPTH, MAX_CHANNELS )
+#define AUDIO_IN_PACKET_MAX                           CALC_AUDIO_PACKET_SIZE_FS((USBD_AUDIO_FREQ_MIC_DEFAULT + USBD_AUDIO_FREQ_MIC_DEFAULT / USB_MAX_IN_PACKET_SIZE_EXPANSION_DENOMINATOR) , MAX_BIT_DEPTH, MAX_CHANNELS )
 #define AUDIO_SYNC_PACKET                              3U
 #define AUDIO_DEFAULT_VOLUME                          20U
 

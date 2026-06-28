@@ -55,10 +55,10 @@ typedef struct
     uint16_t outputs_dsp_usage[N_OUTPUTS]; // dry/wet distributions
     uint8_t dsp_preset_ids[N_INPUTS]; // each input can have a DSP. each DSP can have a preset profile numbering from 1 to 255
     uint8_t nVolume100_decoder;
-	uint8_t nVolume100_encoder[2];
-	uint8_t nVolume100_FS;
-	uint8_t nPregainsDB2_encoder[2];
-	USBCfgDescSelector_t usbCfgDescSelector;
+    uint8_t nVolume100_encoder[2];
+    uint8_t nVolume100_FS;
+    uint8_t nPregainsDB2_encoder[2];
+    USBCfgDescSelector_t usbCfgDescSelector;
     uint32_t USB_record_audio_sample_rate_Hz; // USB Fs, in Hz unit
     uint8_t USB_record_audio_bit_depth; // internal bitdepth,
     uint8_t USB_volume_control; // 1: allow volume control over USB

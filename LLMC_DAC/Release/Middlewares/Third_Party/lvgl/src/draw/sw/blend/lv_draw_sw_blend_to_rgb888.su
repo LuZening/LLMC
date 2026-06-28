@@ -1,3 +1,0 @@
-lv_draw_sw_blend_to_rgb888.c:379:35:rgb888_image_blend	80	static
-lv_draw_sw_blend_to_rgb888.c:130:28:lv_draw_sw_blend_color_to_rgb888	80	static
-lv_draw_sw_blend_to_rgb888.c:257:28:lv_draw_sw_blend_image_to_rgb888	80	static

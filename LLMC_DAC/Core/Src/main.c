@@ -111,7 +111,7 @@ const osThreadAttr_t defaultTask_attributes = {
 void taskLVGLTimer(void * argument);
 const osThreadAttr_t taskLVGLTimer_attr= {
   .name = "lvgl_timer",
-  .stack_size = 10*1024U,
+  .stack_size = 8*1024U,
   .priority = (osPriority_t) osPriorityNormal,
 };
 osThreadId_t taskLVGLTimerHandle;
@@ -120,7 +120,7 @@ osThreadId_t taskLVGLTimerHandle;
 void StartHumanInOutTask(void * argument);
 const osThreadAttr_t taskHumanInput_attr= {
   .name = "human_in",
-  .stack_size = 2048,
+  .stack_size = 1024,
   .priority = (osPriority_t) osPriorityAboveNormal,
 };
 osThreadId_t taskHumanInputHandle;
@@ -161,24 +161,24 @@ const uint16_t headphonepins[N_HEADPHONES] = {OUT1_DETECT_Pin, OUT2_DETECT_Pin};
 /* USER CODE BEGIN 0 */
 void hold_power_enable()
 {
-	 HAL_GPIO_WritePin(PWR_EN_GPIO_Port, PWR_EN_Pin, 1); // hold the power en pin
+     HAL_GPIO_WritePin(PWR_EN_GPIO_Port, PWR_EN_Pin, 1); // hold the power en pin
 }
 void power_off()
 {
-	 HAL_GPIO_WritePin(PWR_EN_GPIO_Port, PWR_EN_Pin, 0); // hold the power en pin
+     HAL_GPIO_WritePin(PWR_EN_GPIO_Port, PWR_EN_Pin, 0); // hold the power en pin
 }
 void charging_disable()
 {
-	 HAL_GPIO_WritePin(NOCHRGX_GPIO_Port, NOCHRGX_Pin, 0); // stop charging
+     HAL_GPIO_WritePin(NOCHRGX_GPIO_Port, NOCHRGX_Pin, 0); // stop charging
 }
 void charging_enable()
 {
-	HAL_GPIO_WritePin(NOCHRGX_GPIO_Port, NOCHRGX_Pin, 1); // allow charging
+    HAL_GPIO_WritePin(NOCHRGX_GPIO_Port, NOCHRGX_Pin, 1); // allow charging
 }
 
 void NP_power_enable(uint8_t state)
 {
-	HAL_GPIO_WritePin(NP_EN_GPIO_Port, NP_EN_Pin, state);
+    HAL_GPIO_WritePin(NP_EN_GPIO_Port, NP_EN_Pin, state);
 }
 
 void encoder_preamp_power_enable(uint8_t ch, uint8_t state)
@@ -200,68 +200,68 @@ static void save_config_local();
 int __io_putchar(int ch)
 {
 #ifdef DEBUG
-	HAL_UART_Transmit(&huart1, (uint8_t*)&ch, 1, 0xffffU);
-	return ch;
+    HAL_UART_Transmit(&huart1, (uint8_t*)&ch, 1, 0xffffU);
+    return ch;
 #else
-	return ch;
+    return ch;
 #endif
 }
 
 
 void SAI_encoder_init(uint32_t audio_sample_rate_Hz_SAI)
 {
-	  hsai_BlockA2.Instance = SAI2_Block_A;
-	  hsai_BlockA2.Init.AudioMode = SAI_MODEMASTER_RX;
-	  hsai_BlockA2.Init.Synchro = SAI_ASYNCHRONOUS;
-	  hsai_BlockA2.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-	  hsai_BlockA2.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
-	  hsai_BlockA2.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_HF;
-	  hsai_BlockA2.Init.AudioFrequency = audio_sample_rate_Hz_SAI;
-	  hsai_BlockA2.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
-	  hsai_BlockA2.Init.MonoStereoMode = SAI_STEREOMODE;
-	  hsai_BlockA2.Init.CompandingMode = SAI_NOCOMPANDING;
-	  uint8_t to_continue = encoder_input_started;
-	  if(to_continue)
-	  {
-		  encocder_input_stop();
-	  }
-	  if (HAL_SAI_InitProtocol(&hsai_BlockA2, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_32BIT, 2) != HAL_OK)
-	  {
-	    Error_Handler();
-	  }
-	  if(to_continue)
-	  {
-		  encocder_input_start();
-	  }
+      hsai_BlockA2.Instance = SAI2_Block_A;
+      hsai_BlockA2.Init.AudioMode = SAI_MODEMASTER_RX;
+      hsai_BlockA2.Init.Synchro = SAI_ASYNCHRONOUS;
+      hsai_BlockA2.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
+      hsai_BlockA2.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
+      hsai_BlockA2.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_HF;
+      hsai_BlockA2.Init.AudioFrequency = audio_sample_rate_Hz_SAI;
+      hsai_BlockA2.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
+      hsai_BlockA2.Init.MonoStereoMode = SAI_STEREOMODE;
+      hsai_BlockA2.Init.CompandingMode = SAI_NOCOMPANDING;
+      uint8_t to_continue = encoder_input_started;
+      if(to_continue)
+      {
+          encocder_input_stop();
+      }
+      if (HAL_SAI_InitProtocol(&hsai_BlockA2, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_32BIT, 2) != HAL_OK)
+      {
+        Error_Handler();
+      }
+      if(to_continue)
+      {
+          encocder_input_start();
+      }
 }
 
 
 void SAI_decoder_init(uint32_t audio_sample_rate_Hz_SAI)
 {
-	  hsai_BlockB2.Instance = SAI2_Block_B;
-	  hsai_BlockB2.Init.AudioMode = SAI_MODEMASTER_TX;
-	  hsai_BlockB2.Init.Synchro = SAI_ASYNCHRONOUS;
-	  hsai_BlockB2.Init.OutputDrive = SAI_OUTPUTDRIVE_ENABLE;
-	  hsai_BlockB2.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
-	  hsai_BlockB2.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_HF;
-	  hsai_BlockB2.Init.AudioFrequency = audio_sample_rate_Hz_SAI;
-	  hsai_BlockB2.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
-	  hsai_BlockB2.Init.MonoStereoMode = SAI_STEREOMODE;
-	  hsai_BlockB2.Init.CompandingMode = SAI_NOCOMPANDING;
-	  hsai_BlockB2.Init.TriState = SAI_OUTPUT_NOTRELEASED;
-	  uint8_t to_continue = enable_to_decoder;
-	  if(to_continue)
-	  {
-		  output_to_decoder_stop();
-	  }
-	  if (HAL_SAI_InitProtocol(&hsai_BlockB2, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_32BIT, 2) != HAL_OK)
-	  {
-	    Error_Handler();
-	  }
-	  if(to_continue)
-	  {
-		  output_to_decoder_start();
-	  }
+      hsai_BlockB2.Instance = SAI2_Block_B;
+      hsai_BlockB2.Init.AudioMode = SAI_MODEMASTER_TX;
+      hsai_BlockB2.Init.Synchro = SAI_ASYNCHRONOUS;
+      hsai_BlockB2.Init.OutputDrive = SAI_OUTPUTDRIVE_ENABLE;
+      hsai_BlockB2.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
+      hsai_BlockB2.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_HF;
+      hsai_BlockB2.Init.AudioFrequency = audio_sample_rate_Hz_SAI;
+      hsai_BlockB2.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
+      hsai_BlockB2.Init.MonoStereoMode = SAI_STEREOMODE;
+      hsai_BlockB2.Init.CompandingMode = SAI_NOCOMPANDING;
+      hsai_BlockB2.Init.TriState = SAI_OUTPUT_NOTRELEASED;
+      uint8_t to_continue = enable_to_decoder;
+      if(to_continue)
+      {
+          output_to_decoder_stop();
+      }
+      if (HAL_SAI_InitProtocol(&hsai_BlockB2, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_32BIT, 2) != HAL_OK)
+      {
+        Error_Handler();
+      }
+      if(to_continue)
+      {
+          output_to_decoder_start();
+      }
 
 }
 
@@ -269,17 +269,17 @@ void SAI_decoder_init(uint32_t audio_sample_rate_Hz_SAI)
 profiler_counter_t profSAITx = {0};
 void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai)
 {
-	static uint32_t cnt = 0;
-	cnt++;
-	// output to decoder
-	if(hsai == &hsai_BlockB2)
-	{
-		decoder_HAL_SAI_TxHalfCpltCallback(hsai);
-	}
-	else if(hsai == &hsai_BlockA2) // input from encoder
-	{
-		// pass
-	}
+    static uint32_t cnt = 0;
+    cnt++;
+    // output to decoder
+    if(hsai == &hsai_BlockB2)
+    {
+        decoder_HAL_SAI_TxHalfCpltCallback(hsai);
+    }
+    else if(hsai == &hsai_BlockA2) // input from encoder
+    {
+        // pass
+    }
 }
 
 void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
@@ -287,56 +287,56 @@ void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
 
 //	static uint32_t cycles1, cycles2;
 //	cycles1 = DWT->CYCCNT;
-	static uint32_t cnt = 0;
-	cnt++;
-	if(hsai == &hsai_BlockB2) // output to decoder
-	{
-		decoder_HAL_SAI_TxCpltCallback(hsai);
-	}
-	else if(hsai == &hsai_BlockA2) // input from encoder
-	{
-		// pass
-	}
+    static uint32_t cnt = 0;
+    cnt++;
+    if(hsai == &hsai_BlockB2) // output to decoder
+    {
+        decoder_HAL_SAI_TxCpltCallback(hsai);
+    }
+    else if(hsai == &hsai_BlockA2) // input from encoder
+    {
+        // pass
+    }
 //	cycles2 = DWT->CYCCNT;
 //	uint32_t cycles_used = cycles2 - cycles1; // 9000 (1 input), 16000 (2 inputs)
-	return;
+    return;
 }
 
 profiler_counter_t profUSB_SOF = {0};
 void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef *hsai)
 {
-	static uint32_t cycles1, cycles2;
-	cycles1 = DWT->CYCCNT;
-	if(hsai == &hsai_BlockA2) // input from encoder
-	{
+    static uint32_t cycles1, cycles2;
+    cycles1 = DWT->CYCCNT;
+    if(hsai == &hsai_BlockA2) // input from encoder
+    {
 
-		encoder_HAL_SAI_RxHalfCpltCallback(hsai);
-	}
-	else if(hsai == &hsai_BlockB2) // output to decoder
-	{
-		// pass
-	}
-	cycles2 = DWT->CYCCNT;
-	uint32_t cycles_used = cycles2 - cycles1; // 6719
-	return;
+        encoder_HAL_SAI_RxHalfCpltCallback(hsai);
+    }
+    else if(hsai == &hsai_BlockB2) // output to decoder
+    {
+        // pass
+    }
+    cycles2 = DWT->CYCCNT;
+    uint32_t cycles_used = cycles2 - cycles1; // 6719
+    return;
 }
 
 
 void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef *hsai)
 {
-	if(hsai == &hsai_BlockA2) // input from encoder
-	{
-		encoder_HAL_SAI_RxCpltCallback(hsai);
-	}
-	else if(hsai == &hsai_BlockB2) // output to decoder
-	{
-		// pass
-	}
+    if(hsai == &hsai_BlockA2) // input from encoder
+    {
+        encoder_HAL_SAI_RxCpltCallback(hsai);
+    }
+    else if(hsai == &hsai_BlockB2) // output to decoder
+    {
+        // pass
+    }
 }
 
 void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai)
 {
-	// TODO: implement I2S error callback, I2S pipeline may stall when error occures
+    // TODO: implement I2S error callback, I2S pipeline may stall when error occures
 }
 /*****  I2S DMA ISRs END  *****/
 
@@ -344,93 +344,93 @@ void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai)
 #define EXIT_BUTTON_CRITICAL __HAL_TIM_ENABLE_IT(&htim2, TIM_IT_UPDATE)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-	if(flagHumanInputTaskReady == 0)
-		return;
-	int btn = -1;
-	uint8_t state;
+    if(flagHumanInputTaskReady == 0)
+        return;
+    int btn = -1;
+    uint8_t state;
 
-	  /*LIST OF EXTI INTERRUPTS
-	   * T_INTX:  4 FALLING
-	   * SHUTDOWNX: 4 FALLING
-	   * ENCA: 7	FALLING/RISING
-	   * ENCSW: 9	FALLING
-	   * OUT1 DETECT: 9 RISING
-	   * OUT2_DETECT: 8 RISING
-	   * MIC_DETECT1: 8 RISING
-	   * MIC_DETECT2: 12 RISING
-	   */
-	ENTER_BUTTON_CRITICAL;
-	if(GPIO_Pin == SHUTDOWNX_Pin)
-	{
-		state = HAL_GPIO_ReadPin(SHUTDOWNX_GPIO_Port, SHUTDOWNX_Pin);
-		if(state == 0)
-		{
-			btndeb_interrupt(&btnShutdown, state);
-			btn = 1;
-		}
+      /*LIST OF EXTI INTERRUPTS
+       * T_INTX:  4 FALLING
+       * SHUTDOWNX: 4 FALLING
+       * ENCA: 7	FALLING/RISING
+       * ENCSW: 9	FALLING
+       * OUT1 DETECT: 9 RISING
+       * OUT2_DETECT: 8 RISING
+       * MIC_DETECT1: 8 RISING
+       * MIC_DETECT2: 12 RISING
+       */
+    ENTER_BUTTON_CRITICAL;
+    if(GPIO_Pin == SHUTDOWNX_Pin)
+    {
+        state = HAL_GPIO_ReadPin(SHUTDOWNX_GPIO_Port, SHUTDOWNX_Pin);
+        if(state == 0)
+        {
+            btndeb_interrupt(&btnShutdown, state);
+            btn = 1;
+        }
 
-	}
-	/* TODO: ENCSW_Pin does not trigger the EXTI9-5 interrupt */
-	else if(GPIO_Pin == ENCSW_Pin)
-	{
+    }
+    /* TODO: ENCSW_Pin does not trigger the EXTI9-5 interrupt */
+    else if(GPIO_Pin == ENCSW_Pin)
+    {
 
-		state = HAL_GPIO_ReadPin(ENCSW_GPIO_Port, ENCSW_Pin);
-		if(state == 0)
-		{
-			btndeb_interrupt(&rotenc.SW, state);
-			btn = 3;
-		}
+        state = HAL_GPIO_ReadPin(ENCSW_GPIO_Port, ENCSW_Pin);
+        if(state == 0)
+        {
+            btndeb_interrupt(&rotenc.SW, state);
+            btn = 3;
+        }
 
-		state = HAL_GPIO_ReadPin(OUT1_DETECT_GPIO_Port, OUT1_DETECT_Pin);
-		if(state == 1)
-		{
-			btndeb_interrupt(&btnsOutDetect[0], state);
-			btn = 4;
-		}
-	}
-	else if(GPIO_Pin == OUT2_DETECT_Pin)
-	{
-		state = HAL_GPIO_ReadPin(OUT2_DETECT_GPIO_Port, OUT2_DETECT_Pin);
-		if(state == 1)
-		{
-			btndeb_interrupt(&btnsOutDetect[1], state);
-			btn = 5;
-		}
-		state = HAL_GPIO_ReadPin(MIC_DETECT1_GPIO_Port, MIC_DETECT1_Pin);
-		if(state == 1)
-		{
-			btndeb_interrupt(&btnsMicDetect[0], state);
-			btn = 6;
-		}
-	}
-	else if(GPIO_Pin == MIC_DETECT2_Pin)
-	{
-		state = HAL_GPIO_ReadPin(MIC_DETECT2_GPIO_Port, MIC_DETECT2_Pin);
-		if(state == 1)
-		{
-			btndeb_interrupt(&btnsMicDetect[1], state);
-			btn = 7;
-		}
-	}
-	else if(GPIO_Pin == ENCA_Pin)
-	{
-		uint8_t fall_rise = HAL_GPIO_ReadPin(ENCA_GPIO_Port, ENCA_Pin);
-		RotEnc_interrupt(&rotenc, fall_rise);
-	}
+        state = HAL_GPIO_ReadPin(OUT1_DETECT_GPIO_Port, OUT1_DETECT_Pin);
+        if(state == 1)
+        {
+            btndeb_interrupt(&btnsOutDetect[0], state);
+            btn = 4;
+        }
+    }
+    else if(GPIO_Pin == OUT2_DETECT_Pin)
+    {
+        state = HAL_GPIO_ReadPin(OUT2_DETECT_GPIO_Port, OUT2_DETECT_Pin);
+        if(state == 1)
+        {
+            btndeb_interrupt(&btnsOutDetect[1], state);
+            btn = 5;
+        }
+        state = HAL_GPIO_ReadPin(MIC_DETECT1_GPIO_Port, MIC_DETECT1_Pin);
+        if(state == 1)
+        {
+            btndeb_interrupt(&btnsMicDetect[0], state);
+            btn = 6;
+        }
+    }
+    else if(GPIO_Pin == MIC_DETECT2_Pin)
+    {
+        state = HAL_GPIO_ReadPin(MIC_DETECT2_GPIO_Port, MIC_DETECT2_Pin);
+        if(state == 1)
+        {
+            btndeb_interrupt(&btnsMicDetect[1], state);
+            btn = 7;
+        }
+    }
+    else if(GPIO_Pin == ENCA_Pin)
+    {
+        uint8_t fall_rise = HAL_GPIO_ReadPin(ENCA_GPIO_Port, ENCA_Pin);
+        RotEnc_interrupt(&rotenc, fall_rise);
+    }
 
 
-	// start TIM2 timebase only if it has not started
-	if(btn >= 0)
-	{
+    // start TIM2 timebase only if it has not started
+    if(btn >= 0)
+    {
 
-		cntTimer_EXTI = 0;
-		if((htim2.Instance->CR1 & TIM_CR1_CEN) == 0)
-		{
-		  HAL_TIM_Base_Start_IT(&htim2);
-		}
-	}
-	EXIT_BUTTON_CRITICAL;
-	/* process Rotary */
+        cntTimer_EXTI = 0;
+        if((htim2.Instance->CR1 & TIM_CR1_CEN) == 0)
+        {
+          HAL_TIM_Base_Start_IT(&htim2);
+        }
+    }
+    EXIT_BUTTON_CRITICAL;
+    /* process Rotary */
 
 }
 
@@ -445,7 +445,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
-	//note: HAL Ticks each 500us WHY?
+    //note: HAL Ticks each 500us WHY?
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM8) {
     HAL_IncTick();
@@ -456,125 +456,125 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
    * */
   if(htim->Instance == TIM2)
   {
-	  const int us = 10000;
-	  /* handle encoder */
-	  int i = 0;
-	  uint32_t bitmapInt = 0;// indicate if a button is at interrupted state
-	  uint32_t bitmapAct = 0; // indicate if a button is at active state, to keep timer from shutting down when long press button engaged
-	  if(rotenc.SW.interrupted || rotenc.SW.active)
-	  {
-		  bool flip = btndeb_tick(&rotenc.SW, us);
-		  uint8_t active = rotenc.SW.active;
-		  if(flip && (active == 0)) // trigger when released
-		  {
-			  rotenc.SW.interrupted = 0;
-		  }
-		  bitmapInt |= ((uint32_t)rotenc.SW.interrupted << (i));
-		  bitmapAct |= ((uint32_t)(active) << (i));
-		  i++;
-	  }
+      const int us = 10000;
+      /* handle encoder */
+      int i = 0;
+      uint32_t bitmapInt = 0;// indicate if a button is at interrupted state
+      uint32_t bitmapAct = 0; // indicate if a button is at active state, to keep timer from shutting down when long press button engaged
+      if(rotenc.SW.interrupted || rotenc.SW.active)
+      {
+          bool flip = btndeb_tick(&rotenc.SW, us);
+          uint8_t active = rotenc.SW.active;
+          if(flip && (active == 0)) // trigger when released
+          {
+              rotenc.SW.interrupted = 0;
+          }
+          bitmapInt |= ((uint32_t)rotenc.SW.interrupted << (i));
+          bitmapAct |= ((uint32_t)(active) << (i));
+          i++;
+      }
 
 
-	  if(btnShutdown.interrupted || btnShutdown.active)
-	  {
-		  bool flip = btndeb_tick(&btnShutdown, us);
-		  // trigger when pressed
-		  if(btnShutdown.active)
-		  {
-			  btnShutdown.interrupted = 0;
-			  if(btnShutdown.cntLongPress >= 2000000)
-			  {
-				  osThreadFlagsSet(taskHumanInputHandle, FLAG_SHUTDOWN_BUTTON_LONG_PRESSED);
-				  btnShutdown.active = 0; // to avoid continous triggering
-			  }
-		  }
-		  else if(btnShutdown.interrupted == 0) // released before long press, the button was in active state, but now not
-		  {
-			  osThreadFlagsSet(taskHumanInputHandle, FLAG_SHUTDOWN_BUTTON_SHORT_CLICKED);
-			  btnShutdown.active = 0; // to avoid continous triggering
-		  }
-		  bitmapInt |= ((uint32_t)btnShutdown.interrupted << (i));
-		  bitmapAct |= ((uint32_t)(btnShutdown.active) << (i));
-		  i++;
-	  }
+      if(btnShutdown.interrupted || btnShutdown.active)
+      {
+          bool flip = btndeb_tick(&btnShutdown, us);
+          // trigger when pressed
+          if(btnShutdown.active)
+          {
+              btnShutdown.interrupted = 0;
+              if(btnShutdown.cntLongPress >= 2000000)
+              {
+                  osThreadFlagsSet(taskHumanInputHandle, FLAG_SHUTDOWN_BUTTON_LONG_PRESSED);
+                  btnShutdown.active = 0; // to avoid continous triggering
+              }
+          }
+          else if(btnShutdown.interrupted == 0) // released before long press, the button was in active state, but now not
+          {
+              osThreadFlagsSet(taskHumanInputHandle, FLAG_SHUTDOWN_BUTTON_SHORT_CLICKED);
+              btnShutdown.active = 0; // to avoid continous triggering
+          }
+          bitmapInt |= ((uint32_t)btnShutdown.interrupted << (i));
+          bitmapAct |= ((uint32_t)(btnShutdown.active) << (i));
+          i++;
+      }
 
-	  // TODO: two sided trigger
-	  for(uint8_t j = 0; j < N_OUTPUTS; ++j)
-	  {
+      // TODO: two sided trigger
+      for(uint8_t j = 0; j < N_OUTPUTS; ++j)
+      {
 
-		  if(btnsOutDetect[j].interrupted || btnsOutDetect[j].active)
-		  {
-			  bool flip = btndeb_tick(&btnsOutDetect[j], us);
-			  uint8_t active = (btnsOutDetect[j].state == btnsOutDetect[j].lvlAct);
-			  // trigger when pressed
-			  if(flip)
-			  {
-				  btnsOutDetect[j].interrupted = 0;
-				  if(active) // plugged
-				  {
-					  btnsOutDetect[j].active = 0;
-				  }
-				  else // unplugged
-				  {
+          if(btnsOutDetect[j].interrupted || btnsOutDetect[j].active)
+          {
+              bool flip = btndeb_tick(&btnsOutDetect[j], us);
+              uint8_t active = (btnsOutDetect[j].state == btnsOutDetect[j].lvlAct);
+              // trigger when pressed
+              if(flip)
+              {
+                  btnsOutDetect[j].interrupted = 0;
+                  if(active) // plugged
+                  {
+                      btnsOutDetect[j].active = 0;
+                  }
+                  else // unplugged
+                  {
 
-				  }
-			  }
-			  bitmapInt |= ((uint32_t)btnsOutDetect[j].interrupted << (i++));
-		  }
-	  }
+                  }
+              }
+              bitmapInt |= ((uint32_t)btnsOutDetect[j].interrupted << (i++));
+          }
+      }
 
-	  for(uint8_t j = 0; j < N_MICROPHONES; ++j)
-	  {
+      for(uint8_t j = 0; j < N_MICROPHONES; ++j)
+      {
 
-		  if(btnsMicDetect[j].interrupted || btnsMicDetect[j].active)
-		  {
-			  bool flip = btndeb_tick(&btnsMicDetect[j], us);
-			  uint8_t active = (btnsMicDetect[j].state == btnsMicDetect[j].lvlAct);
-			  // trigger when pressed
-			  if(flip)
-			  {
-				  btnsMicDetect[j].interrupted = 0;
-				  if(active) // plugged
-				  {
-					  btnsMicDetect[j].active = 0;
-					  /* TODO: do something */
-					  // connect MIC j to outputs
-					  cfg.audio_connections[0] |= (1<<j);
-					  cfg.audio_connections[0] |= (1<<j);
-					  audio_connections_apply(cfg.audio_connections);
-				  }
-				  else // unplugged
-				  {
-					  // disconnect MIC j to outputs
-					  cfg.audio_connections[0] &= ~(1<<j);
-					  cfg.audio_connections[0] &= ~(1<<j);
-					  audio_connections_apply(cfg.audio_connections);
-				  }
-			  }
-			  bitmapInt |= ((uint32_t)btnsMicDetect[j].interrupted << (i++));
-		  }
-	  }
+          if(btnsMicDetect[j].interrupted || btnsMicDetect[j].active)
+          {
+              bool flip = btndeb_tick(&btnsMicDetect[j], us);
+              uint8_t active = (btnsMicDetect[j].state == btnsMicDetect[j].lvlAct);
+              // trigger when pressed
+              if(flip)
+              {
+                  btnsMicDetect[j].interrupted = 0;
+                  if(active) // plugged
+                  {
+                      btnsMicDetect[j].active = 0;
+                      /* TODO: do something */
+                      // connect MIC j to outputs
+                      cfg.audio_connections[0] |= (1<<j);
+                      cfg.audio_connections[0] |= (1<<j);
+                      audio_connections_apply(cfg.audio_connections);
+                  }
+                  else // unplugged
+                  {
+                      // disconnect MIC j to outputs
+                      cfg.audio_connections[0] &= ~(1<<j);
+                      cfg.audio_connections[0] &= ~(1<<j);
+                      audio_connections_apply(cfg.audio_connections);
+                  }
+              }
+              bitmapInt |= ((uint32_t)btnsMicDetect[j].interrupted << (i++));
+          }
+      }
 
-	  /* TIM stop condition */
-	  // Condition 1: no more interrupted buttons awaiting
-	  // Condition 2: still buttons awaiting but its state is not active
-	  bool stopTimer = false;
-	  if(bitmapInt == 0 && bitmapAct == 0)
-	  {
-		  stopTimer = true;
-	  }
-	  else if(bitmapAct == 0) // bitmapInt > 0
-	  {
-		  cntTimer_EXTI += us; // accumulate idle counter
-		  if(cntTimer_EXTI >= 1000000)
-			  stopTimer = true;
-	  }
+      /* TIM stop condition */
+      // Condition 1: no more interrupted buttons awaiting
+      // Condition 2: still buttons awaiting but its state is not active
+      bool stopTimer = false;
+      if(bitmapInt == 0 && bitmapAct == 0)
+      {
+          stopTimer = true;
+      }
+      else if(bitmapAct == 0) // bitmapInt > 0
+      {
+          cntTimer_EXTI += us; // accumulate idle counter
+          if(cntTimer_EXTI >= 1000000)
+              stopTimer = true;
+      }
 
-	  if(stopTimer)
-	  {
-		  HAL_TIM_Base_Stop_IT(&htim2);
-		  cntTimer_EXTI = 0;
-	  }
+      if(stopTimer)
+      {
+          HAL_TIM_Base_Stop_IT(&htim2);
+          cntTimer_EXTI = 0;
+      }
 
   }
   /* USER CODE END Callback 1 */
@@ -583,26 +583,55 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 void HAL_LTDC_LineEventCallback(LTDC_HandleTypeDef *hltdc)
 {
-	/*
-	// SWITCH between dual framebuffers
-	size_t addr;
-	switch(g_gpu_state)
-	{
-	case 0:
-		g_gpu_state = 1;
-		addr = (size_t)framebuf2;
-		break;
-	case 1:
-		g_gpu_state = 0;
-		addr = (size_t)framebuf1;
-		break;
-	}
-	HAL_LTDC_SetAddress_NoReload(hltdc, addr, 0);
-	hltdc->Instance->SRCR = LTDC_RELOAD_VERTICAL_BLANKING;
-	*/
+    /*
+    // SWITCH between dual framebuffers
+    size_t addr;
+    switch(g_gpu_state)
+    {
+    case 0:
+        g_gpu_state = 1;
+        addr = (size_t)framebuf2;
+        break;
+    case 1:
+        g_gpu_state = 0;
+        addr = (size_t)framebuf1;
+        break;
+    }
+    HAL_LTDC_SetAddress_NoReload(hltdc, addr, 0);
+    hltdc->Instance->SRCR = LTDC_RELOAD_VERTICAL_BLANKING;
+    */
 }
 
 
+
+/* Non-blocking MCU internal temperature sensor (interrupt-driven one-shot). */
+static volatile uint16_t adc_temp_raw = 0;
+static volatile uint8_t  adc_temp_ready = 0;
+static int16_t mcu_cached_temp = 25; /* fallback before first measurement */
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
+{
+    if (hadc == &hadc2) {
+        adc_temp_raw = (uint16_t)HAL_ADC_GetValue(&hadc2);
+        adc_temp_ready = 1;
+    }
+}
+
+/* Returns the latest temperature in °C (cached, non-blocking).
+ * Triggers a new ADC conversion for the next call. */
+static int mcu_read_temperature(void)
+{
+    if (adc_temp_ready) {
+        adc_temp_ready = 0;
+        uint16_t ts_cal1 = *TEMPSENSOR_CAL1_ADDR;
+        uint16_t ts_cal2 = *TEMPSENSOR_CAL2_ADDR;
+        mcu_cached_temp = (int16_t)((int32_t)(110 - 30) * (adc_temp_raw - ts_cal1)
+                            / (int32_t)(ts_cal2 - ts_cal1) + 30);
+    }
+    /* Start next conversion (interrupt will fire ~180µs later) */
+    HAL_ADC_Start_IT(&hadc2);
+    return mcu_cached_temp;
+}
 
 /* USER CODE END 0 */
 
@@ -665,7 +694,8 @@ int main(void)
   MX_FATFS_Init();
   MX_TIM2_Init();
   MX_TIM5_Init();
-//  MX_ADC2_Init();
+  HAL_TIM_Base_Start(&htim5); /* free-run counter for USB feedback and encoder */
+  MX_ADC2_Init();
 //  MX_MDMA_Init();
   MX_DMA2D_Init();
 #ifndef DEBUG
@@ -942,9 +972,9 @@ static void MX_ADC2_Init(void)
   }
   /** Configure Regular Channel
   */
-  sConfig.Channel = ADC_CHANNEL_VBAT;
+  sConfig.Channel = ADC_CHANNEL_TEMPSENSOR;
   sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+  sConfig.SamplingTime = ADC_SAMPLETIME_387CYCLES_5;
   sConfig.SingleDiff = ADC_SINGLE_ENDED;
   sConfig.OffsetNumber = ADC_OFFSET_NONE;
   sConfig.Offset = 0;
@@ -954,7 +984,11 @@ static void MX_ADC2_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN ADC2_Init 2 */
-
+  /* Enable internal temperature sensor path */
+  ADC12_COMMON->CCR |= ADC_CCR_TSEN;
+  /* Enable ADC interrupt (for non-blocking one-shot conversion) */
+  HAL_NVIC_SetPriority(ADC_IRQn, 6, 0);
+  HAL_NVIC_EnableIRQ(ADC_IRQn);
   /* USER CODE END ADC2_Init 2 */
 
 }
@@ -1719,7 +1753,7 @@ char bufLVGLDebug[256] = {0};
 /* LVGL timer for tasks. */
 void taskLVGLTimer(void * argument)
 {
-	portTASK_USES_FLOATING_POINT();
+    portTASK_USES_FLOATING_POINT();
   /* init: start lvgl */
   init_LVGL_GUI();
   // wait for start signal fired by default task, when Config is successfully loaded from the filesystem
@@ -1729,10 +1763,10 @@ void taskLVGLTimer(void * argument)
   bool calibrate_touchscreen = !cfg.TSCalibInfo.isCalibrated;
   if(cfg.TSCalibInfo.isCalibrated)
   {
-	  int x,y,z;
-	  z = touch_read_XY_ADC(&x, &y);
-	  if(z > 400)
-		  calibrate_touchscreen = true;
+      int x,y,z;
+      z = touch_read_XY_ADC(&x, &y);
+      if(z > 400)
+          calibrate_touchscreen = true;
   }
 #else
   bool calibrate_touchscreen = !cfg.TSCalibInfo.isCalibrated;
@@ -1740,9 +1774,9 @@ void taskLVGLTimer(void * argument)
   start_LVGL_input_tasks(calibrate_touchscreen);
   if(!calibrate_touchscreen)
   {
-	  lv_lock();
-	  display_main_widgets();
-	  lv_unlock();
+      lv_lock();
+      display_main_widgets();
+      lv_unlock();
   }
 
   /* set GUI ready flag */
@@ -1753,22 +1787,22 @@ void taskLVGLTimer(void * argument)
 #ifdef DEBUG
   if(bufLVGLDebug[0] != 0)
   {
-	  show_toast(bufLVGLDebug);
-	  bufLVGLDebug[0] = 0;
+      show_toast(bufLVGLDebug);
+      bufLVGLDebug[0] = 0;
   }
 #endif
   for(;;)
   {
 #ifdef DEBUG
-	  HAL_GPIO_WritePin(LED_MIC1_GPIO_Port, LED_MIC1_Pin, 0); // light
+      HAL_GPIO_WritePin(LED_MIC1_GPIO_Port, LED_MIC1_Pin, 0); // light
 #endif
-	lv_lock();
-	uint32_t time_till_next_ms = lv_timer_handler();
-	lv_unlock();
+    lv_lock();
+    uint32_t time_till_next_ms = lv_timer_handler();
+    lv_unlock();
 #ifdef DEBUG
-	  HAL_GPIO_WritePin(LED_MIC1_GPIO_Port, LED_MIC1_Pin, 1); // off
+      HAL_GPIO_WritePin(LED_MIC1_GPIO_Port, LED_MIC1_Pin, 1); // off
 #endif
-	  HAL_IWDG_Refresh(&hiwdg1);
+      HAL_IWDG_Refresh(&hiwdg1);
     osDelay(pdMS_TO_TICKS(time_till_next_ms));
   }
 }
@@ -1783,218 +1817,217 @@ KFIFO_DMA arr_fifo_I2C_transmit[N_I2C_TRANSMIT_SLOTS];
 
 void init_async_i2c()
 {
-	for(int i = 0; i < N_I2C_TRANSMIT_SLOTS; ++i)
-	{
-		memset(arr_buf_I2C_transmit[i], 0, BYTES_I2C_TRANSMIT_BUFFER);
-		kfifo_DMA_static_init(&arr_fifo_I2C_transmit[i], arr_buf_I2C_transmit[i], BYTES_I2C_TRANSMIT_BUFFER, 0);
-	}
+    for(int i = 0; i < N_I2C_TRANSMIT_SLOTS; ++i)
+    {
+        memset(arr_buf_I2C_transmit[i], 0, BYTES_I2C_TRANSMIT_BUFFER);
+        kfifo_DMA_static_init(&arr_fifo_I2C_transmit[i], arr_buf_I2C_transmit[i], BYTES_I2C_TRANSMIT_BUFFER, 0);
+    }
 }
 
 uint8_t transmit_async_i2c(uint8_t slot, uint8_t* packet, uint8_t len)
 {
-	uint8_t data[BYTES_I2C_MAX_SINGLE_TRANSMIT + 1];
-	uint8_t lenTransmitted = 0;
-	if(slot < N_I2C_TRANSMIT_SLOTS)
-	{
-		KFIFO_DMA* pfifo = &arr_fifo_I2C_transmit[slot];
-		uint8_t sizeFree = kfifo_get_free_space(pfifo);
-		if(sizeFree > len)
-		{
-			data[0] = len;
-			memcpy(data+1, packet, len);
-			kfifo_put(pfifo, data, len+1);
-			lenTransmitted = len;
-		}
-	}
-	return lenTransmitted;
+    uint8_t data[BYTES_I2C_MAX_SINGLE_TRANSMIT + 1];
+    uint8_t lenTransmitted = 0;
+    if(slot < N_I2C_TRANSMIT_SLOTS)
+    {
+        KFIFO_DMA* pfifo = &arr_fifo_I2C_transmit[slot];
+        uint8_t sizeFree = kfifo_get_free_space(pfifo);
+        if(sizeFree > len)
+        {
+            data[0] = len;
+            memcpy(data+1, packet, len);
+            kfifo_put(pfifo, data, len+1);
+            lenTransmitted = len;
+        }
+    }
+    return lenTransmitted;
 }
 
 void StartHumanInOutTask(void *argument)
 {
-	static uint8_t fsmPowerOff = 0;
-	static uint8_t fsmMics[N_MICROPHONES] = {0};
-	static uint8_t fsmOuts[2] = {0};
-	int rflags;
-	init_async_i2c();
-	rflags = osThreadFlagsWait(FLAG_TASK_START, osFlagsWaitAll, osWaitForever);
-	flagHumanInputTaskReady = 1;
-	for(;;)
-	{
-		rflags = osThreadFlagsWait(0xFFF, osFlagsWaitAny, pdMS_TO_TICKS(100));
-		HAL_IWDG_Refresh(&hiwdg1);
-		// routine task: no flag received, but timeout, process shutdown delay
-		if(rflags < 0)
-		{
-			// only judge if power off pin has been released
-			if(fsmPowerOff)
-			{
-			  // TODO: shutdown
-			  if((HAL_GPIO_ReadPin(SHUTDOWNX_GPIO_Port, SHUTDOWNX_Pin) == 1)) // button released
-			  {
-				  // to confirm
-				  osDelay(pdMS_TO_TICKS(20));
-				  if(HAL_GPIO_ReadPin(SHUTDOWNX_GPIO_Port, SHUTDOWNX_Pin) == 1) // confirmed that button has been released
-				  {
-					  fsmPowerOff = 0;
-					  osMutexAcquire(mtxConfig, osWaitForever);
-					  save_config_local();
-					  osMutexRelease(mtxConfig);
-					  osDelay(pdMS_TO_TICKS(200)); // give some time for saving
+    static uint8_t fsmPowerOff = 0;
+    static uint8_t fsmMics[N_MICROPHONES] = {0};
+    static uint8_t fsmOuts[2] = {0};
+    int rflags;
+    init_async_i2c();
+    rflags = osThreadFlagsWait(FLAG_TASK_START, osFlagsWaitAll, osWaitForever);
+    flagHumanInputTaskReady = 1;
+    for(;;)
+    {
+        rflags = osThreadFlagsWait(0xFFF, osFlagsWaitAny, pdMS_TO_TICKS(100));
+        HAL_IWDG_Refresh(&hiwdg1);
+        // routine task: no flag received, but timeout, process shutdown delay
+        if(rflags < 0)
+        {
+            // only judge if power off pin has been released
+            if(fsmPowerOff)
+            {
+              // TODO: shutdown
+              if((HAL_GPIO_ReadPin(SHUTDOWNX_GPIO_Port, SHUTDOWNX_Pin) == 1)) // button released
+              {
+                  // to confirm
+                  osDelay(pdMS_TO_TICKS(20));
+                  if(HAL_GPIO_ReadPin(SHUTDOWNX_GPIO_Port, SHUTDOWNX_Pin) == 1) // confirmed that button has been released
+                  {
+                      fsmPowerOff = 0;
+                      osMutexAcquire(mtxConfig, osWaitForever);
+                      save_config_local();
+                      osMutexRelease(mtxConfig);
+                      osDelay(pdMS_TO_TICKS(200)); // give some time for saving
 #ifndef DEBUG
-					  power_off();
+                      power_off();
 
 #else
-					  // This task also conflicts with USB MSC mode, for the two applications will race on one SDIO device
-					  cfg.audio_connections[0] = 0b1111;
-					  cfg.audio_connections[1] = 0b1111;
-					  audio_connections_apply(cfg.audio_connections);
-					  FS_player_test();
+                      // This task also conflicts with USB MSC mode, for the two applications will race on one SDIO device
+                      cfg.audio_connections[0] = 0b1111;
+                      cfg.audio_connections[1] = 0b1111;
+                      audio_connections_apply(cfg.audio_connections);
+                      FS_player_test();
 
 #endif
-				  }
-			  }
-			}
-			/* TASK: process analog device reset BEGIN */
-			if((audio_analog_chips_need_reset) && (hi2c1.State == HAL_I2C_STATE_READY) /* to avoid conflict with async I2C transmissions*/)
-			{
-				reset_audio_analog_chips();
-				audio_analog_chips_need_reset = false;
-			}
-			/* TASK: process analog device reset END */
-			/* TASK: process I2C BEGIN */
-			for(int i = 0; i < N_I2C_TRANSMIT_SLOTS; ++i)
-			{
-				uint8_t sizeFilled = kfifo_get_filled_size(&arr_fifo_I2C_transmit[i]);
-				if(sizeFilled > 0 )
-				{
-					uint8_t sizePack;
-					kfifo_get(&arr_fifo_I2C_transmit[i], &sizePack, 1);
-					if(sizePack > 0)
-					{
-						static uint8_t __attribute__((section(".DMA_no_cache"))) data[BYTES_I2C_MAX_SINGLE_TRANSMIT];
-						kfifo_get(&arr_fifo_I2C_transmit[i], data, sizePack);
-						uint16_t addrDevice = arr_I2C_device_addrs[i];
-						if (__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_BUSY)) {
-						    __HAL_I2C_CLEAR_FLAG(&hi2c1, I2C_FLAG_BUSY); // 清除 BUSY 标志
-						    hi2c1.State = HAL_I2C_STATE_READY; // 将 I2C 状态设置为 READY
-						}
-						HAL_I2C_Master_Transmit_DMA(&hi2c1, addrDevice, data, sizePack);
-						// the interval between tasks are sufficent for DMA transmission, so no need for syncnization with DMA finish signal
-					}
-				}
-			}
-			/* TASK: process I2C END */
+                  }
+              }
+            }
+            /* TASK: process analog device reset BEGIN */
+            if((audio_analog_chips_need_reset) && (hi2c1.State == HAL_I2C_STATE_READY) /* to avoid conflict with async I2C transmissions*/)
+            {
+                reset_audio_analog_chips();
+                audio_analog_chips_need_reset = false;
+            }
+            /* TASK: process analog device reset END */
+            /* TASK: process I2C BEGIN */
+            for(int i = 0; i < N_I2C_TRANSMIT_SLOTS; ++i)
+            {
+                uint8_t sizeFilled = kfifo_get_filled_size(&arr_fifo_I2C_transmit[i]);
+                if(sizeFilled > 0 )
+                {
+                    uint8_t sizePack;
+                    kfifo_get(&arr_fifo_I2C_transmit[i], &sizePack, 1);
+                    if(sizePack > 0)
+                    {
+                        static uint8_t __attribute__((section(".DMA_no_cache"))) data[BYTES_I2C_MAX_SINGLE_TRANSMIT];
+                        kfifo_get(&arr_fifo_I2C_transmit[i], data, sizePack);
+                        uint16_t addrDevice = arr_I2C_device_addrs[i];
+                        if (__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_BUSY)) {
+                            HAL_I2C_Init(&hi2c1);
+                        }
+                        HAL_I2C_Master_Transmit_DMA(&hi2c1, addrDevice, data, sizePack);
+                        // the interval between tasks are sufficent for DMA transmission, so no need for syncnization with DMA finish signal
+                    }
+                }
+            }
+            /* TASK: process I2C END */
 
 
-			continue;
-		};
-		/* TASK: detect power off */
-		if((rflags & (FLAG_SHUTDOWN_BUTTON_LONG_PRESSED | FLAG_SHUTDOWN_NOW)) != 0)
-		{
-		  // TODO: pop up prompt window
-			lv_lock();
-			show_msgbox_farewell();
-			lv_unlock();
-			osDelay(pdMS_TO_TICKS(2000));
-			fsmPowerOff = 1;
-		}
-		/* TASK: detect back light off*/
-		else if((rflags & FLAG_SHUTDOWN_BUTTON_SHORT_CLICKED) != 0)
-		{
-			if(is_back_light_on)
-			{
-				set_back_light(0);
-				set_mic_LEDs(0, 1);
-			}
-			else
-			{
-				set_back_light(1);
-			}
-		}
+            continue;
+        };
+        /* TASK: detect power off */
+        if((rflags & (FLAG_SHUTDOWN_BUTTON_LONG_PRESSED | FLAG_SHUTDOWN_NOW)) != 0)
+        {
+          // TODO: pop up prompt window
+            lv_lock();
+            show_msgbox_farewell();
+            lv_unlock();
+            osDelay(pdMS_TO_TICKS(2000));
+            fsmPowerOff = 1;
+        }
+        /* TASK: detect back light off*/
+        else if((rflags & FLAG_SHUTDOWN_BUTTON_SHORT_CLICKED) != 0)
+        {
+            if(is_back_light_on)
+            {
+                set_back_light(0);
+                set_mic_LEDs(0, 1);
+            }
+            else
+            {
+                set_back_light(1);
+            }
+        }
 
 
-		ENTER_BUTTON_CRITICAL;
-		/* TASK: detect microphone plug (rising edge) and unplug (falling edge)*/
-		for(int i = 0; i < N_MICROPHONES; ++i)
-		{
-			// detect plug in, send from EXTI ISR
-			if(rflags & (FLAG_MIC_1_PLUGGED << i))
-			{
-				fsmMics[i] = 1;
-				osMutexAcquire(mtxConfig, osWaitForever);
-				// by default: link microphone i to USB output
-				cfg.audio_connections[1] |= (1U << i);
-				// prepare devices and etc
-				audio_connections_apply(cfg.audio_connections);
-				osMutexRelease(mtxConfig);
-			}
-			// detect unplug, judge from GPIO reading
-			else if(fsmMics[i])
-			{
-				uint8_t v = HAL_GPIO_ReadPin(micports[i], micpins[i]);
-				if(v == 0) // unplugged
-				{
-					// to confirm
-				  osDelay(pdMS_TO_TICKS(20));
-				  v = HAL_GPIO_ReadPin(micports[i], micpins[i]);
-				  if(v == 0) // unplugged
-				  {
-					    fsmMics[i] = 0;
-						osMutexAcquire(mtxConfig, osWaitForever);
-						// by default: disconnect microphone i to USB output
-						cfg.audio_connections[1] &= ~(1U << i);
-						// prepare devices and etc
-						audio_connections_apply(cfg.audio_connections);
-						osMutexRelease(mtxConfig);
-				  }
-				}
+        ENTER_BUTTON_CRITICAL;
+        /* TASK: detect microphone plug (rising edge) and unplug (falling edge)*/
+        for(int i = 0; i < N_MICROPHONES; ++i)
+        {
+            // detect plug in, send from EXTI ISR
+            if(rflags & (FLAG_MIC_1_PLUGGED << i))
+            {
+                fsmMics[i] = 1;
+                osMutexAcquire(mtxConfig, osWaitForever);
+                // by default: link microphone i to USB output
+                cfg.audio_connections[1] |= (1U << i);
+                // prepare devices and etc
+                audio_connections_apply(cfg.audio_connections);
+                osMutexRelease(mtxConfig);
+            }
+            // detect unplug, judge from GPIO reading
+            else if(fsmMics[i])
+            {
+                uint8_t v = HAL_GPIO_ReadPin(micports[i], micpins[i]);
+                if(v == 0) // unplugged
+                {
+                    // to confirm
+                  osDelay(pdMS_TO_TICKS(20));
+                  v = HAL_GPIO_ReadPin(micports[i], micpins[i]);
+                  if(v == 0) // unplugged
+                  {
+                        fsmMics[i] = 0;
+                        osMutexAcquire(mtxConfig, osWaitForever);
+                        // by default: disconnect microphone i to USB output
+                        cfg.audio_connections[1] &= ~(1U << i);
+                        // prepare devices and etc
+                        audio_connections_apply(cfg.audio_connections);
+                        osMutexRelease(mtxConfig);
+                  }
+                }
 
-			}
-		}
+            }
+        }
 
-		/* TASK: detect output plug (rising edge) and unplug (falling edge)*/
-		for(int i = 0; i < N_HEADPHONES; ++i)
-		{
-			// detect plug
-			if(rflags & (FLAG_OUT_1_PLUGGED << i))
-			{
-				fsmMics[i] = 1;
-				osMutexAcquire(mtxConfig, osWaitForever);
-				// by default: link decoder to FS and USB speaker
-				cfg.audio_connections[0] |= 0b1100U;
-				// prepare devices and etc
-				audio_connections_apply(cfg.audio_connections);
-				osMutexRelease(mtxConfig);
-			}
-			// detect unplug
-			else if(fsmMics[i])
-			{
-				uint8_t v = HAL_GPIO_ReadPin(headphoneports[i], headphonepins[i]);
-				if(v == 0) // unplugged
-				{
-					// to confirm
-				  osDelay(pdMS_TO_TICKS(20));
-				  v = HAL_GPIO_ReadPin(headphoneports[i], headphonepins[i]);
-				  if(v == 0) // unplugged
-				  {
-						fsmOuts[i]=0;
-						osMutexAcquire(mtxConfig, osWaitForever);
-						// turn off decoder if all Outputs are unplugged
-						if(fsmOuts[0] == 0 && fsmOuts[1] == 0)
-						{
-							cfg.audio_connections[1] = 0U;
-							// prepare devices and etc
-							audio_connections_apply(cfg.audio_connections);
-						}
-						osMutexRelease(mtxConfig);
-				  }
-				}
-			}
-		}
-		EXIT_BUTTON_CRITICAL;
+        /* TASK: detect output plug (rising edge) and unplug (falling edge)*/
+        for(int i = 0; i < N_HEADPHONES; ++i)
+        {
+            // detect plug
+            if(rflags & (FLAG_OUT_1_PLUGGED << i))
+            {
+                fsmMics[i] = 1;
+                osMutexAcquire(mtxConfig, osWaitForever);
+                // by default: link decoder to FS and USB speaker
+                cfg.audio_connections[0] |= 0b1100U;
+                // prepare devices and etc
+                audio_connections_apply(cfg.audio_connections);
+                osMutexRelease(mtxConfig);
+            }
+            // detect unplug
+            else if(fsmMics[i])
+            {
+                uint8_t v = HAL_GPIO_ReadPin(headphoneports[i], headphonepins[i]);
+                if(v == 0) // unplugged
+                {
+                    // to confirm
+                  osDelay(pdMS_TO_TICKS(20));
+                  v = HAL_GPIO_ReadPin(headphoneports[i], headphonepins[i]);
+                  if(v == 0) // unplugged
+                  {
+                        fsmOuts[i]=0;
+                        osMutexAcquire(mtxConfig, osWaitForever);
+                        // turn off decoder if all Outputs are unplugged
+                        if(fsmOuts[0] == 0 && fsmOuts[1] == 0)
+                        {
+                            cfg.audio_connections[1] = 0U;
+                            // prepare devices and etc
+                            audio_connections_apply(cfg.audio_connections);
+                        }
+                        osMutexRelease(mtxConfig);
+                  }
+                }
+            }
+        }
+        EXIT_BUTTON_CRITICAL;
 
 
-	}
+    }
 }
 
 
@@ -2014,41 +2047,42 @@ uint8_t __attribute__((aligned(32))) __attribute__((section(".DMA_no_cache"))) b
 
 static void save_config_local()
 {
-	  /* TASK: save config on EEPROM */
+      if(!isModified) return;
 
-	  if(isModified)
-	  {
-		  FRESULT fr = FR_OK;
-		  if(!isFilesystemOK)
-		  {
-			  SD_Driver.disk_initialize(0);
-			  fr = f_mount(&SDFatFS, (const TCHAR*)SDPath,1);
-		  }
-		  if(fr == FR_OK)
-			  fr = f_open(&f, FS_PATH_CONFIG_FILE,FA_WRITE | FA_CREATE_ALWAYS);
-		  if(fr == FR_OK)
-		  {
-			  memcpy(bufFile, &cfg, sizeof(cfg));
-			  size_t lenWritten;
-			  fr = f_write(&f, bufFile, sizeof(cfg), &lenWritten);
-			  f_close(&f);
-			  lv_lock();
-			  show_toast("Config saved!");
-			  lv_unlock();
-			  osDelay(pdMS_TO_TICKS(1000));
-		  }
-		  else
-		  {
-			  number2text(bufLVGLDebug, fr, 0, 0);
-			  lv_lock();
-			  show_toast(bufLVGLDebug);
-			  lv_unlock();
-			  osDelay(pdMS_TO_TICKS(2000));
-		  }
-		  isModified = false;
-	  }
+      /* In MSC mode the SD card is owned by the USB host — stop USB to free it */
+      if(cfg.usbCfgDescSelector == USB_CFG_DESC_MASS_STORAGE) {
+          USB_stop();
+          isFilesystemOK = false;
+      }
 
-
+      FRESULT fr = FR_OK;
+      if(!isFilesystemOK) {
+          osDelay(pdMS_TO_TICKS(200)); /* wait for SDMMC to settle after USB stop */
+          memset(&hsd1, 0, sizeof(hsd1));
+          MX_SDMMC1_SD_Init();
+          SD_Driver.disk_initialize(0);
+          fr = f_mount(&SDFatFS, (const TCHAR*)SDPath, 1);
+      }
+      if(fr == FR_OK) {
+          fr = f_open(&f, FS_PATH_CONFIG_FILE, FA_WRITE | FA_CREATE_ALWAYS);
+      }
+      if(fr == FR_OK) {
+          memcpy(bufFile, &cfg, sizeof(cfg));
+          size_t lenWritten;
+          fr = f_write(&f, bufFile, sizeof(cfg), &lenWritten);
+          f_close(&f);
+          lv_lock();
+          show_toast("Config saved!");
+          lv_unlock();
+          osDelay(pdMS_TO_TICKS(1000));
+      } else {
+          number2text(bufLVGLDebug, fr, 0, 0);
+          lv_lock();
+          show_toast(bufLVGLDebug);
+          lv_unlock();
+          osDelay(pdMS_TO_TICKS(2000));
+      }
+      isModified = false;
 }
 
 
@@ -2065,160 +2099,161 @@ void StartDefaultTask(void *argument)
   size_t lenRead;
   if(fr == FR_OK)
   {
-	  /* NOTE: SDMMC1 buf cannot be put at AHB SRAMS, DMA will halt */
-	  isFilesystemOK = true;
-	  /* Init: test filesystem*/
-#ifdef DEBUG
-	  fr = f_open(&f, L"0:/test.txt", FA_READ);
-	  if(fr == FR_OK)
-	  {
-		  f_read(&f, (uint8_t*)bufFile, 512, &lenRead);
-		  f_close(&f);
-		  strncpy(bufLVGLDebug, (char*)bufFile, 16);
-	  }
-	  else
-	  {
-		  strcpy(bufLVGLDebug, "unable to open test file");
-	  }
-#endif
-	  /* Init: Load Config */
-	  bool isConfigLoaded = false;
-	  fr = f_open(&f, FS_PATH_CONFIG_FILE, FA_READ | FA_OPEN_EXISTING);
-	  if(fr == FR_OK)
-	  {
-		  f_read(&f, bufFile, sizeof(cfg), &lenRead);
-		  f_close(&f);
-		  if(lenRead == sizeof(cfg))
-		  {
-			  osMutexAcquire(mtxConfig, osWaitForever);
-			  if((fr == FR_OK) && (config_check_valid((Config*)bufFile)))
-			  {
-				  memcpy(&cfg, bufFile, lenRead);
-				  isConfigLoaded = true;
-			  }
-			  osMutexRelease(mtxConfig);
-		  }
-	  }
-	  // create config file if not loaded successfully
-	  if(!isConfigLoaded)
-	  {
-		  strcpy(bufLVGLDebug, "unable to open config file");
-		  fr = f_opendir(&dir, FS_FOLDER_SYS);
-		  if(fr == FR_OK)
-			  f_closedir(&dir);
-		  else
-			  fr = f_mkdir(FS_FOLDER_SYS);
-		  osMutexAcquire(mtxConfig, osWaitForever);
-		  fr = f_open(&f, FS_PATH_CONFIG_FILE, FA_WRITE | FA_CREATE_ALWAYS);
-		  f_write(&f,(uint8_t*)&cfg, sizeof(Config), &lenRead);
-		  f_close(&f);
-		  osMutexRelease(mtxConfig);
-	  }
-	  // audio DSP init
-	for(int i = 0; i < N_INPUTS; ++i)
-	{
-		// initialize DSP, before profile loaded in GUI
-		if(arr_DSPs[i])
-		{
-			for(int j =0; j < arr_N_DSP_channels[i]; ++j)
-			{
-				// load preset for DSPs
-				int r = -1;
-				if(cfg.dsp_preset_ids[i] > 0)
-				{
-					r = load_and_apply_DSP_preset(&arr_DSPs[i][j], cfg.dsp_preset_ids[i]);
+      /* NOTE: SDMMC1 buf cannot be put at AHB SRAMS, DMA will halt */
+      isFilesystemOK = true;
+      /* Init: test filesystem — read test.txt root, show content in toast */
+      fr = f_open(&f, L"0:/test.txt", FA_READ);
+      if(fr == FR_OK)
+      {
+          lenRead = 0;
+          f_read(&f, (uint8_t*)bufFile, 512, &lenRead);
+          f_close(&f);
+          bufFile[lenRead < sizeof(bufFile) ? lenRead : sizeof(bufFile) - 1] = 0;
+          strncpy(bufLVGLDebug, (char*)bufFile, sizeof(bufLVGLDebug) - 1);
+          bufLVGLDebug[sizeof(bufLVGLDebug) - 1] = 0;
+      }
+      else
+      {
+          strcpy(bufLVGLDebug, "test.txt not found");
+      }
+      /* Init: Load Config */
+      bool isConfigLoaded = false;
+      fr = f_open(&f, FS_PATH_CONFIG_FILE, FA_READ | FA_OPEN_EXISTING);
+      if(fr == FR_OK)
+      {
+          f_read(&f, bufFile, sizeof(cfg), &lenRead);
+          f_close(&f);
+          if(lenRead == sizeof(cfg))
+          {
+              osMutexAcquire(mtxConfig, osWaitForever);
+              if((fr == FR_OK) && (config_check_valid((Config*)bufFile)))
+              {
+                  memcpy(&cfg, bufFile, lenRead);
+                  isConfigLoaded = true;
+              }
+              osMutexRelease(mtxConfig);
+          }
+      }
+      // create config file if not loaded successfully
+      if(!isConfigLoaded)
+      {
+          strcpy(bufLVGLDebug, "unable to open config file");
+          fr = f_opendir(&dir, FS_FOLDER_SYS);
+          if(fr == FR_OK)
+              f_closedir(&dir);
+          else
+              fr = f_mkdir(FS_FOLDER_SYS);
+          osMutexAcquire(mtxConfig, osWaitForever);
+          fr = f_open(&f, FS_PATH_CONFIG_FILE, FA_WRITE | FA_CREATE_ALWAYS);
+          f_write(&f,(uint8_t*)&cfg, sizeof(Config), &lenRead);
+          f_close(&f);
+          osMutexRelease(mtxConfig);
+      }
+      // audio DSP init
+    for(int i = 0; i < N_INPUTS; ++i)
+    {
+        // initialize DSP, before profile loaded in GUI
+        if(arr_DSPs[i])
+        {
+            for(int j =0; j < arr_N_DSP_channels[i]; ++j)
+            {
+                // load preset for DSPs
+                int r = -1;
+                if(cfg.dsp_preset_ids[i] > 0)
+                {
+                    r = load_and_apply_DSP_preset(&arr_DSPs[i][j], cfg.dsp_preset_ids[i]);
 
-				}
-				// if preset load failed, initialize
-				if(r != 0)
-				{
-					audio_DSP_cfg_t dsp_cfg = {
-							.cfg_compress = audio_compress_cfg_default,
-							.cfg_EQ = audio_EQ_cfg_default,
-							.cfg_reverb = audio_reverb_cfg_default,
-							.function_bits = 0,
-					};
-					audio_DSP_init(&arr_DSPs[i][j], &dsp_cfg);
-				}
-			}
-		}
-	}
-	  // apply audio connection and prepare transmissions
-	  adcx120_init_t adcx120_init_cfg = {
-			  .pregain_db2 = {cfg.nPregainsDB2_encoder[0], cfg.nPregainsDB2_encoder[1]},
-			  .volume100 = {cfg.nVolume100_encoder[0], cfg.nVolume100_encoder[1]},
-	  };
-	  // adcx
-	  encocder_input_start();
-	  osDelay(pdMS_TO_TICKS(10));
-	  adcx120_reset(&adcx120);
-	  osDelay(pdMS_TO_TICKS(10));
-	  adcx120_awake(&adcx120);
-	  osDelay(pdMS_TO_TICKS(50));
-	  adcx120_init(&adcx120, &adcx120_init_cfg);
-	   // if enabled in config, will init all audio devices
-	  taskENTER_CRITICAL();
-	  sync_volumes(false); // blocked
-	  taskEXIT_CRITICAL();
-	  audio_connections_apply(cfg.audio_connections);
-	  // sync dry/wet sound connections
-	  audio_outpus_dsp_connection_apply(cfg.outputs_dsp_usage);
-	  /* load DSP profiles BEGIN */
-	  TCHAR* wcsProfilePath = wcsPathToPlay;
-	  // build path
-	  TCHAR* wcsID = strncpy_TCHAR(wcsProfilePath, PATH_DSP_PROFILE_FOLDER _T("/") FILENAME_DSP_PROFILE, _MAX_LFN);
-	  // iterate all input dsps
-	  uint8_t id = 0;
-	  audio_DSP_cfg_t cfgDSP;
-	  for(int iIn = 0; iIn < N_INPUTS; ++iIn)
-	  {
-		  if((id = cfg.dsp_preset_ids[iIn]) > 0)
-		  {
-			  audio_DSP_t* pDSP = arr_DSPs[iIn];
-			  if(pDSP == NULL) continue;
-			  uint8_t nChs = arr_num_channels_to_share_DSP[iIn];
-			  /* make path */
-			  // add number to path
-			  *wcsID = _T('0') + id;
-			  // terminate the string
-			  *(wcsID+1) = 0;
-			  /* open file */
-			  // try to open the file
-			  bool loaded = false;
-			  fr = f_open(&f, wcsProfilePath, FA_READ | FA_OPEN_EXISTING);
-			  if(fr == FR_OK)
-			  {
-				  fr = f_read(&f, bufFile, sizeof(audio_DSP_cfg_t), &lenRead);
-				  f_close(&f);
-				  if(fr == FR_OK)
-				  {
-					  if(lenRead == sizeof(audio_DSP_cfg_t))
-						  loaded = true;
-				  }
-			  }
-			  if(loaded)
-			  {
-				  memcpy(&cfgDSP, bufFile, sizeof(cfgDSP));
-				  for(int idxCh = 0; idxCh < nChs; idxCh++)
-				  {
-					  audio_DSP_init(&(pDSP[idxCh]), &cfgDSP);
-				  }
-			  }
-			  else
-			  {
-				  cfg.dsp_preset_ids[iIn] = 0; // mark the profile as invalid
-				  isModified = true;
-			  }
+                }
+                // if preset load failed, initialize
+                if(r != 0)
+                {
+                    audio_DSP_cfg_t dsp_cfg = {
+                            .cfg_compress = audio_compress_cfg_default,
+                            .cfg_EQ = audio_EQ_cfg_default,
+                            .cfg_reverb = audio_reverb_cfg_default,
+                            .function_bits = 0,
+                    };
+                    audio_DSP_init(&arr_DSPs[i][j], &dsp_cfg);
+                }
+            }
+        }
+    }
+      // apply audio connection and prepare transmissions
+      adcx120_init_t adcx120_init_cfg = {
+              .pregain_db2 = {cfg.nPregainsDB2_encoder[0], cfg.nPregainsDB2_encoder[1]},
+              .volume100 = {cfg.nVolume100_encoder[0], cfg.nVolume100_encoder[1]},
+      };
+      // adcx
+      encocder_input_start();
+      osDelay(pdMS_TO_TICKS(10));
+      adcx120_reset(&adcx120);
+      osDelay(pdMS_TO_TICKS(10));
+      adcx120_awake(&adcx120);
+      osDelay(pdMS_TO_TICKS(50));
+      adcx120_init(&adcx120, &adcx120_init_cfg);
+       // if enabled in config, will init all audio devices
+      taskENTER_CRITICAL();
+      sync_volumes(false); // blocked
+      taskEXIT_CRITICAL();
+      audio_connections_apply(cfg.audio_connections);
+      // sync dry/wet sound connections
+      audio_outpus_dsp_connection_apply(cfg.outputs_dsp_usage);
+      /* load DSP profiles BEGIN */
+      TCHAR* wcsProfilePath = wcsPathToPlay;
+      // build path
+      TCHAR* wcsID = strncpy_TCHAR(wcsProfilePath, PATH_DSP_PROFILE_FOLDER _T("/") FILENAME_DSP_PROFILE, _MAX_LFN);
+      // iterate all input dsps
+      uint8_t id = 0;
+      audio_DSP_cfg_t cfgDSP;
+      for(int iIn = 0; iIn < N_INPUTS; ++iIn)
+      {
+          if((id = cfg.dsp_preset_ids[iIn]) > 0)
+          {
+              audio_DSP_t* pDSP = arr_DSPs[iIn];
+              if(pDSP == NULL) continue;
+              uint8_t nChs = arr_num_channels_to_share_DSP[iIn];
+              /* make path */
+              // add number to path
+              *wcsID = _T('0') + id;
+              // terminate the string
+              *(wcsID+1) = 0;
+              /* open file */
+              // try to open the file
+              bool loaded = false;
+              fr = f_open(&f, wcsProfilePath, FA_READ | FA_OPEN_EXISTING);
+              if(fr == FR_OK)
+              {
+                  fr = f_read(&f, bufFile, sizeof(audio_DSP_cfg_t), &lenRead);
+                  f_close(&f);
+                  if(fr == FR_OK)
+                  {
+                      if(lenRead == sizeof(audio_DSP_cfg_t))
+                          loaded = true;
+                  }
+              }
+              if(loaded)
+              {
+                  memcpy(&cfgDSP, bufFile, sizeof(cfgDSP));
+                  for(int idxCh = 0; idxCh < nChs; idxCh++)
+                  {
+                      audio_DSP_init(&(pDSP[idxCh]), &cfgDSP);
+                  }
+              }
+              else
+              {
+                  cfg.dsp_preset_ids[iIn] = 0; // mark the profile as invalid
+                  isModified = true;
+              }
 
-		  }
-	  }
+          }
+      }
 
-	  /* load DSP profiles END */
-	  USB_switch_to_configuration(cfg.usbCfgDescSelector);
+      /* load DSP profiles END */
+      USB_switch_to_configuration(cfg.usbCfgDescSelector);
   }
   else
   {
-	  strcpy(bufLVGLDebug, "unable to mount SD card");
+      strcpy(bufLVGLDebug, "unable to mount SD card");
   }
   /* Start Other dependent tasks*/
   // START HUMAN INPUT TASK
@@ -2228,7 +2263,7 @@ void StartDefaultTask(void *argument)
 
   /* init code for audio tasks */
   if(cfg.usbCfgDescSelector != USB_CFG_DESC_MASS_STORAGE)
-	  FS_player_task_start();
+      FS_player_task_start();
 //  USB_player_task_start();
 
   /* init code for USB_DEVICE */
@@ -2242,54 +2277,52 @@ void StartDefaultTask(void *argument)
   for(;;)
   {
       osDelay(osWaitForever);
-	  /* TASK: detect battery life */
-	  static int VBAT_mv_avg = 0;
-	  taskENTER_CRITICAL();
-	  int VBAT_mv = touch_read_VBAT_mv();
-	  taskEXIT_CRITICAL();
-	  if(VBAT_mv_avg == 0)
-		  VBAT_mv_avg = VBAT_mv;
-	  else
-		  VBAT_mv_avg = (VBAT_mv_avg * 15 + VBAT_mv) / 16;
-	  // GUI updates
-	  if(isGUIReady)
-	  {
-		  lv_lock();
-		  if(VBAT_mv_avg > 4000U) // SOC: 100%
-		  {
-			  GUI_set_battery_SOC(4);
-		  }
-		  else if(VBAT_mv_avg > 3800) // SOC: 75%
-		  {
-			  GUI_set_battery_SOC(3);
-		  }
-		  else if(VBAT_mv_avg > 3600) // SOC: 50%
-		  {
-			  GUI_set_battery_SOC(2);
-		  }
-		  else if(VBAT_mv_avg > 3400) // SOC: 25%
-		  {
-			  GUI_set_battery_SOC(1);
-		  }
-		  else // SOC: empty
-		  {
-			  GUI_set_battery_SOC(0);
-		  }
-		  lv_unlock();
+      /* TASK: detect battery life */
+      static int VBAT_mv_avg = 0;
+      taskENTER_CRITICAL();
+      int VBAT_mv = touch_read_VBAT_mv();
+      taskEXIT_CRITICAL();
+      if(VBAT_mv_avg == 0)
+          VBAT_mv_avg = VBAT_mv;
+      else
+          VBAT_mv_avg = (VBAT_mv_avg * 15 + VBAT_mv) / 16;
+      // GUI updates
+      if(isGUIReady)
+      {
+          lv_lock();
+          if(VBAT_mv_avg > 4000U) // SOC: 100%
+          {
+              GUI_set_battery_SOC(4);
+          }
+          else if(VBAT_mv_avg > 3800) // SOC: 75%
+          {
+              GUI_set_battery_SOC(3);
+          }
+          else if(VBAT_mv_avg > 3600) // SOC: 50%
+          {
+              GUI_set_battery_SOC(2);
+          }
+          else if(VBAT_mv_avg > 3400) // SOC: 25%
+          {
+              GUI_set_battery_SOC(1);
+          }
+          else // SOC: empty
+          {
+              GUI_set_battery_SOC(0);
+          }
+          lv_unlock();
 
-		  /* TASK: detect temperature */
-		  static int temp_C_avg = 0;
-		  taskENTER_CRITICAL();
-		  int temp_C = touch_read_temperature();
-		  taskEXIT_CRITICAL();
-		  if(temp_C_avg == 0)
-			  temp_C_avg = temp_C;
-		  else
-			  temp_C_avg = (temp_C_avg * 15 + temp_C) / 16;
-		  lv_lock();
-		  GUI_set_temperature(temp_C_avg);
-		  lv_unlock();
-	  }
+          /* TASK: detect temperature */
+          static int temp_C_avg = 0;
+          int temp_C = mcu_read_temperature();
+          if(temp_C_avg == 0)
+              temp_C_avg = temp_C;
+          else
+              temp_C_avg = (temp_C_avg * 15 + temp_C) / 16;
+          lv_lock();
+          GUI_set_temperature(temp_C_avg);
+          lv_unlock();
+      }
   /* USER CODE END 5 */
   }
 }
@@ -2366,10 +2399,10 @@ void MPU_Config(void)
   HAL_MPU_ConfigRegion(&MPU_InitStruct);
   /** Initializes and configures the Region and the memory to be protected
   */
-  // for DMA (1KB)+32KB (+1kb from the residual space of framebuffer1), no cache
+  // for DMA (1KB)+64KB (+1kb from the residual space of framebuffer1), no cache
   MPU_InitStruct.Number = MPU_REGION_NUMBER6;
   MPU_InitStruct.BaseAddress = 0x24040000;
-  MPU_InitStruct.Size = MPU_REGION_SIZE_32KB;
+  MPU_InitStruct.Size = MPU_REGION_SIZE_64KB; // TO 0x24050000
   MPU_InitStruct.IsCacheable = MPU_ACCESS_NOT_CACHEABLE;
   MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
 
@@ -2377,18 +2410,7 @@ void MPU_Config(void)
 
   /** Initializes and configures the Region and the memory to be protected
   */
-  // for DMA (1KB)+32KB+16KB (+1kb from the residual space of framebuffer1), no cache
   MPU_InitStruct.Number = MPU_REGION_NUMBER7;
-  MPU_InitStruct.BaseAddress = 0x24048000;
-  MPU_InitStruct.Size = MPU_REGION_SIZE_16KB;
-  MPU_InitStruct.IsCacheable = MPU_ACCESS_NOT_CACHEABLE;
-  MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
-
-  HAL_MPU_ConfigRegion(&MPU_InitStruct);
-
-  /** Initializes and configures the Region and the memory to be protected
-  */
-  MPU_InitStruct.Number = MPU_REGION_NUMBER8;
   MPU_InitStruct.BaseAddress = 0x30000000;
   MPU_InitStruct.Size = MPU_REGION_SIZE_128KB;
   MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
@@ -2399,7 +2421,7 @@ void MPU_Config(void)
   /** Initializes and configures the Region and the memory to be protected
   */
   // ITCM
-  MPU_InitStruct.Number = MPU_REGION_NUMBER9;
+  MPU_InitStruct.Number = MPU_REGION_NUMBER8;
   MPU_InitStruct.BaseAddress = 0x00000000;
   MPU_InitStruct.Size = MPU_REGION_SIZE_64KB;
   MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;

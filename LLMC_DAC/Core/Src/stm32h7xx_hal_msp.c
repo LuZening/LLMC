@@ -746,7 +746,7 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
   }
   else if(htim_base->Instance==TIM5)
   {
-	  __HAL_RCC_TIM5_CLK_ENABLE();
+      __HAL_RCC_TIM5_CLK_ENABLE();
   }
 
 }
@@ -775,7 +775,7 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* htim_base)
   }
   else if(htim_base->Instance==TIM5)
   {
-	  __HAL_RCC_TIM5_CLK_DISABLE();
+      __HAL_RCC_TIM5_CLK_DISABLE();
   }
 
 
