@@ -194,9 +194,8 @@ static void prev_event_handler_cb(lv_event_t* e)
 {
     if(lv_event_get_code(e) == LV_EVENT_CLICKED) {
 #ifndef LVGL_SIM
-        osMutexAcquire(mtxFSPlayer, osWaitForever);
+        /* Dirty read is safe; mutex would block if player is opening a file */
         int32_t current_ms = (samplesPerMs > 0) ? (int32_t)(samplesPlayed / samplesPerMs) : 0;
-        osMutexRelease(mtxFSPlayer);
         uint32_t new_ms = (current_ms > 10000) ? (uint32_t)(current_ms - 10000) : 0;
         FS_player_signal_seek(new_ms);
 #endif
@@ -231,9 +230,8 @@ static void next_event_handler_cb(lv_event_t* e)
 {
     if(lv_event_get_code(e) == LV_EVENT_CLICKED) {
 #ifndef LVGL_SIM
-        osMutexAcquire(mtxFSPlayer, osWaitForever);
+        /* Dirty read is safe; mutex would block if player is opening a file */
         int32_t current_ms = (samplesPerMs > 0) ? (int32_t)(samplesPlayed / samplesPerMs) : 0;
-        osMutexRelease(mtxFSPlayer);
         FS_player_signal_seek((uint32_t)(current_ms + 10000));
 #endif
     }

@@ -98,6 +98,7 @@ size_t samplesPerMs = (DEFAULT_SAMPLE_RATE_HZ / 1000); // protected by mtxFSPlay
 // start to play autonomouslty after changing track, without the need for manual operations
 // this flag will be set each time the player enters PLAY state, and be cleared when paused or stopped
 static bool startPlayInstantly = false;
+static bool seek_pending = false;
 static uint32_t fade_in_elapsed = 0;
 #define FADE_IN_SAMPLES  ((DEFAULT_SAMPLE_RATE_HZ / 1000) * 50)  // 50ms
 /* PLAY CONTROL */
@@ -587,6 +588,7 @@ static void task_FS_loader(void * argument)
             {
                 osMutexAcquire(mtxFSPlayer, osWaitForever);
                 uint32_t target = seek_target_frame;
+                seek_pending = false;
                 osMutexRelease(mtxFSPlayer);
                 player_do_seek(target);
             }
@@ -946,12 +948,18 @@ void FS_player_signal_next()
 
 void FS_player_signal_seek(uint32_t frame_ms)
 {
-    if(taskFSLoader && qFSLoader)
+    /* Seek only meaningful during playback; also avoids blocking on mutex
+     * while the player task is opening a file in STOP state */
+    if(taskFSLoader && qFSLoader && FS_player_state == FS_PLAYER_PLAY)
     {
-        osMutexAcquire(mtxFSPlayer, osWaitForever);
+        if (osMutexAcquire(mtxFSPlayer, 10) != osOK) return; // timeout 10ms
         seek_target_frame = frame_ms;
+        bool already_pending = seek_pending;
+        seek_pending = true;
         osMutexRelease(mtxFSPlayer);
-        osMessageQueuePut(qFSLoader, &FS_LOADER_SIGNAL_SEEK, 0, 100);
+        if (!already_pending) {
+            osMessageQueuePut(qFSLoader, &FS_LOADER_SIGNAL_SEEK, 0, 100);
+        }
     }
 }
 
