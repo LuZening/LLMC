@@ -8,7 +8,7 @@
 #include "utf_convert.h"
 
 /*
-UTF-16		UTF-8
+UTF-16        UTF-8
 0000 - 007F 0xxxxxxx
 0080 - 07FF 110xxxxx 10xxxxxx
 0800 - FFFF 1110xxxx 10xxxxxx 10xxxxxx
@@ -70,7 +70,7 @@ int UTF8ToUTF16(const UTF8* pUTF8Start, const UTF8* pUTF8End, UTF16* pUTF16Start
 
      while (pTempUTF8 < pUTF8End && pTempUTF16+1 < pUTF16End)
      {
-    	 *pTempUTF16 = 0;
+         *pTempUTF16 = 0;
          if (*pTempUTF8 >= 0xE0U && *pTempUTF8 <= 0xEFU) //��3���ֽڵĸ�ʽ
          {
              //0800 - FFFF 1110xxxx 10xxxxxx 10xxxxxx

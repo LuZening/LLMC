@@ -92,9 +92,9 @@ static const uint8_t table_crc8[256] ICONST_ATTR = {
 
 void init_flac_context(FLACContext* p, int* pBuf0, int* pBuf1)
 {
-	memset(p, 0, sizeof(FLACContext));
-	p->decoded0 = pBuf0;
-	p->decoded1 = pBuf1;
+    memset(p, 0, sizeof(FLACContext));
+    p->decoded0 = pBuf0;
+    p->decoded1 = pBuf1;
 }
 
 static int64_t get_utf8(GetBitContext *gb) ICODE_ATTR_FLAC;

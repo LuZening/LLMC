@@ -161,6 +161,11 @@ static uint32_t fnsof_new = 0;
 static uint8_t __attribute__((aligned(4))) bufFeedback[4]; // leave some room to avoid overflow
 static precise_counter_t lastSampleCount_mic = {0};
 static precise_counter_t counter_feedback = {0};
+/* Drift correction state machine for microphone Data In */
+#define DRIFT_THRESHOLD 8
+enum { DRIFT_NORMAL = 0, DRIFT_HIGH, DRIFT_LOW };
+static uint8_t drift_state = DRIFT_NORMAL;
+static int32_t cum_samples_err = 0;
 uint32_t global_counter_USB_mic_SOF = 0;
 uint32_t global_counter_USB_mic_DataIn = 0;
 uint32_t global_counter_USB_mic_loss = 0;
@@ -1013,8 +1018,9 @@ size_t USB_absorb_from_fifo_mic_in(USBD_HandleTypeDef *pdev,  uint8_t *buf, size
 #else // always submit standard length
     size_t countDiff_limited = STANDARD_COUNT_DIFF;
 #endif
-	/* Drop overflowed samples if necessary */
-    int32_t sizeToGet = (int32_t)(countDiff_limited * sizePerSampleCount);
+    /* Drop overflowed samples if necessary */
+    /* Fixed base: standard packet size. Drift correction via state machine below. */
+    int32_t sizeToGet = (int32_t)(standard_count_diff * sizePerSampleCount);
     uint32_t sizeGot = 0;
     size_t sizeAvail = kfifo_get_filled_size(&fifo_to_USB_record);
     if(countToDrop > 0)
@@ -1023,29 +1029,34 @@ size_t USB_absorb_from_fifo_mic_in(USBD_HandleTypeDef *pdev,  uint8_t *buf, size
         sizeAvail = kfifo_get_filled_size(&fifo_to_USB_record);
     }
     uint32_t sizeFree = fifo_to_USB_record.size - sizeAvail;
-	/* Jump start when data is warmed up */
+    /* Jump start when data is warmed up */
     if(ready_for_output_USB_record == 0)
     {
         if(sizeAvail >= (sizePreheatBytes_USB_record))
             ready_for_output_USB_record = 1;
     }
-	/* transfer data with adjusted length from the FIFO to the USB transmit buffer */
-	static int32_t accum_adjust = 0;
-	/* Reset accum_adjust on restart (counter re-initialised) */
-	if(lastSampleCount_mic.state == PRECISE_COUNTER_INIT)
-	    accum_adjust = 0;
+    /* transfer data with adjusted length from the FIFO to the USB transmit buffer */
     if(ready_for_output_USB_record)
     {
-        /* Cumulative fractional adjustment: smoothly distribute +/-1 sample
-         * across multiple SOFs instead of abrupt jumps. */
-        int32_t deviation = ((int32_t)countDiff_limited - (int32_t)standard_count_diff) * (int32_t)sizePerSampleCount;
-        accum_adjust += deviation;
-        if (accum_adjust >= (int32_t)sizePerSampleCount) {
+        cum_samples_err += (int32_t)countDiff_limited - (int32_t)standard_count_diff;
+        switch(drift_state)
+        {
+        case DRIFT_NORMAL:
+            if(cum_samples_err >= DRIFT_THRESHOLD)
+                drift_state = DRIFT_HIGH;
+            else if(cum_samples_err <= -DRIFT_THRESHOLD)
+                drift_state = DRIFT_LOW;
+            break;
+        case DRIFT_HIGH:
             sizeToGet += (int32_t)sizePerSampleCount;
-            accum_adjust -= (int32_t)sizePerSampleCount;
-        } else if (accum_adjust <= -(int32_t)sizePerSampleCount) {
+            cum_samples_err--;
+            if(cum_samples_err <= 0) { drift_state = DRIFT_NORMAL; cum_samples_err = 0; }
+            break;
+        case DRIFT_LOW:
             sizeToGet -= (int32_t)sizePerSampleCount;
-            accum_adjust += (int32_t)sizePerSampleCount;
+            cum_samples_err++;
+            if(cum_samples_err >= 0) { drift_state = DRIFT_NORMAL; cum_samples_err = 0; }
+            break;
         }
         if (sizeToGet < (int32_t)sizePerSampleCount)
             sizeToGet = (int32_t)sizePerSampleCount;
@@ -1225,7 +1236,7 @@ static void AUDIO_IN_Restart(USBD_HandleTypeDef *pdev)
     /* update packet sizes */
     int i = 1;
     haudio->packet_sizes[i] = CALC_AUDIO_PACKET_SIZE_FS(haudio->sample_rate_Hzs[i], haudio->bit_depths[i], MAX_CHANNELS);
-//    kfifo_invalidate(&fifo_to_USB_record); // exhause all un-outed data on the FIFO
+    kfifo_invalidate(&fifo_to_USB_record); // flush stale data from previous session
     haudio->EPIN_tx_flags[0] = 255U;// Sync EP, NEED FIRST TRANSMIT TO INITIATE
     haudio->wr_enables[1] = 1U;
 
@@ -1234,6 +1245,8 @@ static void AUDIO_IN_Restart(USBD_HandleTypeDef *pdev)
     // set initial value to measure I2S speed
 //                lastSampleCount_mic = get_encoder_I2S_sample_count(NULL);
     memset(&lastSampleCount_mic, 0, sizeof(precise_counter_t));
+    drift_state = DRIFT_NORMAL;
+    cum_samples_err = 0;
     memset(&profUSB_MicIn, 0, sizeof(profiler_counter_t));
 
     sizeLastPacket_mic = haudio->packet_sizes[i];

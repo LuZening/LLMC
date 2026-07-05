@@ -330,7 +330,7 @@ static void browser_file_event_handler(lv_event_t * e)
         /* if clicked "..",  back to the parent folder */
         if((lv_strcmp(str_fn, "返回上级") == 0))
         {
-        	// only when the current path is not the root folder
+            // only when the current path is not the root folder
             if(countPath > 3)
             {
                 /*Remove the last '/' character*/
@@ -373,7 +373,7 @@ static void browser_file_event_handler(lv_event_t * e)
                 f_closedir(&dir);
                 // remove trailling '/'
                 if((cntFullPath > 0) && wcs_full_path[cntFullPath - 1] == _T('/'))
-                	wcs_full_path[cntFullPath - 1] = 0;
+                    wcs_full_path[cntFullPath - 1] = 0;
                 show_dir(obj, wcs_full_path);
                 lv_obj_send_event(explorer, LV_EVENT_VALUE_CHANGED, "folder");
             }
@@ -415,7 +415,7 @@ static void show_dir(lv_obj_t * obj, const TCHAR * wcsPath)
 
 
     while(1) {
-    	// call f_readdir repetitively to get file infos in sequence
+        // call f_readdir repetitively to get file infos in sequence
         fr = f_readdir(&dir, &finfo);
         if(fr != FR_OK) {
             LV_LOG_USER("Driver, file or directory does not exist %d!", fr);
@@ -434,7 +434,7 @@ static void show_dir(lv_obj_t * obj, const TCHAR * wcsPath)
         size_t countFn;
         countFn = strnlen_TCHAR(wcsFn, _MAX_LFN);
         UTF16ToUTF8((UTF16*)wcsFn, (UTF16*)(wcsFn + countFn),
-        		(UTF8*)bufUTF8, (UTF8*)(bufUTF8 + sizeof(bufUTF8)));
+                (UTF8*)bufUTF8, (UTF8*)(bufUTF8 + sizeof(bufUTF8)));
         char* fn = bufUTF8;
 #else
         char* fn = wcsFn;
@@ -460,7 +460,7 @@ static void show_dir(lv_obj_t * obj, const TCHAR * wcsPath)
         else if((is_end_with(fn, ".")) || (is_end_with(fn, "..")))
         {
             /*is relative return, hide the row */
-        	// do nothing
+            // do nothing
         }
         else if(fn[0] == _T('/'))
         {/*is dir*/
@@ -496,7 +496,7 @@ static void show_dir(lv_obj_t * obj, const TCHAR * wcsPath)
 #if _LFN_UNICODE
         countPath = strnlen_TCHAR(wcsPath, _MAX_LFN);
         int sizeUTF8 = UTF16ToUTF8((UTF16*)wcsPath, (UTF16*)(wcsPath + countPath),
-        		(UTF8*)bufUTF8, (UTF8*)(bufUTF8 + sizeof(bufUTF8)));
+                (UTF8*)bufUTF8, (UTF8*)(bufUTF8 + sizeof(bufUTF8)));
         char* path = bufUTF8;
 #else
         countPath = strnlen(wcsPath, _MAX_LFN);

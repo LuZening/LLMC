@@ -118,7 +118,7 @@ static void preset_dropdown_event_handler(lv_event_t *e)
                 }
                 else
                 {
-//					lv_dropdown_set_selected(dropdown, cfg.dsp_preset_ids[idx_DSP]);
+//                    lv_dropdown_set_selected(dropdown, cfg.dsp_preset_ids[idx_DSP]);
                     show_toast("加载DSP预设失败，将创建新预设");
                 }
             }

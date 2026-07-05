@@ -42,16 +42,16 @@ typedef struct FLACContext {
     unsigned long samplenumber;
     unsigned long totalsamples;
     enum decorrelation_type decorrelation;
-//	int decorrelation;
+//    int decorrelation;
 
     int filesize;
     int length; // time unit: millisecond(ms)
     int bitrate; // 455kbps
     int metadatalength;
     
-	int seektable;
-	int seekpoints;
-	
+    int seektable;
+    int seekpoints;
+    
     int bitstream_size;
     int bitstream_index;
 

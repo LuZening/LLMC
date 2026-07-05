@@ -1,0 +1,9 @@
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/Audio/playlist.c:15:6:playlist_init	16	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/Audio/playlist.c:24:5:playlist_getcur	40	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/Audio/playlist.c:169:5:playlist_prev	56	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/Audio/playlist.c:269:5:playlist_next	48	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/Audio/playlist.c:63:5:playlist_isin	32	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/Audio/playlist.c:101:5:playlist_goto	32	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/Audio/playlist.c:117:5:playlist_add	40	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/Audio/playlist.c:353:5:playlist_remove	40	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/Audio/playlist.c:403:8:playlist_saveas	40	static

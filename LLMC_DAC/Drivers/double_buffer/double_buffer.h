@@ -7,7 +7,7 @@
 typedef struct
 {
 //    size_t nQuartersIn[4];
-	uint8_t *buf;
+    uint8_t *buf;
     size_t size;
     size_t size_half;
 

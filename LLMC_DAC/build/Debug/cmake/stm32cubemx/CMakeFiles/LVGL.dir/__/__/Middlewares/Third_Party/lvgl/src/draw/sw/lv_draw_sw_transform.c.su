@@ -1,0 +1,8 @@
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/draw/sw/../../misc/../font/../draw/../misc/lv_color.h:349:46:lv_color_16_16_mix	0	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/draw/sw/../../misc/../font/../draw/../misc/lv_color_op.h:67:28:lv_color_mix32	16	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/draw/sw/lv_draw_sw_transform.c:244:13:transform_rgb888	88	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/draw/sw/lv_draw_sw_transform.c:340:13:transform_argb8888	88	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/draw/sw/lv_draw_sw_transform.c:430:13:transform_rgb565a8	80	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/draw/sw/lv_draw_sw_transform.c:538:13:transform_a8	64	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/draw/sw/lv_draw_sw_transform.c:612:13:transform_point_upscaled	12	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/draw/sw/lv_draw_sw_transform.c:82:6:lv_draw_sw_transform	208	static

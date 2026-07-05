@@ -102,10 +102,10 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
     switch(cfg.usbCfgDescSelector)
     {
     case USB_CFG_DESC_UAC1_0:
-		HAL_NVIC_SetPriority(OTG_HS_IRQn, 3, 0); // NVIC prioirty: USB = 3,
-		break;
+        HAL_NVIC_SetPriority(OTG_HS_IRQn, 3, 0); // NVIC prioirty: USB = 3,
+        break;
     default:
-    	HAL_NVIC_SetPriority(OTG_HS_IRQn, 6, 0); // MSC, lower than SD card
+        HAL_NVIC_SetPriority(OTG_HS_IRQn, 6, 0); // MSC, lower than SD card
     }
     HAL_NVIC_EnableIRQ(OTG_HS_IRQn);
   /* USER CODE BEGIN USB_OTG_HS_MspInit 1 */
@@ -383,7 +383,7 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
   /* USER CODE BEGIN TxRx_Configuration */
   // NOTE must be 32BYTES aligned // unit is word
   HAL_PCDEx_SetRxFiFo(&hpcd_USB_OTG_HS, 0x140); // for EP OUTs' MAX PACKET = 96 * 2 * 3 / 4(to the unit "word")
-  HAL_PCDEx_SetTxFiFo(&hpcd_USB_OTG_HS, 0, 0x60); // for EPIN0
+  HAL_PCDEx_SetTxFiFo(&hpcd_USB_OTG_HS, 0, 0x80); // for EPIN0
   HAL_PCDEx_SetTxFiFo(&hpcd_USB_OTG_HS, 1, 0x140); // for EPIN1 (Micophone)
   HAL_PCDEx_SetTxFiFo(&hpcd_USB_OTG_HS, 2, 0x10); // for EPIN2 (feedback)
   /* USER CODE END TxRx_Configuration */

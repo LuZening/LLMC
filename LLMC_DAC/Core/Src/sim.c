@@ -75,8 +75,8 @@ size_t f_size(FIL* p)
 
 /* Implement placeholder FatFS handles BEGIN */
 FRESULT f_opendir(
-    DIR* dp,			/* Pointer to directory object to create */
-    const TCHAR* path	/* Pointer to the directory path */
+    DIR* dp,            /* Pointer to directory object to create */
+    const TCHAR* path    /* Pointer to the directory path */
 )
 {
     if (wcsstr(path, L".wav"))

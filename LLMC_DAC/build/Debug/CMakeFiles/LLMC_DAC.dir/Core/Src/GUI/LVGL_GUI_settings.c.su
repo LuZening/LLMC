@@ -1,0 +1,8 @@
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/GUI/LVGL_GUI_settings.c:32:13:dismiss_settings_screen	16	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/GUI/LVGL_GUI_settings.c:160:6:back_event_cb	16	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/GUI/LVGL_GUI_settings.c:54:13:menu_settings_event_cb	8	static,ignoring_inline_asm
+E:/Projects/You/LLMC/LLMC_DAC/cmake/stm32cubemx/../../Middlewares/Third_Party/lvgl/src/core/../display/lv_display.h:392:26:lv_screen_active	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/GUI/LVGL_GUI_settings.c:268:13:create_sub_page_buffer_dashboard	56	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/GUI/LVGL_GUI_settings.c:260:13:dismiss_sub_page_buffer_dashboard_event_cb	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/GUI/LVGL_GUI_settings.c:203:13:buffer_dashboard_timer_cb	16	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/GUI/LVGL_GUI_settings.c:399:6:display_settings_screen	40	static

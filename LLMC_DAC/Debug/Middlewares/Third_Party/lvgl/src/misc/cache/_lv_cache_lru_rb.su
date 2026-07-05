@@ -1,0 +1,17 @@
+lv_string.h:65:20:lv_memzero	16	static
+lv_ll.h:85:20:_lv_ll_clear	16	static
+_lv_cache_lru_rb.c:102:15:alloc_new_node	40	static
+_lv_cache_lru_rb.c:138:23:get_lru_node	16	static
+_lv_cache_lru_rb.c:143:15:alloc_cb	16	static
+_lv_cache_lru_rb.c:156:13:init_cnt_cb	32	static
+_lv_cache_lru_rb.c:180:13:init_size_cb	32	static
+_lv_cache_lru_rb.c:204:13:destroy_cb	24	static
+_lv_cache_lru_rb.c:219:27:get_cb	56	static
+_lv_cache_lru_rb.c:256:27:add_cb	40	static
+_lv_cache_lru_rb.c:281:13:remove_cb	40	static
+_lv_cache_lru_rb.c:308:13:drop_cb	48	static
+_lv_cache_lru_rb.c:339:13:drop_all_cb	40	static
+_lv_cache_lru_rb.c:373:27:get_victim_cb	32	static
+_lv_cache_lru_rb.c:393:36:reserve_cond_cb	32	static
+_lv_cache_lru_rb.c:417:17:cnt_get_data_size_cb	16	static
+_lv_cache_lru_rb.c:423:17:size_get_data_size_cb	24	static

@@ -21,9 +21,9 @@ extern SPI_HandleTypeDef hspi1;
 #define HR2046_CMD_READ_X 0xD0
 #define HR2046_CMD_READ_Y 0x90
 #endif
-//#define HR2046_CMD_READ_Z1 0xb1	/* Read Z1 */
+//#define HR2046_CMD_READ_Z1 0xb1    /* Read Z1 */
 //#define HR2046_CMD_READ_Z2 0xc1    /* read Z2 */
-#define HR2046_CMD_READ_Z1 0xb0	/* Read Z1 */
+#define HR2046_CMD_READ_Z1 0xb0    /* Read Z1 */
 #define HR2046_CMD_READ_Z2 0xc0    /* read Z2 */
 #define HR2046_CMD_READ_TEMP 0x84
 #define HR2046_CMD_READ_TEMP_91 0xF4

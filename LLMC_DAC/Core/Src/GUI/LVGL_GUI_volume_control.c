@@ -112,14 +112,14 @@ void sync_volumes(bool nonblock)
                 {
                     // set decoder volume
                     uint8_t v = volume100_to_255(volume100_linear_to_log(nVol100_tg));
-//					PCM179x_set_attenuation(&pcm179x, v);
+//                    PCM179x_set_attenuation(&pcm179x, v);
                     uint8_t len = PCM179x_set_attenuation_async(&pcm179x, v, data);
                     transmit_async_i2c(0, data, len);
                 }
                 else if(i == 1)
                 {
                     // set encoder mic1(ch2) volume
-//					adcx120_set_volume(&adcx120, 2, volume100_linear_to_log(nVol100_tg));
+//                    adcx120_set_volume(&adcx120, 2, volume100_linear_to_log(nVol100_tg));
                     uint8_t len = adcx120_set_volume_async(&adcx120, 2, volume100_linear_to_log(nVol100_tg), data);
                     transmit_async_i2c(1, data, len);
 
@@ -127,7 +127,7 @@ void sync_volumes(bool nonblock)
                 else if(i == 2)
                 {
                     // set encoder mic2(ch1) volume
-//					adcx120_set_volume(&adcx120, 1, volume100_linear_to_log(nVol100_tg));
+//                    adcx120_set_volume(&adcx120, 1, volume100_linear_to_log(nVol100_tg));
                     uint8_t len = adcx120_set_volume_async(&adcx120, 1, volume100_linear_to_log(nVol100_tg), data);
                     transmit_async_i2c(1, data, len);
                 }
@@ -180,14 +180,14 @@ void sync_volumes(bool nonblock)
                 if(i == 0)
                 {
                     // set decoder gain
-//					adcx120_set_gain(&adcx120, 2, n_target);
+//                    adcx120_set_gain(&adcx120, 2, n_target);
                     uint8_t len = adcx120_set_gain_async(&adcx120, 2, n_target, data);
                     transmit_async_i2c(1, data, len);
                 }
                 else if(i == 1)
                 {
                     // set encoder mic1(ch2) gain
-//					adcx120_set_gain(&adcx120, 1, n_target);
+//                    adcx120_set_gain(&adcx120, 1, n_target);
                     uint8_t len = adcx120_set_gain_async(&adcx120, 1, n_target, data);
                     transmit_async_i2c(1, data, len);
                 }
@@ -367,7 +367,7 @@ void display_volume_control_screen()
 
     isVolumeControlCreated = true;
 
-    #define MARGIN_TO_BORDER_X	30
+    #define MARGIN_TO_BORDER_X    30
     #define MARGIN_TO_BORDER_Y  10
 
     lvGroupVolumeControl = lv_group_create();
@@ -405,12 +405,12 @@ void display_volume_control_screen()
     lv_obj_align(subcont, LV_ALIGN_BOTTOM_LEFT, 0, 0); // put to the most lower-right corner
     lv_obj_set_layout(subcont, LV_LAYOUT_GRID);
     lv_obj_remove_flag(subcont, LV_OBJ_FLAG_SCROLLABLE);
-//	lv_obj_remove_flag(lvCont, LV_OBJ_FLAG_CLICKABLE);
+//    lv_obj_remove_flag(lvCont, LV_OBJ_FLAG_CLICKABLE);
     // grid layout, rows: outputs, index: inputs
 
     // 3-controls: decoder_out (headphone), encoder_in (microphone) 1, encoder_in (microphone) 1, FS_player
     // icons 20x20 pixels
-//	static const char* arrPathImgs[N_CONTROLS] = { LV_SYMBOL_VOLUME_MAX, "麦克风1", "麦克风2", LV_SYMBOL_AUDIO};
+//    static const char* arrPathImgs[N_CONTROLS] = { LV_SYMBOL_VOLUME_MAX, "麦克风1", "麦克风2", LV_SYMBOL_AUDIO};
 
     #define HEIGHT_MARGIN 10
     #define SLIDER_HEIGHT 10

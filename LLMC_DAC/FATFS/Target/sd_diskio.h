@@ -36,9 +36,10 @@
 /* Exported constants --------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 extern const Diskio_drvTypeDef  SD_Driver;
-extern bool g_SDCard_transmitting;
+extern volatile bool g_SDCard_transmitting;
 /* USER CODE BEGIN lastSection */
 /* can be used to modify / undefine previous code or add new definitions */
+void SD_ResetQueue(void);
 /* USER CODE END lastSection */
 
 #endif /* __SD_DISKIO_H */

@@ -1,0 +1,17 @@
+audio_player.c:136:6:FS_player_init	16	static
+audio_player.c:156:13:FS_player_reset	24	static
+audio_player.c:176:6:FS_player_task_start	8	static
+audio_player.c:192:22:judge_track_file_format	16	static
+audio_player.c:215:15:FS_open_file	40	static
+audio_player.c:274:12:find_track_in_the_same_folder	88	static
+audio_player.c:411:13:task_FS_loader	144	static
+audio_player.c:848:13:player_do_seek	32	static
+audio_player.c:881:6:FS_player_signal_start	8	static
+audio_player.c:891:6:FS_player_signal_stop	8	static
+audio_player.c:899:6:FS_player_signal_pause	8	static
+audio_player.c:908:6:FS_player_signal_replay	8	static
+audio_player.c:918:6:FS_player_signal_next	8	static
+audio_player.c:928:6:FS_player_signal_seek	16	static
+audio_player.c:939:6:FS_player_signal_prev	8	static
+audio_player.c:948:6:FS_player_change_track	32	static
+audio_player.c:973:6:FS_player_test	16	static

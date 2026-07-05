@@ -1,0 +1,7 @@
+lv_indev_scroll.c:515:16:find_snap_point_y	64	static
+lv_indev_scroll.c:460:16:find_snap_point_x	64	static
+lv_indev_scroll.c:584:16:elastic_diff	40	static
+lv_indev_scroll.c:45:6:_lv_indev_scroll_handler	96	static
+lv_indev_scroll.c:114:6:_lv_indev_scroll_throw_handler	48	static
+lv_indev_scroll.c:226:9:lv_indev_scroll_throw_predict	4	static
+lv_indev_scroll.c:251:6:lv_indev_scroll_get_snap_dist	16	static

@@ -1,0 +1,11 @@
+lv_theme.c:37:15:lv_theme_get_from_obj	24	static
+lv_theme.c:43:6:lv_theme_apply	24	static
+lv_theme.c:53:6:lv_theme_set_parent	16	static
+lv_theme.c:58:6:lv_theme_set_apply_cb	16	static
+lv_theme.c:63:19:lv_theme_get_font_small	24	static
+lv_theme.c:69:19:lv_theme_get_font_normal	24	static
+lv_theme.c:75:19:lv_theme_get_font_large	24	static
+lv_theme.c:81:12:lv_theme_get_color_primary	24	static
+lv_theme.c:87:12:lv_theme_get_color_secondary	24	static
+lv_theme.c:97:13:apply_theme	16	static
+lv_theme.c:103:13:apply_theme_recursion	24	static

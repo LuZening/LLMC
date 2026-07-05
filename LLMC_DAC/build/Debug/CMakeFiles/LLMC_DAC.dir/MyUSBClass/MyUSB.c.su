@@ -1,0 +1,5 @@
+E:/Projects/You/LLMC/LLMC_DAC/MyUSBClass/MyUSB.c:31:6:USB_my_init_no_cache_memory	8	static
+E:/Projects/You/LLMC/LLMC_DAC/MyUSBClass/MyUSB.c:43:6:USB_switch_to_configuration	0	static
+E:/Projects/You/LLMC/LLMC_DAC/MyUSBClass/MyUSB.c:57:8:USBD_my_static_malloc	0	static
+E:/Projects/You/LLMC/LLMC_DAC/MyUSBClass/MyUSB.c:63:6:USB_switch_configuration_hot	16	static
+E:/Projects/You/LLMC/LLMC_DAC/MyUSBClass/MyUSB.c:144:6:USB_stop	8	static

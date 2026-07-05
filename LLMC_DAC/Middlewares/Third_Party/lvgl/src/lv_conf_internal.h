@@ -2973,28 +2973,28 @@
     #ifdef CONFIG_LV_USE_ST7735
         #define LV_USE_ST7735 CONFIG_LV_USE_ST7735
     #else
-        #define LV_USE_ST7735		0
+        #define LV_USE_ST7735        0
     #endif
 #endif
 #ifndef LV_USE_ST7789
     #ifdef CONFIG_LV_USE_ST7789
         #define LV_USE_ST7789 CONFIG_LV_USE_ST7789
     #else
-        #define LV_USE_ST7789		0
+        #define LV_USE_ST7789        0
     #endif
 #endif
 #ifndef LV_USE_ST7796
     #ifdef CONFIG_LV_USE_ST7796
         #define LV_USE_ST7796 CONFIG_LV_USE_ST7796
     #else
-        #define LV_USE_ST7796		0
+        #define LV_USE_ST7796        0
     #endif
 #endif
 #ifndef LV_USE_ILI9341
     #ifdef CONFIG_LV_USE_ILI9341
         #define LV_USE_ILI9341 CONFIG_LV_USE_ILI9341
     #else
-        #define LV_USE_ILI9341		0
+        #define LV_USE_ILI9341        0
     #endif
 #endif
 

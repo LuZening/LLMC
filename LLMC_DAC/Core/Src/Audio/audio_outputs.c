@@ -95,8 +95,8 @@ void output_to_decoder_init()
     sampleCounter_decoder = 0;
     // reset to internal system Fs and Bitdepth
     set_audio_sample_rate_and_bit_depth(0, DEFAULT_SAMPLE_RATE_T, 32);
-//	memset(bufDecoder, 0, sizeof(bufDecoder));
-//	kfifo_DMA_static_init(&fifo_to_decoder, bufDecoder, sizeof(bufDecoder), sizeof(bufDecoder) >> 1);
+//    memset(bufDecoder, 0, sizeof(bufDecoder));
+//    kfifo_DMA_static_init(&fifo_to_decoder, bufDecoder, sizeof(bufDecoder), sizeof(bufDecoder) >> 1);
     // never stop
     // note: unit of Size depends on DMA Data Width, which is WORD in this case
     HAL_StatusTypeDef r = HAL_SAI_Transmit_DMA(hsai_out, bufToDecoderDMA, sizeof(bufToDecoderDMA) / 4);
@@ -122,7 +122,7 @@ void output_to_decoder_start()
 
 void output_to_decoder_stop()
 {
-//	HAL_SAI_Abort(hsai_out);
+//    HAL_SAI_Abort(hsai_out);
     enable_to_decoder = 0;
 }
 /* call when update connections END */
@@ -157,7 +157,7 @@ static size_t output_fifo_mixer_absorb(size_t maxlen)
     uint8_t nUsedChannels_USB_record = 0;
 
     /* Mixer */
-//	float* bufMixerInplace_f32 = NULL;
+//    float* bufMixerInplace_f32 = NULL;
     static float __attribute__((aligned(4)))  __attribute__((section(".DTCMRAM1_heap"))) bufMixerAbsorbed_f32[I2S_DMA_BUF_SIZE / 2];
     static float __attribute__((aligned(4)))  __attribute__((section(".DTCMRAM1_heap"))) bufMixerAbsorbed_temp_f32[I2S_DMA_BUF_SIZE / 2];
     static float __attribute__((aligned(4)))  __attribute__((section(".DTCMRAM1_heap"))) bufMixerAbsorbed_temp2_f32[I2S_DMA_BUF_SIZE / 2];
@@ -165,21 +165,21 @@ static size_t output_fifo_mixer_absorb(size_t maxlen)
     static float __attribute__((aligned(4)))  __attribute__((section(".DTCMRAM1_heap"))) bufMixerToUSBRecord_f32[I2S_DMA_BUF_SIZE / 2];
     static float __attribute__((aligned(4)))  __attribute__((section(".DTCMRAM1_heap"))) bufMixerToUSBRecord_temp_f32[I2S_DMA_BUF_SIZE / 2];
 
-//	if(enable_to_decoder && (channels_connected_to_decoder != 0))
-//	{
-//		memset(bufMixerToDecoder_f32, 0, sizeof(bufMixerToDecoder_f32));
-//	}
-//	if(enable_to_USB_record && (channels_connected_to_USB_record != 0))
-//	{
-//		memset(bufMixerToUSBRecord_f32, 0, sizeof(bufMixerToUSBRecord_f32));
-//	}
+//    if(enable_to_decoder && (channels_connected_to_decoder != 0))
+//    {
+//        memset(bufMixerToDecoder_f32, 0, sizeof(bufMixerToDecoder_f32));
+//    }
+//    if(enable_to_USB_record && (channels_connected_to_USB_record != 0))
+//    {
+//        memset(bufMixerToUSBRecord_f32, 0, sizeof(bufMixerToUSBRecord_f32));
+//    }
     /* calculate double buffer size to fill */
     size_t sizeToAbsorb_f32, sizeAbsorbed_f32, countSamplesToAbsorb; // bytes to absorb, but the fifo stores float32 data
 
     // unit: bytes
     sizeToAbsorb_f32 = maxlen;
     // uinit: samples for each channel
-    countSamplesToAbsorb =	maxlen / sizeof(float); // float in dbuf
+    countSamplesToAbsorb =    maxlen / sizeof(float); // float in dbuf
 
     int i, j;
     /* iterate each input FIFO */
@@ -273,16 +273,16 @@ static size_t output_fifo_mixer_absorb(size_t maxlen)
                 else
                     ++(*pUnderflowCounts[i]);
             }
-//			/* if DSP used on the input, then produce another copy for post-DSP audio */
-//			if(
-//			// CASE 1: the input fifo beging process now is the encoder, which takes over 2 independent DSPs
-//			((i == 0) && (((cfg.outputs_dsp_usage[OUTPUT_IDX_DECODER] & 0b11) > 0) ||  ((cfg.outputs_dsp_usage[OUTPUT_IDX_USB_RECORDING] & 0b11) > 0)))
-//			// CASE 2: the input fifo beging process now is not the encoder, which takes over 1 independent DSP
-//			|| ((i > 0) && (((cfg.outputs_dsp_usage[OUTPUT_IDX_DECODER] & (1 << (i + 1))) > 0) ||  ((cfg.outputs_dsp_usage[OUTPUT_IDX_USB_RECORDING] & (1 << (i+1))) > 0)))
-//			)
-//			{
+//            /* if DSP used on the input, then produce another copy for post-DSP audio */
+//            if(
+//            // CASE 1: the input fifo beging process now is the encoder, which takes over 2 independent DSPs
+//            ((i == 0) && (((cfg.outputs_dsp_usage[OUTPUT_IDX_DECODER] & 0b11) > 0) ||  ((cfg.outputs_dsp_usage[OUTPUT_IDX_USB_RECORDING] & 0b11) > 0)))
+//            // CASE 2: the input fifo beging process now is not the encoder, which takes over 1 independent DSP
+//            || ((i > 0) && (((cfg.outputs_dsp_usage[OUTPUT_IDX_DECODER] & (1 << (i + 1))) > 0) ||  ((cfg.outputs_dsp_usage[OUTPUT_IDX_USB_RECORDING] & (1 << (i+1))) > 0)))
+//            )
+//            {
 //
-//			}
+//            }
         }
         else
         {
@@ -291,15 +291,15 @@ static size_t output_fifo_mixer_absorb(size_t maxlen)
             sizeAbsorbed_f32 = sizeToAbsorb_f32;
         }
 
-//		/* Notify FIFO writing Tasks */ WARNING: SAI interrupts have high priority, higher than the RTOS, so no RTOS functions are allowed here!!!
-//		// send FIFO empty task flag to FS player, to notify the task to prepare more data
-//		if((pFifo == &fifo_from_FS) && (taskFSLoader))
-//		{
-//			if(kfifo_get_free_space(pFifo) < pFifo->half)
-//			{
-//				osThreadFlagsSet(taskFSLoader, FLAG_FIFO_HALF_EMPTY);
-//			}
-//		}
+//        /* Notify FIFO writing Tasks */ WARNING: SAI interrupts have high priority, higher than the RTOS, so no RTOS functions are allowed here!!!
+//        // send FIFO empty task flag to FS player, to notify the task to prepare more data
+//        if((pFifo == &fifo_from_FS) && (taskFSLoader))
+//        {
+//            if(kfifo_get_free_space(pFifo) < pFifo->half)
+//            {
+//                osThreadFlagsSet(taskFSLoader, FLAG_FIFO_HALF_EMPTY);
+//            }
+//        }
 
         /* MIXER BEGIN */
         /* Output 1:　decoder BEGIN*/
@@ -493,7 +493,7 @@ static void process_encoder_data(
     uint8_t channel_LR_enable_bits = cfg.audio_connections[0] & 0b11U;
     // 4 bytes for each sample each channel
     // channel_LR_enable_bits: 0b01 = L-only, copy to R; 0b10 = R-only, copy to L,
-//				deinterlace_decoder_channels_f32((float*)bufMixerAbsorbed_f32, (float*)bufMixerAbsorbed_f32, countSamplesToAbsorb, 2, channel_LR_enable_bits);
+//                deinterlace_decoder_channels_f32((float*)bufMixerAbsorbed_f32, (float*)bufMixerAbsorbed_f32, countSamplesToAbsorb, 2, channel_LR_enable_bits);
     if(channel_LR_enable_bits != 0)
     {
         audio_DSP_deinterlace_channels((float*)bufTemp1_OutDSP, (float*)bufInOut, cntAllChs, 2);
@@ -574,7 +574,7 @@ void decoder_HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai)
     // switch ptrs
     r = double_buffer_out_transfer_HalfCplt_cb(&dbuf_to_decoder_i2s);
     UNUSED(r);
-//	sampleCounter_decoder += dbuf_to_decoder_i2s.size_half;
+//    sampleCounter_decoder += dbuf_to_decoder_i2s.size_half;
 
     // absord audio data from each input channel to stuff the decoder's output dbuf AND the USB recorder's output
     size_t nAbsorbed = output_fifo_mixer_absorb(dbuf_to_decoder_i2s.size_half);

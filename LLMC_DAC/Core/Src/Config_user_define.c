@@ -22,12 +22,12 @@ const char* VALID_STRING = "LLMCDEDICATEDFORYOU";
 config_var_map_t configNameMapper[CONFIG_NUM_OF_VARS] = {
 //    {"TSCalibInfo", &(cfg.TSCalibInfo), CONFIG_VAR_OBJ},
 //    {"sel.2", &(cfg.nRadioToAntNums[1]), CONFIG_VAR_U8},
-//	{"label.1", &(cfg.sAntNames[0]), CONFIG_VAR_BYTESTRING_LONG},
-//	{"label.2", &(cfg.sAntNames[1]), CONFIG_VAR_BYTESTRING_LONG},
-//	{"label.3", &(cfg.sAntNames[2]), CONFIG_VAR_BYTESTRING_LONG},
-//	{"label.4", &(cfg.sAntNames[3]), CONFIG_VAR_BYTESTRING_LONG},
-//	{"label.5", &(cfg.sAntNames[4]), CONFIG_VAR_BYTESTRING_LONG},
-//	{"label.6", &(cfg.sAntNames[5]), CONFIG_VAR_BYTESTRING_LONG},
+//    {"label.1", &(cfg.sAntNames[0]), CONFIG_VAR_BYTESTRING_LONG},
+//    {"label.2", &(cfg.sAntNames[1]), CONFIG_VAR_BYTESTRING_LONG},
+//    {"label.3", &(cfg.sAntNames[2]), CONFIG_VAR_BYTESTRING_LONG},
+//    {"label.4", &(cfg.sAntNames[3]), CONFIG_VAR_BYTESTRING_LONG},
+//    {"label.5", &(cfg.sAntNames[4]), CONFIG_VAR_BYTESTRING_LONG},
+//    {"label.6", &(cfg.sAntNames[5]), CONFIG_VAR_BYTESTRING_LONG},
         0
 
 };

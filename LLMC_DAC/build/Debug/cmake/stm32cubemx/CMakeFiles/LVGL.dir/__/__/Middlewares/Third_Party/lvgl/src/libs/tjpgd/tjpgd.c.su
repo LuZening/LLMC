@@ -1,0 +1,11 @@
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/tjpgd/tjpgd.c:132:15:alloc_pool	0	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/tjpgd/tjpgd.c:158:16:create_qt_tbl	24	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/tjpgd/tjpgd.c:194:16:create_huffman_tbl	32	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/tjpgd/tjpgd.c:285:12:huffext	32	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/tjpgd/tjpgd.c:438:12:bitext	32	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/tjpgd/tjpgd.c:610:13:block_idct	32	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/tjpgd/tjpgd.c:534:9:jd_restart	24	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/tjpgd/tjpgd.c:735:9:jd_mcu_load	48	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/tjpgd/tjpgd.c:826:9:jd_mcu_output	56	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/tjpgd/tjpgd.c:940:9:jd_prepare	24	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/tjpgd/tjpgd.c:1101:9:jd_decomp	40	static

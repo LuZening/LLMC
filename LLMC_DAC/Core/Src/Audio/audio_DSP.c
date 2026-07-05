@@ -47,7 +47,7 @@ void audio_decimator_init(audio_decimator_t* p, uint8_t downsample, dsp_value_t 
 
 size_t audio_decimator_filter_apply(audio_decimator_t* arrDecimators, dsp_value_t* pDst,  dsp_value_t* pSrc, uint16_t countAllChs, uint8_t nCh)
 {
-//	assert(count > arrDecimators->max_count_for_single_process);
+//    assert(count > arrDecimators->max_count_for_single_process);
 
     dsp_value_t *end = pSrc + countAllChs;
     uint16_t countEachCh = countAllChs / nCh;
@@ -100,7 +100,7 @@ void audio_interplolator_init(audio_interpolator_t* p, uint8_t upsample, dsp_val
 
 size_t audio_interpolator_filter_apply(audio_interpolator_t* arrInterpolators, dsp_value_t* __restrict pDst,  dsp_value_t* __restrict pSrc, uint16_t countAllChs, uint8_t nCh)
 {
-//	assert(count > arrDecimators->max_count_for_single_process);
+//    assert(count > arrDecimators->max_count_for_single_process);
     float32_t *end = pSrc + countAllChs;
     uint16_t countEachCh = countAllChs / nCh;
     uint16_t countEachCh_up = countEachCh * arrInterpolators->filter.L;
@@ -276,7 +276,7 @@ void audio_DSP_apply(audio_DSP_t* p, dsp_value_t* output, dsp_value_t* input, si
     if((p->function_bits & DSP_FUNCTION_BIT_REVERB) != 0)
     {
         // still under construction, reverb function will be bypassed first
-//		audio_reverb(&p->reverb, pDst, pSrc, cnt);
+//        audio_reverb(&p->reverb, pDst, pSrc, cnt);
         // bypass the effector
         if(pDSPFrom != pDst)
         {

@@ -71,7 +71,7 @@ int playlist_isin(playlist_t* p, const TCHAR* key)
     size_t cntKey = strnlen_TCHAR(key, PLAYLIST_MAX_STR_COUNT / 2);
 
     if (cntKey > 0)
-    {		
+    {        
         // rewind
         p->posRowBegin = -1;
         // iterate

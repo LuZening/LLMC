@@ -15,10 +15,10 @@ void enable_DWT();
 #define N_PROFILER_COUNTER_ENTRIES 128
 typedef struct
 {
-	uint32_t cyc;
-	uint8_t iwr;
-	int arrCycDiffs[N_PROFILER_COUNTER_ENTRIES];
-	int cycDiff_max, cycDiff_mean;
+    uint32_t cyc;
+    uint8_t iwr;
+    int arrCycDiffs[N_PROFILER_COUNTER_ENTRIES];
+    int cycDiff_max, cycDiff_mean;
 } profiler_counter_t;
 
 void init_profiler_counter(profiler_counter_t* p);

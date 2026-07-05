@@ -65,7 +65,7 @@ uint32_t audio_sample_rate_to_Hz(audio_sample_rate_t t)
 {
     /*
      *
-     * 	AUDIO_SAMPLE_RATE_44K1 = 0,
+     *     AUDIO_SAMPLE_RATE_44K1 = 0,
     AUDIO_SAMPLE_RATE_48K,
     AUDIO_SAMPLE_RATE_96K,
      */
@@ -76,7 +76,7 @@ audio_sample_rate_t audio_sample_rate_from_Hz(uint32_t Hz)
 {
     /*
      *
-     * 	AUDIO_SAMPLE_RATE_44K1 = 0,
+     *     AUDIO_SAMPLE_RATE_44K1 = 0,
     AUDIO_SAMPLE_RATE_48K,
     AUDIO_SAMPLE_RATE_96K,
     AUDIO_SAMPLE_RATE_192K,
@@ -121,8 +121,8 @@ void set_audio_sample_rate_and_bit_depth(uint8_t idx, audio_sample_rate_t rate_n
     }
     else if(idx == 1) // encoder - microphone
     {
-//		adcx120_init(&adcx120); // init in main
-//		adcx120_test(&adcx120);
+//        adcx120_init(&adcx120); // init in main
+//        adcx120_test(&adcx120);
         switch(rate_new)
         {
         case AUDIO_SAMPLE_RATE_96K:
@@ -193,8 +193,8 @@ void audio_connections_apply(uint16_t *audio_connections)
     /* turn on NP power if decoder or encoder is on */
     if(isEncoderSel[0] ||isEncoderSel[1] || isDecoderSel)
         NP_power_enable(1);
-//	else
-//		NP_power_enable(0);
+//    else
+//        NP_power_enable(0);
 
     /* init decoder */
     if(isDecoderSel)

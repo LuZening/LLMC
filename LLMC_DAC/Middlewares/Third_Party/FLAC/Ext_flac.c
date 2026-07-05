@@ -33,7 +33,7 @@
 
 
 int8_t PCM_buffer0[4 * MAX_BLOCKSIZE ];   //放置送CODE的PCM数据流,同时也与temp_buffer组合充当了之前版本的fc.decoded0(临时PCM数据)
-int8_t PCM_buffer1[4 * MAX_BLOCKSIZE ];	  //放置送CODE的PCM数据流,同时也与temp_buffer组合充当了之前版本的fc.decoded1(临时PCM数据)
+int8_t PCM_buffer1[4 * MAX_BLOCKSIZE ];      //放置送CODE的PCM数据流,同时也与temp_buffer组合充当了之前版本的fc.decoded1(临时PCM数据)
 int8_t temp_buffer[4 * MAX_BLOCKSIZE ];
 
 void flac_dump_headers(FLACContext *s)
@@ -59,7 +59,7 @@ int parse_flac(FIL *fp, FLACContext* fc, uint8_t* bufFileLoader, size_t sizeBuf)
     int blocklength;
     uint32_t* p;
     uint32_t seekpoint_lo,seekpoint_hi;
-   	uint32_t offset_lo,offset_hi;
+       uint32_t offset_lo,offset_hi;
 
     if (f_rewind(fp) != FR_OK)
     {
@@ -71,7 +71,7 @@ int parse_flac(FIL *fp, FLACContext* fc, uint8_t* bufFileLoader, size_t sizeBuf)
         return -1;
     }
     if(lenRead < 4)
-    	return -1;
+        return -1;
 
     if (memcmp(buf, "fLaC", 4) != 0)
     {
@@ -81,13 +81,13 @@ int parse_flac(FIL *fp, FLACContext* fc, uint8_t* bufFileLoader, size_t sizeBuf)
     fc->metadatalength = 4;
 
     while (!endofmetadata) 
-	{
+    {
         if (f_read(fp, buf, 4, &lenRead) != FR_OK)
         {
             return -3;
         }
         if(lenRead < 4)
-        	return -3;
+            return -3;
 
         endofmetadata = (buf[0]&0x80);
         blocklength = (buf[1] << 16) | (buf[2] << 8) | buf[3];
@@ -123,11 +123,11 @@ int parse_flac(FIL *fp, FLACContext* fc, uint8_t* bufFileLoader, size_t sizeBuf)
 
             found_streaminfo=true;
         }
-		else if ((buf[0] & 0x7f) == 3) 	/* 3 is the SEEKTABLE block */
-		{
+        else if ((buf[0] & 0x7f) == 3)     /* 3 is the SEEKTABLE block */
+        {
                // rt_kprintf("Seektable length = %d bytes\n",blocklength);
-			while (blocklength >= 18)
-			{
+            while (blocklength >= 18)
+            {
                 f_read(fp,buf,18,&lenRead);
                 if (lenRead < 18) return -5;
                 blocklength-=lenRead;// check
@@ -138,20 +138,20 @@ int parse_flac(FIL *fp, FLACContext* fc, uint8_t* bufFileLoader, size_t sizeBuf)
                 offset_lo=betoh32(*(p++));
             
                 if ((seekpoint_hi != 0xffffffff) && (seekpoint_lo != 0xffffffff))
-				{
-         	         //rt_kprintf("Seekpoint: %u, Offset=%u\n",seekpoint_lo,offset_lo);
+                {
+                      //rt_kprintf("Seekpoint: %u, Offset=%u\n",seekpoint_lo,offset_lo);
                 }
             }
-			f_lseek(fp, f_tell(fp) + blocklength);
+            f_lseek(fp, f_tell(fp) + blocklength);
         }
-		else
-		  {
-			/* Skip to next metadata block */
-			if (f_lseek(fp, f_tell(fp) + blocklength) != FR_OK)
-			{
-				return -6;
-			}
-		  }
+        else
+          {
+            /* Skip to next metadata block */
+            if (f_lseek(fp, f_tell(fp) + blocklength) != FR_OK)
+            {
+                return -6;
+            }
+          }
     }
 
    if (found_streaminfo)
@@ -173,26 +173,26 @@ static int play_flac(char* path)
     int n;
     int bytesleft;
     int consumed;
-	int8_t i;
+    int8_t i;
 
 /*  文件buffer 用rt_malloc放到外部RAM
- *	为什么那么痛苦不把PCM buffer也放到外部RAM呢?
- *	原因很简单:外部RAM慢! 导致会断流,
+ *    为什么那么痛苦不把PCM buffer也放到外部RAM呢?
+ *    原因很简单:外部RAM慢! 导致会断流,
  *  这里把文件buffer放到外部RAM主要有两个原因
- *	1.只有64K的内部RAM 不得不这么做
- *	2.文件buffer的"吞吐量"少
+ *    1.只有64K的内部RAM 不得不这么做
+ *    2.文件buffer的"吞吐量"少
  */
-	unsigned char *filebuf ; 
+    unsigned char *filebuf ; 
 
-	/* audio device */
-	rt_device_t snd_device;
+    /* audio device */
+    rt_device_t snd_device;
 
-	extern void vol(uint16_t v) ;
-	vol(50); 
+    extern void vol(uint16_t v) ;
+    vol(50); 
 
-	//本次没用内存池..主要因为这种情况下不知道如何使用 ^_^
-	if (rt_sem_init(&flac_sem, "flac_sem", 2, RT_IPC_FLAG_FIFO) != RT_EOK)
-		rt_kprintf("init flac_sem semaphore failed\n");
+    //本次没用内存池..主要因为这种情况下不知道如何使用 ^_^
+    if (rt_sem_init(&flac_sem, "flac_sem", 2, RT_IPC_FLAG_FIFO) != RT_EOK)
+        rt_kprintf("init flac_sem semaphore failed\n");
 
     fd=open(path,O_RDONLY,0);
 
@@ -201,16 +201,16 @@ static int play_flac(char* path)
         return(1);
     }
 
-	/* open audio device */
-	snd_device = rt_device_find("snd");
-	if (snd_device != RT_NULL)
-	{
-		/*  set tx complete call back function 
-		 *  设置回调函数,当DMA传输完毕时,会执行flac_decoder_tx_done
-		 */
-		rt_device_set_tx_complete(snd_device, flac_decoder_tx_done);
-		rt_device_open(snd_device, RT_DEVICE_OFLAG_WRONLY);
-	}
+    /* open audio device */
+    snd_device = rt_device_find("snd");
+    if (snd_device != RT_NULL)
+    {
+        /*  set tx complete call back function 
+         *  设置回调函数,当DMA传输完毕时,会执行flac_decoder_tx_done
+         */
+        rt_device_set_tx_complete(snd_device, flac_decoder_tx_done);
+        rt_device_open(snd_device, RT_DEVICE_OFLAG_WRONLY);
+    }
 
 
     /* Read the metadata and position the file pointer at the start of the 
@@ -218,55 +218,55 @@ static int play_flac(char* path)
     parse_flac(fd, &fc);
     dump_headers(&fc);
 
-	if((fc.min_blocksize != fc.max_blocksize) || (fc.max_blocksize > MAX_BLOCKSIZE ) || (fc.max_framesize > MAX_FRAMESIZE))
-	{
-	  rt_kprintf("\n\rOo Do not support this file!!\n\r"); 
-	  rt_kprintf("You can choose another Converter.Such as foobar2000 ^_^\n\r"); 
-	  return false;
-	}
+    if((fc.min_blocksize != fc.max_blocksize) || (fc.max_blocksize > MAX_BLOCKSIZE ) || (fc.max_framesize > MAX_FRAMESIZE))
+    {
+      rt_kprintf("\n\rOo Do not support this file!!\n\r"); 
+      rt_kprintf("You can choose another Converter.Such as foobar2000 ^_^\n\r"); 
+      return false;
+    }
 
 
-	//set CODEC's samplerate
-	rt_device_control(snd_device, CODEC_CMD_SAMPLERATE, &(fc.samplerate));
+    //set CODEC's samplerate
+    rt_device_control(snd_device, CODEC_CMD_SAMPLERATE, &(fc.samplerate));
 
-	filebuf = (unsigned char *)rt_malloc(MAX_FRAMESIZE); /* The input buffer */
+    filebuf = (unsigned char *)rt_malloc(MAX_FRAMESIZE); /* The input buffer */
     bytesleft=read(fd,filebuf,MAX_FRAMESIZE);
 
       
        while (bytesleft) 
-	   {
+       {
     
-		rt_sem_take(&flac_sem, RT_WAITING_FOREVER);
+        rt_sem_take(&flac_sem, RT_WAITING_FOREVER);
 
-		//轮流使用两PCM_buffer
-	    if(i++ & 1)
-	    {
-	    	//decoded0,decoded1用来存放临时PCM数据
-			fc.decoded0 = (int32_t *)PCM_buffer0;
-			fc.decoded1 = (int32_t *)temp_buffer;
+        //轮流使用两PCM_buffer
+        if(i++ & 1)
+        {
+            //decoded0,decoded1用来存放临时PCM数据
+            fc.decoded0 = (int32_t *)PCM_buffer0;
+            fc.decoded1 = (int32_t *)temp_buffer;
 
-        	if(flac_decode_frame(&fc,filebuf,bytesleft,(int16_t *)PCM_buffer0) < 0) 
-			{
+            if(flac_decode_frame(&fc,filebuf,bytesleft,(int16_t *)PCM_buffer0) < 0) 
+            {
              rt_kprintf("DECODE ERROR, ABORTING\n");
              break;
- 	        }
+             }
 
-			rt_device_write(snd_device, 0, (int16_t *)PCM_buffer0, ((fc.max_blocksize * 4) ));
-	    }
-	    else
-	    {	
-	     	//decoded0,decoded1用来存放临时PCM数据
-	  		fc.decoded0 = (int32_t *)PCM_buffer1;
-    		fc.decoded1 = (int32_t *)temp_buffer;
+            rt_device_write(snd_device, 0, (int16_t *)PCM_buffer0, ((fc.max_blocksize * 4) ));
+        }
+        else
+        {    
+             //decoded0,decoded1用来存放临时PCM数据
+              fc.decoded0 = (int32_t *)PCM_buffer1;
+            fc.decoded1 = (int32_t *)temp_buffer;
 
-	  		if(flac_decode_frame(&fc,filebuf,bytesleft,(int16_t *)PCM_buffer1) < 0) 
-			{
-       	      rt_kprintf("DECODE ERROR, ABORTING\n");
-       	      break;
-       		}
+              if(flac_decode_frame(&fc,filebuf,bytesleft,(int16_t *)PCM_buffer1) < 0) 
+            {
+                 rt_kprintf("DECODE ERROR, ABORTING\n");
+                 break;
+               }
 
-			rt_device_write(snd_device, 0, (int16_t *)PCM_buffer1, ((fc.max_blocksize * 4) ));
-	    }
+            rt_device_write(snd_device, 0, (int16_t *)PCM_buffer1, ((fc.max_blocksize * 4) ));
+        }
 
         consumed=fc.gb.index/8;
         rt_memmove(filebuf,&filebuf[consumed],bytesleft-consumed);
@@ -274,16 +274,16 @@ static int play_flac(char* path)
 
         n=read(fd,&filebuf[bytesleft],MAX_FRAMESIZE-bytesleft);
         if (n > 0) 
-		{
+        {
             bytesleft+=n;
         }
-		 
-		
+         
+        
       }
 
-	/* close device and file */
+    /* close device and file */
     rt_device_close(snd_device);
-	rt_free(filebuf);
+    rt_free(filebuf);
     close(fd);
     return(0);
 }

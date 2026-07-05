@@ -1,0 +1,11 @@
+lv_color.c:258:19:lv_color_filter_shade_cb	24	static
+lv_color.c:44:9:lv_color_format_get_bpp	0	static
+lv_color.c:78:6:lv_color_format_has_alpha	0	static
+lv_color.c:97:14:lv_color_to_32	24	static
+lv_color.c:107:10:lv_color_to_u16	8	static
+lv_color.c:112:10:lv_color_to_u32	8	static
+lv_color.c:117:12:lv_color_lighten	24	static
+lv_color.c:123:12:lv_color_darken	24	static
+lv_color.c:128:12:lv_color_hsv_to_rgb	24	static
+lv_color.c:186:16:lv_color_rgb_to_hsv	32	static
+lv_color.c:237:16:lv_color_to_hsv	16	static

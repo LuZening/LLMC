@@ -1,0 +1,8 @@
+lv_area.h:126:20:lv_area_copy	16	static
+lv_area.h:139:23:lv_area_get_width	16	static
+lv_area.h:149:23:lv_area_get_height	16	static
+lv_math.h:54:45:lv_trigo_cos	16	static
+lv_string.h:65:20:lv_memzero	16	static
+lv_draw_sw_arc.c:49:6:lv_draw_sw_arc	600	static
+lv_draw_sw_arc.c:218:13:add_circle	64	static
+lv_draw_sw_arc.c:238:13:get_rounded_area	48	static

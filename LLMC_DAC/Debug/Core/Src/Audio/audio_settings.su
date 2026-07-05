@@ -1,0 +1,9 @@
+audio_settings.c:20:7:volume100_to_volumef	24	static
+audio_settings.c:32:9:volume100_to_255	24	static
+audio_settings.c:40:9:volume100_linear_to_log	24	static
+audio_settings.c:64:10:audio_sample_rate_to_Hz	16	static
+audio_settings.c:75:21:audio_sample_rate_from_Hz	24	static
+audio_settings.c:94:6:set_audio_sample_rate_and_bit_depth	16	static
+audio_settings.c:145:6:set_mic_LEDs	16	static
+audio_settings.c:158:6:audio_connections_apply	40	static
+audio_settings.c:260:6:audio_outpus_dsp_connection_apply	16	static

@@ -1,0 +1,8 @@
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/switch/lv_switch.c:215:13:lv_switch_anim_completed	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/switch/lv_switch.c:205:13:lv_switch_anim_exec_cb	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/switch/lv_switch.c:101:13:lv_switch_destructor	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/switch/lv_switch.c:226:13:lv_switch_trigger_anim	112	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/switch/lv_switch.c:146:13:draw_main	312	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/switch/lv_switch.c:109:13:lv_switch_event	32	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/switch/lv_switch.c:85:13:lv_switch_constructor	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/switch/lv_switch.c:73:12:lv_switch_create	8	static

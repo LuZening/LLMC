@@ -1,0 +1,12 @@
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/misc/lv_style.h:496:30:lv_style_get_prop_inlined	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/misc/lv_style.c:176:6:lv_style_init	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/misc/lv_style.c:190:6:lv_style_reset	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/misc/lv_style.c:201:17:lv_style_register_prop	16	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/misc/lv_style.c:237:17:lv_style_get_num_custom_props	0	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/misc/lv_style.c:242:6:lv_style_remove_prop	24	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/misc/lv_style.c:287:6:lv_style_set_prop	24	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/misc/lv_style.c:336:16:lv_style_get_prop	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/misc/lv_style.c:341:6:lv_style_transition_dsc_init	24	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/misc/lv_style.c:352:18:lv_style_prop_get_default	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/misc/lv_style.c:416:6:lv_style_is_empty	0	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/misc/lv_style.c:423:9:_lv_style_prop_lookup_flags	0	static

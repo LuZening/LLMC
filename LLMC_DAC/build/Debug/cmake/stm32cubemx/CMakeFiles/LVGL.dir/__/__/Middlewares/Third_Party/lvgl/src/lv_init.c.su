@@ -1,0 +1,5 @@
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/lv_init.c:78:20:lv_global_init	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/lv_init.c:106:20:_lv_cleanup_devices	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/lv_init.c:117:6:lv_is_initialized	0	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/lv_init.c:127:6:lv_init	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/lv_init.c:312:6:lv_deinit	8	static

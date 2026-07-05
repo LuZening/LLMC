@@ -98,6 +98,8 @@ size_t samplesPerMs = (DEFAULT_SAMPLE_RATE_HZ / 1000); // protected by mtxFSPlay
 // start to play autonomouslty after changing track, without the need for manual operations
 // this flag will be set each time the player enters PLAY state, and be cleared when paused or stopped
 static bool startPlayInstantly = false;
+static uint32_t fade_in_elapsed = 0;
+#define FADE_IN_SAMPLES  ((DEFAULT_SAMPLE_RATE_HZ / 1000) * 50)  // 50ms
 /* PLAY CONTROL */
 
 /* DECODER */
@@ -135,7 +137,7 @@ static void player_do_seek(uint32_t target_frame);
 // call before start task
 void FS_player_init()
 {
-//	assert(FS_FIFO_SIZE % 4 == 0);
+//    assert(FS_FIFO_SIZE % 4 == 0);
     memset((uint8_t*)bufFSFIFO, 0, FS_FIFO_SIZE);
 
     for(int i = 0; i < MAX_CHANNELS; ++i)
@@ -162,14 +164,16 @@ static void FS_player_reset(FS_play_mode_t mode)
     }
 
     samplesPlayed = 0;
+    fade_in_elapsed = 0;
+    FS_is_EOF = false;
     audio_sinc_resampler_init(&audio_sinc_resampler_44K_to_48K_FS, audio_sinc_coeffs_44K_to_48K, 44100U, 48000U, MAX_CHANNELS);
-//	if(mode != FS_PLAY_MODE_ONE_LOOP)
-//	{
+//    if(mode != FS_PLAY_MODE_ONE_LOOP)
+//    {
         kfifo_DMA_static_init(&fifo_from_FS, (uint8_t*)bufFSFIFO, FS_FIFO_SIZE, 0);
         totalSamples = 0;
         duration_ms = 0;
 
-//	}
+//    }
 }
 
 // call after init
@@ -297,13 +301,13 @@ static int find_track_in_the_same_folder(int direction, /* out */ TCHAR* wcsFile
 
     while(1)
     {
-    	// call f_readdir repetitively to get file infos in sequence
+        // call f_readdir repetitively to get file infos in sequence
         fr = f_readdir(&dirToPlay, &finfo);
         if(fr != FR_OK)
         {
-    		r = -1;
-    		sErrMsg = "Driver, file or directory does not exist";
-    		goto FIND_ITEM_IN_THE_SAME_FOLDER_ERROR;
+            r = -1;
+            sErrMsg = "Driver, file or directory does not exist";
+            goto FIND_ITEM_IN_THE_SAME_FOLDER_ERROR;
         }
 
         /* fn is empty, if no more files to read*/
@@ -311,8 +315,8 @@ static int find_track_in_the_same_folder(int direction, /* out */ TCHAR* wcsFile
         cntFn = strnlen_TCHAR(wcsFn, _MAX_LFN);
         if(cntFn == 0U)
         {
-        	// dir exhausted
-        	break;
+            // dir exhausted
+            break;
         }
 
         file_format_t format = judge_track_file_format(wcsFn, cntFn);
@@ -352,19 +356,19 @@ static int find_track_in_the_same_folder(int direction, /* out */ TCHAR* wcsFile
         }
         else if((fsm == 1) && (format != FILE_FORMAT_UNKNOWN))
         {
-        	// terminate cond: found the next file
-        	if(direction > 0)
-        	{
-        		found = true;
-        		break;
-        	}
-        	// terminate code: attempted to find the prev file of the very first file, which will be the wrapped back
-        	else
-        	{
-        		// keep track of the filename, so the empty filename indicating the end of the dir will not overwrite
-        		strncpy_TCHAR(wcsFn_prev, wcsFn, _MAX_LFN);
-        		iAfter++;
-        	}
+            // terminate cond: found the next file
+            if(direction > 0)
+            {
+                found = true;
+                break;
+            }
+            // terminate code: attempted to find the prev file of the very first file, which will be the wrapped back
+            else
+            {
+                // keep track of the filename, so the empty filename indicating the end of the dir will not overwrite
+                strncpy_TCHAR(wcsFn_prev, wcsFn, _MAX_LFN);
+                iAfter++;
+            }
         }
     }
     f_closedir(&dirToPlay);
@@ -442,99 +446,99 @@ static void task_FS_loader(void * argument)
             /* Open file and parse format BEGIN */
             if(r == osOK)
             {
-            	bool needToOpenNewFile = false;
-            	/* protected: mtxFSPlayer BEGIN */
-            	osMutexAcquire(mtxFSPlayer, osWaitForever);
-            	if(msgCtrl & FS_LOADER_SIGNAL_START)
-            	{
+                bool needToOpenNewFile = false;
+                /* protected: mtxFSPlayer BEGIN */
+                osMutexAcquire(mtxFSPlayer, osWaitForever);
+                if(msgCtrl & FS_LOADER_SIGNAL_START)
+                {
                     needToOpenNewFile = true;
                     startPlayInstantly = true;
-            	}
-            	else if(msgCtrl & FS_LOADER_SIGNAL_NEXT)
-            	{
-            		if(isOpen_PL)
-            		{
-            			// has playlist opened, then switch to the previous music on the playlist
-            			int rFound = playlist_next(&pl, wcsFile, wcsPathToPlay, _MAX_LFN);
-            			if(rFound < 0)
-            			{
-            				// try to wrap back
-            				sErrMsg = "已是播放列表中的最后一首";
-            				rFound = playlist_goto(&pl, 0, wcsFile, wcsPathToPlay, _MAX_LFN);
-            			}
-            			if(rFound >= 0) // ok
-            			{
-            				cntFile = strnlen_TCHAR(wcsFile, _MAX_LFN);
-            				cntPathToPlay = strnlen_TCHAR(wcsPathToPlay, sizeof(wcsPathToPlay) / sizeof(TCHAR));
-            				cntFolder = cntPathToPlay-cntFile;
+                }
+                else if(msgCtrl & FS_LOADER_SIGNAL_NEXT)
+                {
+                    if(isOpen_PL)
+                    {
+                        // has playlist opened, then switch to the previous music on the playlist
+                        int rFound = playlist_next(&pl, wcsFile, wcsPathToPlay, _MAX_LFN);
+                        if(rFound < 0)
+                        {
+                            // try to wrap back
+                            sErrMsg = "已是播放列表中的最后一首";
+                            rFound = playlist_goto(&pl, 0, wcsFile, wcsPathToPlay, _MAX_LFN);
+                        }
+                        if(rFound >= 0) // ok
+                        {
+                            cntFile = strnlen_TCHAR(wcsFile, _MAX_LFN);
+                            cntPathToPlay = strnlen_TCHAR(wcsPathToPlay, sizeof(wcsPathToPlay) / sizeof(TCHAR));
+                            cntFolder = cntPathToPlay-cntFile;
                             needToOpenNewFile = true;
-            			startPlayInstantly = true;
-            			}
-            			else
-            			{
-            				sErrMsg = "播放列表中没有更多歌曲了";
-            			}
-            		}
-            		else
-            		{
-            			// no playlist opened, switch to the next music in the folder
-            			int rFound = find_track_in_the_same_folder(1, wcsFile, &cntFile);
-            			if(rFound >= 0) // ok
-            			{
+                        startPlayInstantly = true;
+                        }
+                        else
+                        {
+                            sErrMsg = "播放列表中没有更多歌曲了";
+                        }
+                    }
+                    else
+                    {
+                        // no playlist opened, switch to the next music in the folder
+                        int rFound = find_track_in_the_same_folder(1, wcsFile, &cntFile);
+                        if(rFound >= 0) // ok
+                        {
                             cntPathToPlay = concat_full_path(wcsFolder, wcsFile, wcsPathToPlay, sizeof(wcsPathToPlay) / sizeof(TCHAR));
                             needToOpenNewFile = true;
-            			startPlayInstantly = true;
-            			}
-            			else
-            			{
-            				sErrMsg = "没有下一曲了";
-            			}
-            		}
-            	}
-            	else if(msgCtrl & FS_LOADER_SIGNAL_PREV)
-            	{
-            		if(isOpen_PL)
-            		{
-            			// has playlist opened, then switch to the next music on the playlist
-            			int rFound = playlist_prev(&pl, wcsFile, wcsPathToPlay, _MAX_LFN);
-            			if(rFound < 0)
+                        startPlayInstantly = true;
+                        }
+                        else
+                        {
+                            sErrMsg = "没有下一曲了";
+                        }
+                    }
+                }
+                else if(msgCtrl & FS_LOADER_SIGNAL_PREV)
+                {
+                    if(isOpen_PL)
+                    {
+                        // has playlist opened, then switch to the next music on the playlist
+                        int rFound = playlist_prev(&pl, wcsFile, wcsPathToPlay, _MAX_LFN);
+                        if(rFound < 0)
                         {
                             // try to wrap back
                             sErrMsg = "已是播放列表中的第一首";
                             rFound = playlist_goto(&pl, INT32_MAX, wcsFile, wcsPathToPlay, _MAX_LFN);
                         }
-            			if(rFound == 0) // ok
-            			{
-            				cntFile = strnlen_TCHAR(wcsFile, _MAX_LFN);
-            				cntPathToPlay = strnlen_TCHAR(wcsPathToPlay, sizeof(wcsPathToPlay) / sizeof(TCHAR));
-            				cntFolder = cntPathToPlay-cntFile;
+                        if(rFound == 0) // ok
+                        {
+                            cntFile = strnlen_TCHAR(wcsFile, _MAX_LFN);
+                            cntPathToPlay = strnlen_TCHAR(wcsPathToPlay, sizeof(wcsPathToPlay) / sizeof(TCHAR));
+                            cntFolder = cntPathToPlay-cntFile;
                             needToOpenNewFile = true;
                             startPlayInstantly = true;
-            			}
-            			else
-            			{
-            				sErrMsg = "已是播放列表中的第一首";
-            			}
-            		}
-            		else
-            		{
-            			// no playlist opened, switch to the previous music in the folder
-            			int rFound = find_track_in_the_same_folder(-1, wcsFile, &cntFile);
-            			if(rFound == 0) // ok
-            			{
+                        }
+                        else
+                        {
+                            sErrMsg = "已是播放列表中的第一首";
+                        }
+                    }
+                    else
+                    {
+                        // no playlist opened, switch to the previous music in the folder
+                        int rFound = find_track_in_the_same_folder(-1, wcsFile, &cntFile);
+                        if(rFound == 0) // ok
+                        {
                             cntPathToPlay = concat_full_path(wcsFolder, wcsFile, wcsPathToPlay, sizeof(wcsPathToPlay) / sizeof(TCHAR));
                             needToOpenNewFile = true;
                             startPlayInstantly = true;
-            			}
-            			else
-            			{
-            				sErrMsg = "没有上一曲了";
-            			}
-            		}
-            	}
-            	/* after all next/prev/continue commands, finally we can open the file */
-            	if(needToOpenNewFile)
-            	{
+                        }
+                        else
+                        {
+                            sErrMsg = "没有上一曲了";
+                        }
+                    }
+                }
+                /* after all next/prev/continue commands, finally we can open the file */
+                if(needToOpenNewFile)
+                {
                     if(FS_open_file(wcsPathToPlay) == 0)
                     {
                         isOpen = true;
@@ -545,13 +549,13 @@ static void task_FS_loader(void * argument)
                         sErrMsg = "无法打开文件";
                         isOpen = false;
                     }
-            	}
-            	osMutexRelease(mtxFSPlayer);
-            	/* protected: mtxFSPlayer END */
-            	// update GUI,
-            	// to avoid deadlock, do not lock GUI mutex within mtxFSplayer context to
-            	if(needToOpenNewFile && isOpen)
-            	{
+                }
+                osMutexRelease(mtxFSPlayer);
+                /* protected: mtxFSPlayer END */
+                // update GUI,
+                // to avoid deadlock, do not lock GUI mutex within mtxFSplayer context to
+                if(needToOpenNewFile && isOpen)
+                {
                     lv_lock();
 
                     GUI_notify_change_track(&track_info, duration_ms, wcsFile, cntFile, wcsPathToPlay, cntPathToPlay);
@@ -561,7 +565,7 @@ static void task_FS_loader(void * argument)
                     // SRC mark
                     GUI_notify_sample_rate_and_bitdepth(current_sample_rate, current_bit_depth);
                     lv_unlock();
-            	}
+                }
             }
             /* Open file and parse format END */
         }
@@ -604,7 +608,7 @@ static void task_FS_loader(void * argument)
             else
             {
                 // variables below will be reset after each task cycle
-//				size_t size_free = kfifo_get_free_space(&fifo_from_FS);
+//                size_t size_free = kfifo_get_free_space(&fifo_from_FS);
                 size_t samplesConsumed = 0;
                 size_t sizePadded = 0;
                 FS_is_EOF = false;
@@ -715,6 +719,21 @@ static void task_FS_loader(void * argument)
                             if(volumef_FS < .99f)
                                 arm_scale_f32(bufCastToFloat, volumef_FS, bufCastToFloat, countPadded);
                             /* volume control END*/
+                            /* fade-in at track start BEGIN */
+                            if (fade_in_elapsed < FADE_IN_SAMPLES && countPadded > 0) {
+                                float *p = bufCastToFloat;
+                                float *end = p + countPadded;
+                                uint32_t s = fade_in_elapsed;
+                                while (p < end) {
+                                    float gain = (float)s / FADE_IN_SAMPLES;
+                                    if (gain >= 1.0f) break;
+                                    for (int ch = 0; ch < nChannels; ch++)
+                                        *p++ *= gain;
+                                    s++;
+                                }
+                                fade_in_elapsed = s;
+                            }
+                            /* fade-in at track start END */
                             /* put into FIFO begin */
                             uint8_t nRetry = 16;
                             // wait until FIFO has enough space
@@ -748,7 +767,7 @@ static void task_FS_loader(void * argument)
                     {
                         // wait until buffer cleared, then STOP
                         uint32_t waitms = 0;
-                        while((kfifo_get_free_space(&fifo_from_FS) > 0) && (waitms < 300))
+                        while((kfifo_get_filled_size(&fifo_from_FS) > 0) && (waitms < 300))
                         {
                             osDelay(pdMS_TO_TICKS(100));
                             waitms += 100;
@@ -818,7 +837,7 @@ static void task_FS_loader(void * argument)
         if(FS_player_state == FS_PLAYER_PLAY)
         {
             size_t sizeInFIFO = kfifo_get_filled_size(&fifo_from_FS);
-//			size_t estTime_ms = sizeInFIFO / (2 * 4 * DEFAULT_SAMPLE_RATE_HZ / 1000);
+//            size_t estTime_ms = sizeInFIFO / (2 * 4 * DEFAULT_SAMPLE_RATE_HZ / 1000);
             if(sizeInFIFO > fifo_from_FS.half) osDelay(pdMS_TO_TICKS(20));
         }
         else

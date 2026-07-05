@@ -1,0 +1,5 @@
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/spinner/lv_spinner.c:94:13:arc_anim_start_angle	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/spinner/lv_spinner.c:99:13:arc_anim_end_angle	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/spinner/lv_spinner.c:46:12:lv_spinner_create	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/spinner/lv_spinner.c:54:6:lv_spinner_set_anim_params	112	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/spinner/lv_spinner.c:83:13:lv_spinner_constructor	8	static

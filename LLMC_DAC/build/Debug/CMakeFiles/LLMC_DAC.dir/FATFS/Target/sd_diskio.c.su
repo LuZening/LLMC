@@ -1,0 +1,10 @@
+E:/Projects/You/LLMC/LLMC_DAC/FATFS/Target/sd_diskio.c:164:16:SD_CheckStatus	8	static
+E:/Projects/You/LLMC/LLMC_DAC/FATFS/Target/sd_diskio.c:181:9:SD_initialize	8	static
+E:/Projects/You/LLMC/LLMC_DAC/FATFS/Target/sd_diskio.c:238:9:SD_status	8	static
+E:/Projects/You/LLMC/LLMC_DAC/FATFS/Target/sd_diskio.c:143:12:SD_CheckStatusWithTimeout	16	static
+E:/Projects/You/LLMC/LLMC_DAC/FATFS/Target/sd_diskio.c:255:9:SD_read	40	static,ignoring_inline_asm
+E:/Projects/You/LLMC/LLMC_DAC/FATFS/Target/sd_diskio.c:416:9:SD_write	40	static,ignoring_inline_asm
+E:/Projects/You/LLMC/LLMC_DAC/FATFS/Target/sd_diskio.c:583:9:SD_ioctl	56	static
+E:/Projects/You/LLMC/LLMC_DAC/FATFS/Target/sd_diskio.c:638:6:BSP_SD_WriteCpltCallback	16	static
+E:/Projects/You/LLMC/LLMC_DAC/FATFS/Target/sd_diskio.c:659:6:BSP_SD_ReadCpltCallback	16	static
+E:/Projects/You/LLMC/LLMC_DAC/FATFS/Target/sd_diskio.c:689:6:SD_ResetQueue	8	static

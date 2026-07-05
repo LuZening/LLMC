@@ -1,0 +1,14 @@
+lv_refr.c:1055:13:wait_for_flushing	8	static
+lv_refr.c:578:13:layer_reshape_draw_buf	16	static
+lv_refr.c:734:19:lv_refr_get_top_obj	24	static
+lv_refr.c:69:6:_lv_refr_init	0	static
+lv_refr.c:73:6:_lv_refr_deinit	0	static
+lv_refr.c:94:6:lv_obj_redraw	320	static
+lv_refr.c:880:6:refr_obj	232	static
+lv_refr.c:774:13:refr_obj_and_children	32	static
+lv_refr.c:670:13:refr_area_part	40	static
+lv_refr.c:251:6:_lv_inv_area	56	static
+lv_refr.c:310:16:_lv_refr_get_disp_refreshing	0	static
+lv_refr.c:319:6:_lv_refr_set_disp_refreshing	0	static
+lv_refr.c:324:6:_lv_display_refr_timer	160	static
+lv_refr.c:77:6:lv_refr_now	8	static

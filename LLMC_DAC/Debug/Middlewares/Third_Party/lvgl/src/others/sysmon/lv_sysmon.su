@@ -1,0 +1,11 @@
+lv_timer.h:247:22:lv_timer_get_user_data	16	static
+lv_color.h:288:26:lv_color_make	24	static
+lv_color.h:415:26:lv_color_white	16	static
+lv_color.h:424:26:lv_color_black	16	static
+lv_display.h:410:26:lv_layer_sys	8	static
+lv_obj_style.h:241:20:lv_obj_set_style_pad_all	24	static
+lv_sysmon.c:70:6:_lv_sysmon_builtin_init	8	static
+lv_sysmon.c:85:6:_lv_sysmon_builtin_deinit	8	static
+lv_sysmon.c:96:12:lv_sysmon_create	32	static
+lv_sysmon.c:249:13:mem_update_timer_cb	24	static
+lv_sysmon.c:266:13:mem_observer_cb	64	static

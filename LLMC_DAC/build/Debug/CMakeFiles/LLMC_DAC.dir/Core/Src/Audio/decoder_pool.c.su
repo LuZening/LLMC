@@ -1,0 +1,4 @@
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/Audio/decoder_pool.c:12:6:decoder_pool_reset	0	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/Audio/decoder_pool.c:17:7:decoder_pool_malloc	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/Audio/decoder_pool.c:27:7:decoder_pool_realloc	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/Audio/decoder_pool.c:39:6:decoder_pool_free	0	static

@@ -1,0 +1,10 @@
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/slider/lv_slider.c:323:13:is_slider_horizontal	16	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/slider/lv_slider.c:293:13:position_knob	40	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/slider/lv_slider.h:170:32:lv_slider_get_mode	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/slider/lv_slider.c:328:13:drag_start	32	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/slider/lv_slider.c:392:13:update_knob_pos	48	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/slider/lv_slider.c:232:13:draw_knob	288	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/slider/lv_slider.c:102:13:lv_slider_event	64	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/slider/lv_slider.c:86:13:lv_slider_constructor	16	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/slider/lv_slider.c:66:12:lv_slider_create	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/slider/lv_slider.c:74:6:lv_slider_is_dragged	0	static

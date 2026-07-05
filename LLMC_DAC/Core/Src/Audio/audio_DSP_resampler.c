@@ -174,12 +174,12 @@ void audio_sinc_resampler_process(audio_sinc_resampler_t* rs,
 
     while(gen < expected_out_len)
     {
-    	input_pos = rs->phase_pos_int;
+        input_pos = rs->phase_pos_int;
         left = input_pos - N_SINC_TAPS_HALF + 1; // left most
 
         // 检查边界
         if((left < 0 ) || ((left + N_SINC_TAPS) > total_avail) )
-        	break;
+            break;
         right = left + N_SINC_TAPS;
 //        const float* coeff = rs->coeffs + rs->phase_pos_frac * N_SINC_TAPS;
         float* coeff = rs->coeffs + rs->coeffs_row_idx * N_SINC_TAPS;
@@ -188,8 +188,8 @@ void audio_sinc_resampler_process(audio_sinc_resampler_t* rs,
 //        }
         for(int c= 0; c<rs->nch;++c)
         {
-        	// find the input view
-        	const float* in_view;
+            // find the input view
+            const float* in_view;
             if(left < HISTORY_COUNT) // all data needed is in the history buffer, use data stored in the history buffer
                 in_view = rs->histories[c] + left;
             else // all data needed is in the input buffer
@@ -197,7 +197,7 @@ void audio_sinc_resampler_process(audio_sinc_resampler_t* rs,
 
             // 卷积计算
             float sum;
-        	arm_dot_prod_f32(in_view, coeff, N_SINC_TAPS, &sum);
+            arm_dot_prod_f32(in_view, coeff, N_SINC_TAPS, &sum);
             output[c * expected_out_len + gen] = sum; // output length may be smaller than out_max of each channel, so this operation will leave some bubble between channels
         }
         gen++;
@@ -205,12 +205,12 @@ void audio_sinc_resampler_process(audio_sinc_resampler_t* rs,
         rs->phase_pos_frac += rs->output_phase_step;
         if(rs->phase_pos_frac >= rs->input_phase_step)
         {
-        	rs->phase_pos_frac -= rs->input_phase_step;
-        	rs->phase_pos_int++;
+            rs->phase_pos_frac -= rs->input_phase_step;
+            rs->phase_pos_int++;
         }
         rs->coeffs_row_idx++;
         if(rs->coeffs_row_idx >= rs->input_phase_step)
-        	rs->coeffs_row_idx = 0;
+            rs->coeffs_row_idx = 0;
     }
 
     // update the history buffer

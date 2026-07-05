@@ -1599,10 +1599,10 @@ void HAL_RCCEx_GetPeriphCLKConfig(RCC_PeriphCLKInitTypeDef  *PeriphClkInit)
                  RCC_PERIPHCLK_USART16 | RCC_PERIPHCLK_USART234578 | RCC_PERIPHCLK_LPUART1 |
                  RCC_PERIPHCLK_I2C4    | RCC_PERIPHCLK_LPTIM1      | RCC_PERIPHCLK_LPTIM2  | RCC_PERIPHCLK_LPTIM345 |
                  RCC_PERIPHCLK_SAI1    | RCC_PERIPHCLK_SPI123      | RCC_PERIPHCLK_SPI45   | RCC_PERIPHCLK_SPI6     |
-	         RCC_PERIPHCLK_FDCAN   | RCC_PERIPHCLK_SDMMC       | RCC_PERIPHCLK_RNG     | RCC_PERIPHCLK_USB      |
-	         RCC_PERIPHCLK_ADC     | RCC_PERIPHCLK_SWPMI1      | RCC_PERIPHCLK_DFSDM1  | RCC_PERIPHCLK_RTC      |
-	         RCC_PERIPHCLK_CEC     | RCC_PERIPHCLK_FMC         | RCC_PERIPHCLK_SPDIFRX | RCC_PERIPHCLK_TIM      |
-	         RCC_PERIPHCLK_CKPER;
+             RCC_PERIPHCLK_FDCAN   | RCC_PERIPHCLK_SDMMC       | RCC_PERIPHCLK_RNG     | RCC_PERIPHCLK_USB      |
+             RCC_PERIPHCLK_ADC     | RCC_PERIPHCLK_SWPMI1      | RCC_PERIPHCLK_DFSDM1  | RCC_PERIPHCLK_RTC      |
+             RCC_PERIPHCLK_CEC     | RCC_PERIPHCLK_FMC         | RCC_PERIPHCLK_SPDIFRX | RCC_PERIPHCLK_TIM      |
+             RCC_PERIPHCLK_CKPER;
 
 #if defined(I2C5)
 PeriphClkInit->PeriphClockSelection |= RCC_PERIPHCLK_I2C1235;
@@ -1612,10 +1612,10 @@ PeriphClkInit->PeriphClockSelection |= RCC_PERIPHCLK_I2C123;
 #if defined(RCC_CDCCIP1R_SAI2ASEL)
   PeriphClkInit->PeriphClockSelection |= RCC_PERIPHCLK_SAI2A;
 #endif /* RCC_CDCCIP1R_SAI2ASEL */
-#if defined(RCC_CDCCIP1R_SAI2BSEL)		 
+#if defined(RCC_CDCCIP1R_SAI2BSEL)         
   PeriphClkInit->PeriphClockSelection |= RCC_PERIPHCLK_SAI2B;
 #endif /* RCC_CDCCIP1R_SAI2BSEL */
-#if defined(SAI3)	 
+#if defined(SAI3)     
   PeriphClkInit->PeriphClockSelection |= RCC_PERIPHCLK_SAI23;
 #endif /* SAI3 */
 #if defined(SAI4)

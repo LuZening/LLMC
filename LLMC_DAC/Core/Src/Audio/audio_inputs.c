@@ -101,7 +101,7 @@ void encocder_input_start()
 void encocder_input_stop()
 {
     encoder_input_started = 0;
-//	HAL_SAI_Abort(hsai_in);
+//    HAL_SAI_Abort(hsai_in);
 }
 /* call when update connections END */
 
@@ -195,14 +195,14 @@ uint32_t get_encoder_I2S_sample_count(uint32_t* pPrevcnt)
     const int upperbound = standardcount + (sampleunit / 2);
     /* Acquire DMA count */
     __disable_irq();
-//	HAL_SAI_DMAPause(hsai_out);
+//    HAL_SAI_DMAPause(hsai_out);
     uint32_t dmacount = (hsai_in->XferCount - __HAL_DMA_GET_COUNTER(hsai_in->hdmarx)) / (4 * MAX_CHANNELS);
-//	HAL_SAI_DMAResume(hsai_out);
+//    HAL_SAI_DMAResume(hsai_out);
     // NOTE: SAI must have higher interrupt priority than USB, so USB routines will always get the latest DMA count updates.
     // OTHERWISE: when DMA circularly rewinds, DMA_COUNTER rewinds but the dbuf has not been updated yet
     uint32_t finecount = sampleCounter_encoder + dmacount;
     __enable_irq();
-    //	__HAL_UNLOCK(hsai_out);
+    //    __HAL_UNLOCK(hsai_out);
     if(pPrevcnt != NULL)
     {
         int cntdiff = (int)(finecount - *pPrevcnt);
@@ -229,11 +229,11 @@ uint32_t get_encoder_I2S_sample_count_TIM(uint32_t* pPrevcnt)
     // NOTE: make sure dbuf_to_decoder_i2s.size is fine grinded, e.g. < standardcount / 2,
     // NOTE: as of USB FS FS=48k, each USB poll requires 48 samples, standardcount = 48
     // NOTE: dbuf_to_decoder_i2s.size < 24/48 * 2ch * 3bytes-per-ch (144Bytes/288Bytes)
-//	const uint32_t standardcount = DEFAULT_SAMPLE_RATE_HZ / 1000;
-//	const uint32_t sampleunit = (I2S_DMA_BUF_SIZE / (4 * MAX_CHANNELS));
+//    const uint32_t standardcount = DEFAULT_SAMPLE_RATE_HZ / 1000;
+//    const uint32_t sampleunit = (I2S_DMA_BUF_SIZE / (4 * MAX_CHANNELS));
     /* Acquire DMA count */
     size_t finecount = htim5.Instance->CNT;
-    //	__HAL_UNLOCK(hsai_out);
+    //    __HAL_UNLOCK(hsai_out);
     if(pPrevcnt != NULL)
     {
         int cntdiff = (int)(finecount - *pPrevcnt);

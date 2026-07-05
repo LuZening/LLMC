@@ -1,0 +1,14 @@
+lv_ll.c:42:6:_lv_ll_init	0	static
+lv_ll.c:57:8:_lv_ll_ins_head	8	static
+lv_ll.c:80:8:_lv_ll_ins_prev	16	static
+lv_ll.c:105:8:_lv_ll_ins_tail	8	static
+lv_ll.c:127:6:_lv_ll_remove	4	static
+lv_ll.c:160:6:_lv_ll_clear_custom	24	static
+lv_ll.c:181:6:_lv_ll_chg_list	16	static
+lv_ll.c:215:8:_lv_ll_get_head	0	static
+lv_ll.c:221:8:_lv_ll_get_tail	0	static
+lv_ll.c:227:8:_lv_ll_get_next	0	static
+lv_ll.c:236:8:_lv_ll_get_prev	0	static
+lv_ll.c:245:10:_lv_ll_get_len	0	static
+lv_ll.c:257:6:_lv_ll_move_before	24	static
+lv_ll.c:285:6:_lv_ll_is_empty	0	static

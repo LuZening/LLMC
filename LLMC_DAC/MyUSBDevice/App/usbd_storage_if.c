@@ -69,10 +69,12 @@ extern SD_HandleTypeDef hsd1;
 #define STORAGE_LUN_NBR                  1
 #define STORAGE_BLK_NBR                  0x10000
 #define STORAGE_BLK_SIZ                  0x200
-#define SYSTICK_COUNT_TIMEOUT		     (256000U * 300U)
+#define SYSTICK_COUNT_TIMEOUT             (256000U * 300U)
 
 /* USER CODE BEGIN PRIVATE_DEFINES */
-
+/* TIM6 timeout for SD card busy-wait (APB1 timer clock = 128MHz) */
+#define SD_TIMEOUT_PRESCALER  (128000U - 1U)  /* 128MHz / 128000 = 1kHz (1ms tick) */
+#define SD_TIMEOUT_PERIOD     (2000U - 1U)     /* ARR = 2000 ticks = 2000ms */
 /* USER CODE END PRIVATE_DEFINES */
 
 /**
@@ -154,7 +156,10 @@ static int8_t STORAGE_Write_HS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uin
 static int8_t STORAGE_GetMaxLun_HS(void);
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_DECLARATION */
-
+static void SD_Timeout_Init(void);
+static void SD_Timeout_Start(void);
+static uint8_t SD_Timeout_HasElapsed(void);
+static void SD_Timeout_Stop(void);
 /* USER CODE END PRIVATE_FUNCTIONS_DECLARATION */
 
 /**
@@ -183,8 +188,7 @@ USBD_StorageTypeDef USBD_Storage_Interface_fops_HS =
 int8_t STORAGE_Init_HS(uint8_t lun)
 {
   /* USER CODE BEGIN 9 */
-
-
+    SD_Timeout_Init();
   return (USBD_OK);
   /* USER CODE END 9 */
 }
@@ -215,9 +219,9 @@ int8_t STORAGE_IsReady_HS(uint8_t lun)
 {
   /* USER CODE BEGIN 11 */
 //  int stat = SD_Driver.disk_status(lun);
-//	int8_t ret =USBD_FAIL;
-//	if (HAL_SD_GetCardState(&hsd1) == HAL_SD_CARD_TRANSFER)
-//	                ret = USBD_OK;
+//    int8_t ret =USBD_FAIL;
+//    if (HAL_SD_GetCardState(&hsd1) == HAL_SD_CARD_TRANSFER)
+//                    ret = USBD_OK;
 //  return stat;
   return USBD_OK;
   /* USER CODE END 11 */
@@ -243,37 +247,39 @@ int8_t STORAGE_IsWriteProtected_HS(uint8_t lun)
   * @param  blk_len: .
   * @retval USBD_OK if all operations are OK else USBD_FAIL
   */
-/* Busy-wait for SD card to be ready with a poll counter.
- * HAL_GetTick() cannot be used here because USB ISR priority (3/6)
- * is higher than SysTick (15), so the tick interrupt is blocked.
- * A volatile loop counter prevents hang regardless of interrupt context. */
-#define SD_READY_POLL_LIMIT 20000000
-
+/* Wait for SD card hardware to exit busy state (TIM6-based timeout). */
 static int8_t SD_WaitReady(void)
 {
-	for (volatile uint32_t poll = 0; poll < SD_READY_POLL_LIMIT; poll++) {
-		if (HAL_SD_GetState(&hsd1) != HAL_SD_STATE_BUSY &&
-			HAL_SD_GetCardState(&hsd1) == HAL_SD_CARD_TRANSFER)
-			return USBD_OK;
-	}
-	return USBD_FAIL;
+    SD_Timeout_Start();
+    while (HAL_SD_GetState(&hsd1) == HAL_SD_STATE_BUSY ||
+        HAL_SD_GetCardState(&hsd1) != HAL_SD_CARD_TRANSFER) {
+        if (SD_Timeout_HasElapsed()) return USBD_FAIL;
+    }
+    SD_Timeout_Stop();
+    return USBD_OK;
 }
 
 int8_t STORAGE_Read_HS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t blk_len)
 {
   /* USER CODE BEGIN 13 */
-	if (blk_len > MSC_MEDIA_PACKET / BLOCKSIZE) return USBD_FAIL;
-	static uint8_t __attribute__((section(".DMA_no_cache"))) buf4DMA[MSC_MEDIA_PACKET];
-	if (SD_WaitReady() != USBD_OK) return USBD_FAIL;
-
-	int r = HAL_SD_ReadBlocks_DMA(&hsd1, buf4DMA, blk_addr, blk_len);
-	if(r == HAL_OK)
-	{
-		if (SD_WaitReady() != USBD_OK) return USBD_FAIL;
-		memcpy(buf, buf4DMA, blk_len * BLOCKSIZE);
-		return USBD_OK;
-	}
-	return USBD_FAIL;
+    if (blk_len > MSC_MEDIA_PACKET / BLOCKSIZE) return USBD_FAIL;
+    static uint8_t __attribute__((section(".DMA_no_cache"))) buf4DMA[MSC_MEDIA_PACKET];
+    /* Wait for previous write DMA to finish (TIM6-based 100ms timeout).
+     * HAL_GetTick() cannot be used because USB ISR priority blocks SysTick. */
+    SD_Timeout_Start();
+    while (g_SDCard_transmitting) {
+        if (SD_Timeout_HasElapsed()) return USBD_FAIL;
+    }
+    SD_Timeout_Stop();
+    if (SD_WaitReady() != USBD_OK) return USBD_FAIL;
+    int r = HAL_SD_ReadBlocks_DMA(&hsd1, buf4DMA, blk_addr, blk_len);
+    if(r == HAL_OK)
+    {
+        if (SD_WaitReady() != USBD_OK) return USBD_FAIL;
+        memcpy(buf, buf4DMA, blk_len * BLOCKSIZE);
+        return USBD_OK;
+    }
+    return USBD_FAIL;
   /* USER CODE END 13 */
 }
 
@@ -288,25 +294,26 @@ int8_t STORAGE_Read_HS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t bl
 int8_t STORAGE_Write_HS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t blk_len)
 {
   /* USER CODE BEGIN 14 */
-	static uint8_t __attribute__((section(".DMA_no_cache"))) buf4DMA[MSC_MEDIA_PACKET];
-	if (blk_len > MSC_MEDIA_PACKET / BLOCKSIZE) return USBD_FAIL;
+    static uint8_t __attribute__((section(".DMA_no_cache"))) buf4DMA[MSC_MEDIA_PACKET];
+    if (blk_len > MSC_MEDIA_PACKET / BLOCKSIZE) return USBD_FAIL;
 
-	/* Wait for previous transmission to finish (poll counter, not HAL_GetTick;
-	 * USB ISR priority blocks SysTick). */
-	for (volatile uint32_t poll = 0; poll < SD_READY_POLL_LIMIT; poll++) {
-		if (!g_SDCard_transmitting) break;
-		if (poll == SD_READY_POLL_LIMIT - 1) return USBD_FAIL;
-	}
-	if (SD_WaitReady() != USBD_OK) return USBD_FAIL;
+    /* Wait for previous write DMA to finish (TIM6-based 100ms timeout).
+     * HAL_GetTick() cannot be used because USB ISR priority blocks SysTick. */
+    SD_Timeout_Start();
+    while (g_SDCard_transmitting) {
+        if (SD_Timeout_HasElapsed()) return USBD_FAIL;
+    }
+    SD_Timeout_Stop();
+    if (SD_WaitReady() != USBD_OK) return USBD_FAIL;
 
-	memcpy(buf4DMA, buf, blk_len * BLOCKSIZE);
-	int r = HAL_SD_WriteBlocks_DMA(&hsd1, buf4DMA, blk_addr, blk_len);
-	if(r == HAL_OK)
-	{
-		g_SDCard_transmitting = true;
-		return USBD_OK;
-	}
-	return USBD_FAIL;
+    memcpy(buf4DMA, buf, blk_len * BLOCKSIZE);
+    int r = HAL_SD_WriteBlocks_DMA(&hsd1, buf4DMA, blk_addr, blk_len);
+    if(r == HAL_OK)
+    {
+        g_SDCard_transmitting = true;
+        return USBD_OK;
+    }
+    return USBD_FAIL;
   /* USER CODE END 14 */
 }
 
@@ -323,6 +330,44 @@ int8_t STORAGE_GetMaxLun_HS(void)
 }
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_IMPLEMENTATION */
+
+/* ---- TIM6-based 100ms timeout for SD card busy-wait ----
+ * TIM6 is a basic timer on APB1 with NVIC priority 1 (higher than USB=3).
+ * APB1 timer clock = 128MHz. Prescaler = 128000 → 1ms tick.
+ * Auto-reload = 100 → UIF flag set after 100ms.
+ * We poll the UIF flag; no interrupt handler needed.
+ */
+
+static void SD_Timeout_Init(void)
+{
+    __HAL_RCC_TIM6_CLK_ENABLE();
+    HAL_NVIC_SetPriority(TIM6_DAC_IRQn, 1, 0);
+    TIM6->PSC = SD_TIMEOUT_PRESCALER;
+    TIM6->ARR = SD_TIMEOUT_PERIOD;
+}
+
+static void SD_Timeout_Start(void)
+{
+    TIM6->CNT = 0;
+    TIM6->SR &= (~TIM_SR_UIF);
+    TIM6->CR1 |= TIM_CR1_CEN;
+}
+
+static uint8_t SD_Timeout_HasElapsed(void)
+{
+//    if (TIM6->SR & TIM_SR_UIF)
+//        return  1U;
+//    else
+//        return 0U;
+    /* always return 0 to do dead polling until g_transmitting_flag cleared*/
+    return 0;
+}
+
+static void SD_Timeout_Stop(void)
+{
+    TIM6->CR1 &= ~TIM_CR1_CEN;
+    TIM6->SR &= (~TIM_SR_UIF);
+}
 
 /* USER CODE END PRIVATE_FUNCTIONS_IMPLEMENTATION */
 

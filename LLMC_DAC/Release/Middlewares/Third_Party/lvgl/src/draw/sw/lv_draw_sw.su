@@ -1,0 +1,8 @@
+lv_draw_sw.c:332:13:render_thread_cb	24	static
+lv_draw_sw.c:166:16:lv_draw_sw_delete	8	static
+lv_draw_sw.c:254:16:evaluate	0	static
+lv_draw_sw.c:292:16:dispatch	16	static
+lv_draw_sw.c:130:6:lv_draw_sw_init	24	static
+lv_draw_sw.c:155:6:lv_draw_sw_deinit	0	static
+lv_draw_sw.c:185:6:lv_draw_sw_rgb565_swap	48	static
+lv_draw_sw.c:219:6:lv_draw_sw_rotate	32	static

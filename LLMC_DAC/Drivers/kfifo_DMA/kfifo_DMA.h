@@ -19,7 +19,7 @@ struct KFIFO_DMA
     volatile unsigned int out;                /* data is extracted from off. (out % size) */
     size_t bytesWritten;
     size_t bytesRead;
-	//    volatile unsigned int *lock; /* protects concurrent modifications */
+    //    volatile unsigned int *lock; /* protects concurrent modifications */
 #ifdef USE_DMA_ON_KFIFO
     volatile unsigned int dmacur; /* DMA cursor position */
     size_t dmastep; // turn kfifo buffer to multiple segments for DMA transfer, each segment is a minial part for DMA

@@ -1,0 +1,8 @@
+lv_draw_rect.c:39:28:lv_draw_rect_dsc_init	16	static
+lv_draw_rect.c:58:6:lv_draw_fill_dsc_init	8	static
+lv_draw_rect.c:65:22:lv_draw_task_get_fill_dsc	0	static
+lv_draw_rect.c:70:6:lv_draw_border_dsc_init	8	static
+lv_draw_rect.c:78:24:lv_draw_task_get_border_dsc	0	static
+lv_draw_rect.c:83:6:lv_draw_box_shadow_dsc_init	8	static
+lv_draw_rect.c:90:28:lv_draw_task_get_box_shadow_dsc	0	static
+lv_draw_rect.c:95:6:lv_draw_rect	120	static

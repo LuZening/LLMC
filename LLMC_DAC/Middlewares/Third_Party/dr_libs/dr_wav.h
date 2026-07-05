@@ -5242,24 +5242,24 @@ DRWAV_PRIVATE drwav_result drwav_wfopen(FILE** ppFile, const wchar_t* pFilePath,
         (void)pAllocationCallbacks;
     }
 #else
-	/*
+    /*
     Use fopen() on anything other than Windows. Requires a conversion. This is annoying because
-	fopen() is locale specific. The only real way I can think of to do this is with wcsrtombs(). Note
-	that wcstombs() is apparently not thread-safe because it uses a static global mbstate_t object for
+    fopen() is locale specific. The only real way I can think of to do this is with wcsrtombs(). Note
+    that wcstombs() is apparently not thread-safe because it uses a static global mbstate_t object for
     maintaining state. I've checked this with -std=c89 and it works, but if somebody get's a compiler
-	error I'll look into improving compatibility.
+    error I'll look into improving compatibility.
     */
 
-	/*
-	Some compilers don't support wchar_t or wcsrtombs() which we're using below. In this case we just
-	need to abort with an error. If you encounter a compiler lacking such support, add it to this list
-	and submit a bug report and it'll be added to the library upstream.
-	*/
-	#if defined(__DJGPP__)
-	{
-		/* Nothing to do here. This will fall through to the error check below. */
-	}
-	#else
+    /*
+    Some compilers don't support wchar_t or wcsrtombs() which we're using below. In this case we just
+    need to abort with an error. If you encounter a compiler lacking such support, add it to this list
+    and submit a bug report and it'll be added to the library upstream.
+    */
+    #if defined(__DJGPP__)
+    {
+        /* Nothing to do here. This will fall through to the error check below. */
+    }
+    #else
     {
         mbstate_t mbs;
         size_t lenMB;
@@ -5301,7 +5301,7 @@ DRWAV_PRIVATE drwav_result drwav_wfopen(FILE** ppFile, const wchar_t* pFilePath,
 
         drwav__free_from_callbacks(pFilePathMB, pAllocationCallbacks);
     }
-	#endif
+    #endif
 
     if (*ppFile == NULL) {
         return DRWAV_ERROR;

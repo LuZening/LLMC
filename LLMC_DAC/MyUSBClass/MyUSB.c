@@ -25,6 +25,8 @@ extern uint8_t _eUSB_CD_bss;
 extern PCD_HandleTypeDef hpcd_USB_OTG_HS; // defined in usbd_conf.c
 extern USBD_DescriptorsTypeDef HS_Desc;
 extern bool isFilesystemOK; // defined in main.c
+extern SD_HandleTypeDef hsd1; // defined in main.c
+extern void MX_SDMMC1_SD_ReInit(void); // defined in main.c
 
 void USB_my_init_no_cache_memory()
 {
@@ -89,6 +91,9 @@ void USB_switch_configuration_hot(USBCfgDescSelector_t new_sel)
         osDelay(pdMS_TO_TICKS(200));
         isFilesystemOK = false;
         FRESULT fr = f_mount(NULL, _T(""), 0); // unmount FS
+        uint8_t retSD = FATFS_UnLinkDriver(SDPath);
+        MX_SDMMC1_SD_ReInit();
+        osDelay(pdMS_TO_TICKS(1200));
         USBD_Stop(&hUsbDeviceHS);
         USBD_DeInit(&hUsbDeviceHS);
     }
@@ -112,10 +117,15 @@ void USB_switch_configuration_hot(USBCfgDescSelector_t new_sel)
         USBD_AUDIO_RegisterInterface(&hUsbDeviceHS, &USBD_AUDIO_fops_HS);
 
         /* Re-mount FatFS — the host may have modified the SD card while
-         * in MSC mode, so the cached FatFS state is stale. */
-        MX_FATFS_Init();
-        SD_Driver.disk_initialize(0);
-        osDelay(pdMS_TO_TICKS(200));
+         * in MSC mode, so the cached FatFS state is stale.
+         * Must reset hsd1 and re-init the SDMMC peripheral before
+         * disk_initialize(), otherwise HAL_SD_Init sees hsd1.State != RESET
+         * (left over from MSC) and skips hardware init, resulting in
+         * FR_NO_FILESYSTEM or stuck BUSY on next MSC switch. */
+        FATFS_LinkDriver(&SD_Driver, SDPath);
+        osDelay(pdMS_TO_TICKS(500));
+        MX_SDMMC1_SD_ReInit();
+        osDelay(pdMS_TO_TICKS(1200));
         FRESULT fr = f_mount(&SDFatFS, (const TCHAR*)SDPath, 1);
         isFilesystemOK = (fr == FR_OK);
 

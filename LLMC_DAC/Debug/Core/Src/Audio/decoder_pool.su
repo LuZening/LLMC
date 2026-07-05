@@ -1,0 +1,4 @@
+decoder_pool.c:12:6:decoder_pool_reset	4	static
+decoder_pool.c:17:7:decoder_pool_malloc	24	static
+decoder_pool.c:27:7:decoder_pool_realloc	24	static
+decoder_pool.c:39:6:decoder_pool_free	16	static

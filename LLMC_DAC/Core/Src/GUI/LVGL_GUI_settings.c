@@ -60,41 +60,41 @@ static void menu_settings_event_cb(lv_event_t * e)
     // setting1: select which USB configuration to show when connect to PC or Phone
     if(obj == lvRoller_USB_config_select)
     {
-    	uint32_t i = lv_roller_get_selected(obj);
+        uint32_t i = lv_roller_get_selected(obj);
 #ifndef LVGL_SIM
-    	switch(i)
-    	{
-    	case 0: //USB音频
-    		USB_switch_configuration_hot(USB_CFG_DESC_UAC1_0);
-    		isModified = true;
-    		refresh_main_player_button();
-    		break;
-    	case 1: //USB存储
-    		USB_switch_configuration_hot(USB_CFG_DESC_MASS_STORAGE);
-    		isModified = true;
-    		refresh_main_player_button();
-    		break;
-    	}
+        switch(i)
+        {
+        case 0: //USB音频
+            USB_switch_configuration_hot(USB_CFG_DESC_UAC1_0);
+            isModified = true;
+            refresh_main_player_button();
+            break;
+        case 1: //USB存储
+            USB_switch_configuration_hot(USB_CFG_DESC_MASS_STORAGE);
+            isModified = true;
+            refresh_main_player_button();
+            break;
+        }
 #endif
     }
     else if(obj == lvDropdown_USB_record_data_format_select)
     {
         static char sText[32];
-    	lv_dropdown_get_selected_str(obj, sText, sizeof(sText));
+        lv_dropdown_get_selected_str(obj, sText, sizeof(sText));
 #ifndef LVGL_SIM
-    	uint8_t bitdepth_new;
-    	// bit depth first
-    	if(strnstr(sText, "24", sizeof(sText)))
-    		bitdepth_new = 24;
-    	else
-    		bitdepth_new = 16;
-    	if(bitdepth_new != cfg.USB_record_audio_bit_depth)
-    	{
-    		cfg.USB_record_audio_bit_depth = bitdepth_new;
+        uint8_t bitdepth_new;
+        // bit depth first
+        if(strnstr(sText, "24", sizeof(sText)))
+            bitdepth_new = 24;
+        else
+            bitdepth_new = 16;
+        if(bitdepth_new != cfg.USB_record_audio_bit_depth)
+        {
+            cfg.USB_record_audio_bit_depth = bitdepth_new;
             isModified = true;
-    	}
-    	// sample rate later
-    	uint32_t FS_new;
+        }
+        // sample rate later
+        uint32_t FS_new;
         if(strnstr(sText, "192k", sizeof(sText)))
             FS_new = 192000U;
         else if(strnstr(sText, "96k", sizeof(sText)))
@@ -134,7 +134,7 @@ static void menu_settings_event_cb(lv_event_t * e)
     else if(obj == lvBtn_calibrate_touchscreen)
     {
 #ifndef LVGL_SIM
-    	start_calibrate_touchscreen();
+        start_calibrate_touchscreen();
 #endif
     }
     else if (obj == lvLabel_power_off)
@@ -164,7 +164,7 @@ void back_event_cb(lv_event_t * e)
     lv_obj_t * menu = lv_event_get_user_data(e);
 
     if(lv_menu_back_button_is_root(menu, obj)) {
-    	dismiss_settings_screen(e);
+        dismiss_settings_screen(e);
     }
 
 }
@@ -216,16 +216,16 @@ static void buffer_dashboard_timer_cb(lv_timer_t* timer)
     /* 2: USB mic counters*/
     for(int i = 0; i <N_COUNTERS; ++i)
     {
-    	if(i != 2)
-    	{
-    		my_utoa(sValue,(*arr_pcounters[i]));
-    	}
-    	else
-    	{
-    		int diff = ((*arr_pcounters[0]) - (*arr_pcounters[1]));
-    		number2text(sValue, diff, 0, 0);
-    	}
-    	lv_label_set_text(lbls_counter[i], sValue);
+        if(i != 2)
+        {
+            my_utoa(sValue,(*arr_pcounters[i]));
+        }
+        else
+        {
+            int diff = ((*arr_pcounters[0]) - (*arr_pcounters[1]));
+            number2text(sValue, diff, 0, 0);
+        }
+        lv_label_set_text(lbls_counter[i], sValue);
     }
     /*3 : profiler counts */
     lv_obj_t* lbl;
@@ -276,14 +276,14 @@ static void create_sub_page_buffer_dashboard(lv_obj_t* sub_cont)
     /* 1: FIFO free space monitoring */
     for(int i = 0; i < N_FIFOS; ++i)
     {
-    	label = lv_label_create(sub_cont);
-    	lv_label_set_text(label, names_FIFO[i]);
+        label = lv_label_create(sub_cont);
+        lv_label_set_text(label, names_FIFO[i]);
 
-    	bars_FIFO[i] = lv_bar_create(sub_cont);
-    	lv_obj_t* bar = bars_FIFO[i];
-    	lv_obj_set_size(bar, LV_PCT(80), 12);
+        bars_FIFO[i] = lv_bar_create(sub_cont);
+        lv_obj_t* bar = bars_FIFO[i];
+        lv_obj_set_size(bar, LV_PCT(80), 12);
 #ifndef LVGL_SIM
-    	lv_bar_set_range(bar, 0, FIFOs[i]->size+1);
+        lv_bar_set_range(bar, 0, FIFOs[i]->size+1);
 #endif
 
     }
@@ -291,20 +291,20 @@ static void create_sub_page_buffer_dashboard(lv_obj_t* sub_cont)
     lv_obj_t* caption;
     for(int i = 0; i <N_COUNTERS; ++i)
     {
-    	caption = lv_label_create(sub_cont);
-    	lv_label_set_text(caption, arr_counter_names[i]);
-    	label = lv_label_create(sub_cont);
-    	lbls_counter[i] = label;
-    	if(i != 2)
-    	{
-    		my_utoa(sValue,*(arr_pcounters[i]));
-    	}
-    	else
-    	{
-    		int diff = ((*arr_pcounters[0]) - (*arr_pcounters[1]));
-    		number2text(sValue, diff, 0, 0);
-    	}
-    	lv_label_set_text(label, sValue);
+        caption = lv_label_create(sub_cont);
+        lv_label_set_text(caption, arr_counter_names[i]);
+        label = lv_label_create(sub_cont);
+        lbls_counter[i] = label;
+        if(i != 2)
+        {
+            my_utoa(sValue,*(arr_pcounters[i]));
+        }
+        else
+        {
+            int diff = ((*arr_pcounters[0]) - (*arr_pcounters[1]));
+            number2text(sValue, diff, 0, 0);
+        }
+        lv_label_set_text(label, sValue);
     }
 
     /* 3: interrupt cyc diff monitoring */
@@ -324,7 +324,7 @@ static void create_sub_page_buffer_dashboard(lv_obj_t* sub_cont)
     // TODO: put items in grid
     for(int i = 0; i < (1 + 3) * (1 + N_PROFILERS); ++i)
     {
-    	// columns are inputs, indices are outputs
+        // columns are inputs, indices are outputs
         uint8_t col= i % (3+1);
         uint8_t row = i / (3+1);
         uint8_t iInput = col - 1;
@@ -332,37 +332,37 @@ static void create_sub_page_buffer_dashboard(lv_obj_t* sub_cont)
         
         // skip upper-left corner, leave it to be empty
         if(i == 0)
-        	continue;
+            continue;
 
         // making column header: mean min max
         if(row == 0)
         {
-        	lv_obj_t *lblHeader = lv_label_create(contTb);
-        	/*Stretch the cell horizontally and vertically too
+            lv_obj_t *lblHeader = lv_label_create(contTb);
+            /*Stretch the cell horizontally and vertically too
              *Set span to 1 to make the cell 1 column/row sized*/
             lv_obj_set_grid_cell(lblHeader, LV_GRID_ALIGN_CENTER, col, 1,
                     LV_GRID_ALIGN_CENTER, row, 1);
-        	lv_label_set_text_static(lblHeader, headers_profiler[iInput]);
-        	lv_obj_center(lblHeader);
+            lv_label_set_text_static(lblHeader, headers_profiler[iInput]);
+            lv_obj_center(lblHeader);
         }
         // making indices for outputs, buttons that trigger settings menu
         else if(col == 0)
         {
-        	lv_obj_t *lblIdx = lv_label_create(contTb);
-        	/*Stretch the cell horizontally and vertically too
+            lv_obj_t *lblIdx = lv_label_create(contTb);
+            /*Stretch the cell horizontally and vertically too
              *Set span to 1 to make the cell 1 column/row sized*/
             lv_obj_set_grid_cell(lblIdx, LV_GRID_ALIGN_CENTER, col, 1,
                     LV_GRID_ALIGN_CENTER, row, 1);
-        	lv_label_set_text_static(lblIdx, names_profiler[iOutput]);
-        	lv_obj_center(lblIdx);
+            lv_label_set_text_static(lblIdx, names_profiler[iOutput]);
+            lv_obj_center(lblIdx);
         }
         // col > 0 and row > 0, making switches
         else
         {
 
-        	lv_obj_t *lblValue = lv_label_create(contTb);
-        	lbls_Profiler[iOutput][iInput] = lblValue;
-        	/*Stretch the cell horizontally and vertically too
+            lv_obj_t *lblValue = lv_label_create(contTb);
+            lbls_Profiler[iOutput][iInput] = lblValue;
+            /*Stretch the cell horizontally and vertically too
              *Set span to 1 to make the cell 1 column/row sized*/
             lv_obj_set_grid_cell(lblValue, LV_GRID_ALIGN_CENTER, col, 1,
                     LV_GRID_ALIGN_CENTER, row, 1);
@@ -390,7 +390,7 @@ static void create_sub_page_buffer_dashboard(lv_obj_t* sub_cont)
 
     /* start value refreshing timer*/
     if(timer_FIFO_refresh == NULL)
-    	timer_FIFO_refresh = lv_timer_create(buffer_dashboard_timer_cb, 500, NULL);
+        timer_FIFO_refresh = lv_timer_create(buffer_dashboard_timer_cb, 500, NULL);
 
     lv_obj_add_event_cb(sub_cont, dismiss_sub_page_buffer_dashboard_event_cb, LV_EVENT_DELETE, NULL);
 }
@@ -453,11 +453,11 @@ void display_settings_screen()
     // sync with cfg
     if(cfg.usbCfgDescSelector == USB_CFG_DESC_UAC1_0)
     {
-    	lv_roller_set_selected(roller, 0, LV_ANIM_OFF);
+        lv_roller_set_selected(roller, 0, LV_ANIM_OFF);
     }
     else if(cfg.usbCfgDescSelector == USB_CFG_DESC_MASS_STORAGE)
     {
-    	lv_roller_set_selected(roller, 1, LV_ANIM_OFF);
+        lv_roller_set_selected(roller, 1, LV_ANIM_OFF);
     }
 #endif
     // item 2: USB record data format select
@@ -465,21 +465,21 @@ void display_settings_screen()
     lv_obj_t* dropdown = lv_dropdown_create(sub_cont);
     lvDropdown_USB_record_data_format_select = dropdown;
     // lv_dropdown_set_options(dropdown, "96kHz@24(高质量)\n48kHz@24(高质量)\n48kHz@16(兼容性)");
-    lv_dropdown_set_options(dropdown, "48kHz@24(高质量)\n48kHz@16(兼容性)");
+    lv_dropdown_set_options(dropdown, "96kHz@24(高质量)\n48kHz@24(高质量)\n48kHz@16(兼容性)");
     lv_obj_add_event_cb(dropdown, menu_settings_event_cb, LV_EVENT_VALUE_CHANGED, NULL);
 #ifndef LVGL_SIM
     // sync with cfg
     if(cfg.USB_record_audio_bit_depth == 24)
     {
-    	if(cfg.USB_record_audio_sample_rate_Hz == 96000)
-    		lv_dropdown_set_selected(dropdown, 0);
-    	else
-    		lv_dropdown_set_selected(dropdown, 1);
+        if(cfg.USB_record_audio_sample_rate_Hz == 96000)
+            lv_dropdown_set_selected(dropdown, 0);
+        else
+            lv_dropdown_set_selected(dropdown, 1);
     }
     else if(cfg.USB_record_audio_bit_depth == 16)
     {
-    	if(cfg.USB_record_audio_sample_rate_Hz == 48000)
-    		lv_dropdown_set_selected(dropdown, 2);
+        if(cfg.USB_record_audio_sample_rate_Hz == 48000)
+            lv_dropdown_set_selected(dropdown, 2);
     }
 #endif
     // item 3: USB volume control
@@ -492,11 +492,11 @@ void display_settings_screen()
     // sync with cfg
     if(cfg.USB_volume_control )
     {
-    	lv_obj_set_state(checkbox, LV_STATE_CHECKED, 1);
+        lv_obj_set_state(checkbox, LV_STATE_CHECKED, 1);
     }
     else
     {
-    	lv_obj_remove_state(checkbox, LV_STATE_CHECKED);
+        lv_obj_remove_state(checkbox, LV_STATE_CHECKED);
     }
 #endif
     // item 4: USB force mono
@@ -509,11 +509,11 @@ void display_settings_screen()
     // sync with cfg
     if(cfg.USB_record_force_mono)
     {
-    	lv_obj_set_state(checkbox, LV_STATE_CHECKED, 1);
+        lv_obj_set_state(checkbox, LV_STATE_CHECKED, 1);
     }
     else
     {
-    	lv_obj_remove_state(checkbox, LV_STATE_CHECKED);
+        lv_obj_remove_state(checkbox, LV_STATE_CHECKED);
     }
 #endif
     // item 5: USB self powered
@@ -526,11 +526,11 @@ void display_settings_screen()
     // sync with cfg
     if(cfg.USB_self_powered)
     {
-    	lv_obj_set_state(checkbox, LV_STATE_CHECKED, 1);
+        lv_obj_set_state(checkbox, LV_STATE_CHECKED, 1);
     }
     else
     {
-    	lv_obj_remove_state(checkbox, LV_STATE_CHECKED);
+        lv_obj_remove_state(checkbox, LV_STATE_CHECKED);
     }
 #endif
     // create main page entry

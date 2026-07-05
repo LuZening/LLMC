@@ -1,0 +1,2 @@
+lv_draw_sw_letter.c:65:35:draw_letter_cb	96	static
+lv_draw_sw_letter.c:52:6:lv_draw_sw_label	0	static

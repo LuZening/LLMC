@@ -95,7 +95,7 @@ void audio_compress(audio_compress_t *p, float *output, float *input,  size_t co
         p->history_gain = alpha * p->history_gain + (1.f - alpha) * gain;
         float compensated_gain = p->history_gain * p->makeup_gain_lin;
         *(output + i) = (*(input + i)) * compensated_gain;
-//		arm_scale_f32(input, compensated_gain, output, count);
+//        arm_scale_f32(input, compensated_gain, output, count);
     }
 
 }

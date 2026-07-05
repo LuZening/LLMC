@@ -58,42 +58,42 @@
 
 #if (defined _WIN32 && !defined _WIN32_WCE) || (defined __WINS__ && defined _SYMBIAN) || defined(_OPENWAVE_SIMULATOR) || defined(WINCE_EMULATOR)    /* Symbian emulator for Ix86 */
 
-#pragma warning( disable : 4035 )	/* complains about inline asm not returning a value */
+#pragma warning( disable : 4035 )    /* complains about inline asm not returning a value */
 
-static __inline int MULSHIFT32(int x, int y)	
+static __inline int MULSHIFT32(int x, int y)    
 {
     __asm {
-		mov		eax, x
-	    imul	y
-	    mov		eax, edx
-	}
+        mov        eax, x
+        imul    y
+        mov        eax, edx
+    }
 }
 
 static __inline int FASTABS(int x) 
 {
-	int sign;
+    int sign;
 
-	sign = x >> (sizeof(int) * 8 - 1);
-	x ^= sign;
-	x -= sign;
+    sign = x >> (sizeof(int) * 8 - 1);
+    x ^= sign;
+    x -= sign;
 
-	return x;
+    return x;
 }
 
 static __inline int CLZ(int x)
 {
-	int numZeros;
+    int numZeros;
 
-	if (!x)
-		return (sizeof(int) * 8);
+    if (!x)
+        return (sizeof(int) * 8);
 
-	numZeros = 0;
-	while (!(x & 0x80000000)) {
-		numZeros++;
-		x <<= 1;
-	} 
+    numZeros = 0;
+    while (!(x & 0x80000000)) {
+        numZeros++;
+        x <<= 1;
+    } 
 
-	return numZeros;
+    return numZeros;
 }
 
 /* MADD64, SHL64, SAR64:
@@ -109,174 +109,174 @@ typedef __int64 Word64;
 
 static __inline Word64 MADD64(Word64 sum, int x, int y)
 {
-	unsigned int sumLo = ((unsigned int *)&sum)[0];
-	int sumHi = ((int *)&sum)[1];
+    unsigned int sumLo = ((unsigned int *)&sum)[0];
+    int sumHi = ((int *)&sum)[1];
 
-	__asm {
-		mov		eax, x
-		imul	y
-		add		eax, sumLo
-		adc		edx, sumHi
-	}
+    __asm {
+        mov        eax, x
+        imul    y
+        add        eax, sumLo
+        adc        edx, sumHi
+    }
 
-	/* equivalent to return (sum + ((__int64)x * y)); */
+    /* equivalent to return (sum + ((__int64)x * y)); */
 }
 
 static __inline Word64 SHL64(Word64 x, int n)
 {
-	unsigned int xLo = ((unsigned int *)&x)[0];
-	int xHi = ((int *)&x)[1];
-	unsigned char nb = (unsigned char)n;
+    unsigned int xLo = ((unsigned int *)&x)[0];
+    int xHi = ((int *)&x)[1];
+    unsigned char nb = (unsigned char)n;
 
-	if (n < 32) {
-		__asm {
-			mov		edx, xHi
-			mov		eax, xLo
-			mov		cl, nb
-			shld    edx, eax, cl
-			shl     eax, cl
-		}
-	} else if (n < 64) {
-		/* shl masks cl to 0x1f */
-		__asm {
-			mov		edx, xLo
-			mov		cl, nb
-			xor     eax, eax
-			shl     edx, cl
-		}
-	} else {
-		__asm {
-			xor		edx, edx
-			xor		eax, eax
-		}
-	}
+    if (n < 32) {
+        __asm {
+            mov        edx, xHi
+            mov        eax, xLo
+            mov        cl, nb
+            shld    edx, eax, cl
+            shl     eax, cl
+        }
+    } else if (n < 64) {
+        /* shl masks cl to 0x1f */
+        __asm {
+            mov        edx, xLo
+            mov        cl, nb
+            xor     eax, eax
+            shl     edx, cl
+        }
+    } else {
+        __asm {
+            xor        edx, edx
+            xor        eax, eax
+        }
+    }
 }
 
 static __inline Word64 SAR64(Word64 x, int n)
 {
-	unsigned int xLo = ((unsigned int *)&x)[0];
-	int xHi = ((int *)&x)[1];
-	unsigned char nb = (unsigned char)n;
+    unsigned int xLo = ((unsigned int *)&x)[0];
+    int xHi = ((int *)&x)[1];
+    unsigned char nb = (unsigned char)n;
 
-	if (n < 32) {
-		__asm {
-			mov		edx, xHi
-			mov		eax, xLo
-			mov		cl, nb
-			shrd	eax, edx, cl
-			sar		edx, cl
-		}
-	} else if (n < 64) {
-		/* sar masks cl to 0x1f */
-		__asm {
-			mov		edx, xHi
-			mov		eax, xHi
-			mov		cl, nb
-			sar		edx, 31
-			sar		eax, cl
-		}
-	} else {
-		__asm {
-			sar		xHi, 31
-			mov		eax, xHi
-			mov		edx, xHi
-		}
-	}
+    if (n < 32) {
+        __asm {
+            mov        edx, xHi
+            mov        eax, xLo
+            mov        cl, nb
+            shrd    eax, edx, cl
+            sar        edx, cl
+        }
+    } else if (n < 64) {
+        /* sar masks cl to 0x1f */
+        __asm {
+            mov        edx, xHi
+            mov        eax, xHi
+            mov        cl, nb
+            sar        edx, 31
+            sar        eax, cl
+        }
+    } else {
+        __asm {
+            sar        xHi, 31
+            mov        eax, xHi
+            mov        edx, xHi
+        }
+    }
 }
 
 #elif (defined _WIN32) && (defined _WIN32_WCE)
 
 /* use asm function for now (EVC++ 3.0 does horrible job compiling __int64 version) */
-#define MULSHIFT32	xmp3_MULSHIFT32
+#define MULSHIFT32    xmp3_MULSHIFT32
 int MULSHIFT32(int x, int y);
 
 static __inline int FASTABS(int x) 
 {
-	int sign;
+    int sign;
 
-	sign = x >> (sizeof(int) * 8 - 1);
-	x ^= sign;
-	x -= sign;
+    sign = x >> (sizeof(int) * 8 - 1);
+    x ^= sign;
+    x -= sign;
 
-	return x;
+    return x;
 }
 
 static __inline int CLZ(int x)
 {
-	int numZeros;
+    int numZeros;
 
-	if (!x)
-		return (sizeof(int) * 8);
+    if (!x)
+        return (sizeof(int) * 8);
 
-	numZeros = 0;
-	while (!(x & 0x80000000)) {
-		numZeros++;
-		x <<= 1;
-	} 
+    numZeros = 0;
+    while (!(x & 0x80000000)) {
+        numZeros++;
+        x <<= 1;
+    } 
 
-	return numZeros;
+    return numZeros;
 }
 
 #elif defined ARM_ADS
 
 typedef long long Word64;
 
-#define MULSHIFT32	xmp3_MULSHIFT32
+#define MULSHIFT32    xmp3_MULSHIFT32
 extern int MULSHIFT32(int x, int y);
 
 
-#define FASTABS	xmp3_FASTABS
+#define FASTABS    xmp3_FASTABS
 int FASTABS(int x);
 
 
 static __inline int CLZ(int x)
 {
-	int numZeros;
+    int numZeros;
 
-	if (!x)
-		return (sizeof(int) * 8);
+    if (!x)
+        return (sizeof(int) * 8);
 
-	numZeros = 0;
-	while (!(x & 0x80000000)) {
-		numZeros++;
-		x <<= 1;
-	} 
+    numZeros = 0;
+    while (!(x & 0x80000000)) {
+        numZeros++;
+        x <<= 1;
+    } 
 
-	return numZeros;
+    return numZeros;
 }
 
 #elif defined(__GNUC__) && defined(ARM)
 
 typedef long long Word64;
 
-#define MULSHIFT32	xmp3_MULSHIFT32
+#define MULSHIFT32    xmp3_MULSHIFT32
 extern int MULSHIFT32(int x, int y);
 
 
-#define FASTABS	xmp3_FASTABS
+#define FASTABS    xmp3_FASTABS
 int FASTABS(int x);
 
 
 static __inline int CLZ(int x)
 {
-	int numZeros;
+    int numZeros;
 
-	if (!x)
-		return (sizeof(int) * 8);
+    if (!x)
+        return (sizeof(int) * 8);
 
-	numZeros = 0;
-	while (!(x & 0x80000000)) {
-		numZeros++;
-		x <<= 1;
-	} 
+    numZeros = 0;
+    while (!(x & 0x80000000)) {
+        numZeros++;
+        x <<= 1;
+    } 
 
-	return numZeros;
+    return numZeros;
 }
 
 #else
 
 #error Unsupported platform in assembly.h
 
-#endif	/* platforms */
+#endif    /* platforms */
 
 #endif /* _ASSEMBLY_H */

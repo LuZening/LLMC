@@ -32,7 +32,7 @@ typedef float float32_t;
 #define LCM_441_480 (147U*160U)
 #define N_441_480_INPUT_FRACSTEPS 160U // 44.1K sample rate in
 #define N_441_480_OUTPUT_FRACSTEPS 147U // 48K sample rate out
-#define N_441_480_PHASE_MODES 	N_441_480_INPUT_FRACSTEPS // has 160 different phase modes
+#define N_441_480_PHASE_MODES     N_441_480_INPUT_FRACSTEPS // has 160 different phase modes
 #define PATH_DSP_PROFILE_FOLDER L"0:DSP"
 #define FILENAME_DSP_PROFILE L"dsp_profile_" // append a number to this filename
 

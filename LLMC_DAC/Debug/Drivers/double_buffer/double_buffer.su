@@ -1,0 +1,5 @@
+double_buffer.c:4:6:double_buffer_init	24	static
+double_buffer.c:19:5:double_buffer_in_transfer_HalfCplt_cb	24	static
+double_buffer.c:29:5:double_buffer_in_transfer_Cplt_cb	24	static
+double_buffer.c:39:5:double_buffer_out_transfer_HalfCplt_cb	24	static
+double_buffer.c:49:5:double_buffer_out_transfer_Cplt_cb	24	static

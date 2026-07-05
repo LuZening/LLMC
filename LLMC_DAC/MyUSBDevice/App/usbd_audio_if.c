@@ -208,24 +208,24 @@ static int8_t AUDIO_AudioCmd_HS(uint8_t idx, uint8_t* pbuf, uint32_t size, uint8
 static int8_t AUDIO_VolumeCtl_HS( uint8_t idx, uint8_t vol)
 {
   /* USER CODE BEGIN 12 */
-	uint8_t buf[8];
-	if(cfg.USB_volume_control == 1)
-	{
-	  if(idx == 0) // Data OUT: playback
-	  {
-		  uint8_t v = volume100_to_255(vol);
-	//	  PCM179x_set_attenuation(&pcm179x, v);
-		  uint8_t len = PCM179x_set_attenuation_async(&pcm179x, v, buf);
-		  transmit_async_i2c(0, buf, len);
-	  }
-	  else // Data IN: record``````````````````````
-	  {
-	//	  adcx120_set_volume(&adcx120, 1, vol);
-	//	  adcx120_set_volume(&adcx120, 2, vol);
-//		  volumef_USB_record = volume100_to_volumef(vol);
-	  }
-	}
-	return (USBD_OK);
+    uint8_t buf[8];
+    if(cfg.USB_volume_control == 1)
+    {
+      if(idx == 0) // Data OUT: playback
+      {
+          uint8_t v = volume100_to_255(vol);
+    //      PCM179x_set_attenuation(&pcm179x, v);
+          uint8_t len = PCM179x_set_attenuation_async(&pcm179x, v, buf);
+          transmit_async_i2c(0, buf, len);
+      }
+      else // Data IN: record``````````````````````
+      {
+    //      adcx120_set_volume(&adcx120, 1, vol);
+    //      adcx120_set_volume(&adcx120, 2, vol);
+//          volumef_USB_record = volume100_to_volumef(vol);
+      }
+    }
+    return (USBD_OK);
   /* USER CODE END 12 */
 }
 
@@ -244,39 +244,39 @@ static int8_t AUDIO_MuteCtl_HS(uint8_t idx, uint8_t cmd)
 //  uint8_t data[8];
 //  if(cmd > 0) // mute
 //  {
-//	  if(idx == 0)
-//	  {
-////		  PCM179x_set_mute(&pcm179x, 1);
-//		  uint8_t len = PCM179x_set_mute_async(&pcm179x, 1, data);
-//		  transmit_async_i2c(0, data, len);
-//	  }
-//	  else if(idx==1)
-//	  {
-////		 adcx120_mute(&adcx120, 1, 1);
-//		uint8_t len = adcx120_mute_async(&adcx120, 1, 1, data);
-//		transmit_async_i2c(1, data, len);
-////		 adcx120_mute(&adcx120, 2, 1);
-//		len = adcx120_mute_async(&adcx120, 2, 1, data);
-//		transmit_async_i2c(1, data, len);
-//	  }
+//      if(idx == 0)
+//      {
+////          PCM179x_set_mute(&pcm179x, 1);
+//          uint8_t len = PCM179x_set_mute_async(&pcm179x, 1, data);
+//          transmit_async_i2c(0, data, len);
+//      }
+//      else if(idx==1)
+//      {
+////         adcx120_mute(&adcx120, 1, 1);
+//        uint8_t len = adcx120_mute_async(&adcx120, 1, 1, data);
+//        transmit_async_i2c(1, data, len);
+////         adcx120_mute(&adcx120, 2, 1);
+//        len = adcx120_mute_async(&adcx120, 2, 1, data);
+//        transmit_async_i2c(1, data, len);
+//      }
 //  }
 //  else // unmute
 //  {
-//	  if(idx == 0)
-//	  {
-////		  PCM179x_set_mute(&pcm179x, 0);
-//		  uint8_t len = PCM179x_set_mute_async(&pcm179x, 0, data);
-//		  transmit_async_i2c(0, data, len);
-//	  }
-//	  else if(idx==1)
-//	  {
-////			 adcx120_mute(&adcx120, 1, 0);
-//			uint8_t len = adcx120_mute_async(&adcx120, 1, 0, data);
-//			transmit_async_i2c(1, data, len);
-////			 adcx120_mute(&adcx120, 2, 0);
-//			len = adcx120_mute_async(&adcx120, 2, 0, data);
-//			transmit_async_i2c(1, data, len);
-//	  }
+//      if(idx == 0)
+//      {
+////          PCM179x_set_mute(&pcm179x, 0);
+//          uint8_t len = PCM179x_set_mute_async(&pcm179x, 0, data);
+//          transmit_async_i2c(0, data, len);
+//      }
+//      else if(idx==1)
+//      {
+////             adcx120_mute(&adcx120, 1, 0);
+//            uint8_t len = adcx120_mute_async(&adcx120, 1, 0, data);
+//            transmit_async_i2c(1, data, len);
+////             adcx120_mute(&adcx120, 2, 0);
+//            len = adcx120_mute_async(&adcx120, 2, 0, data);
+//            transmit_async_i2c(1, data, len);
+//      }
 //  }
   return (USBD_OK);
   /* USER CODE END 13 */

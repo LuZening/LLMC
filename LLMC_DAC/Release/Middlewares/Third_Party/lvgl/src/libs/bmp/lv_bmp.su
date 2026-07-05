@@ -1,0 +1,6 @@
+lv_bmp.c:225:13:decoder_close	8	static
+lv_bmp.c:189:20:decoder_get_area	32	static
+lv_bmp.c:142:20:decoder_open	104	static
+lv_bmp.c:83:20:decoder_info	104	static
+lv_bmp.c:53:6:lv_bmp_init	8	static
+lv_bmp.c:62:6:lv_bmp_deinit	8	static

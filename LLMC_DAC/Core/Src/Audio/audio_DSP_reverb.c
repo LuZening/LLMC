@@ -53,7 +53,7 @@ void audio_reverb(audio_reverb_t *p, float32_t *output, const float32_t *input, 
 {
     for (int i = 0; i < cnt; i++)
     {
-    	/* comb filter */
+        /* comb filter */
         float x = input[i];
         float y =  p->buf_comb[p->idx_comb];
         p->buf_comb[p->idx_comb] = x + p->decay_factor * y;

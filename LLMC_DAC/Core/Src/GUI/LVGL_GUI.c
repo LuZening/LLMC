@@ -71,7 +71,7 @@ const lv_color_t COLOR_BUTTON = LV_COLOR_MAKE(252, 130, 145); // lovelive AS pin
 // when modify, must be protected by Mutex
 
 
-lv_group_t * lvGroups[N_GROUP_STACK_SIZE] =	{NULL};
+lv_group_t * lvGroups[N_GROUP_STACK_SIZE] =    {NULL};
 uint8_t idxGroups = 0; // 指向当前正在操作的group的后一个空位
 lv_group_t* get_current_group()
 {
@@ -262,8 +262,8 @@ static void new_theme_apply_cb(lv_theme_t * th, lv_obj_t * obj)
     if(lv_obj_check_type(obj, &lv_button_class))
     {
         // normal state
-    	lv_obj_add_style(obj, &lvStyleBtn, 0);
-    	// hover or pressed state
+        lv_obj_add_style(obj, &lvStyleBtn, 0);
+        // hover or pressed state
         lv_obj_add_style(obj, &lvStyleBtn_focused, LV_STATE_FOCUSED | LV_STATE_PRESSED);
 
     }
@@ -280,16 +280,16 @@ static void new_theme_apply_cb(lv_theme_t * th, lv_obj_t * obj)
     // for container
     else if(lv_obj_check_type(obj, &lv_obj_class))
     {
-    	lv_obj_add_style(obj, &lvStyleSemiTranspFrame, 0);
+        lv_obj_add_style(obj, &lvStyleSemiTranspFrame, 0);
         lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
         lv_obj_remove_flag(obj, LV_OBJ_FLAG_EVENT_BUBBLE); // not allowing any event pass through the layer to the next
 //        lv_obj_remove_flag(obj, LV_OBJ_FLAG_CLICKABLE); // any click will be past through the layer
     }
     else if(lv_obj_check_type(obj, &lv_bar_class))
     {
-    	lv_obj_add_style(obj, &lvStyleProgBarBg, LV_PART_MAIN);
-    	lv_obj_add_style(obj, &lvStyleProgBarInd, LV_PART_INDICATOR);
-    	lv_obj_remove_flag(obj, LV_OBJ_FLAG_CLICKABLE);
+        lv_obj_add_style(obj, &lvStyleProgBarBg, LV_PART_MAIN);
+        lv_obj_add_style(obj, &lvStyleProgBarInd, LV_PART_INDICATOR);
+        lv_obj_remove_flag(obj, LV_OBJ_FLAG_CLICKABLE);
     }
     // when focused by encoder input
     lv_obj_set_style_border_width(obj, 1, LV_PART_MAIN | LV_STATE_FOCUS_KEY);
@@ -326,10 +326,10 @@ void init_styles()
     lv_style_set_text_color(&lvStyleBtn,  COLOR_PLAIN_TEXT);
     lv_style_set_border_width(&lvStyleBtn, 0);
     lv_style_set_border_opa(&lvStyleBtn,  LV_OPA_COVER);
-//	lv_style_set_shadow_color(&lvStyleBtn, COLOR_SHADOW);
-//	lv_style_set_shadow_opa(&lvStyleBtn, LV_OPA_20);
-//	lv_style_set_shadow_width(&lvStyleBtn, 2);
-//	lv_style_set_shadow_spread(&lvStyleBtn, 2);
+//    lv_style_set_shadow_color(&lvStyleBtn, COLOR_SHADOW);
+//    lv_style_set_shadow_opa(&lvStyleBtn, LV_OPA_20);
+//    lv_style_set_shadow_width(&lvStyleBtn, 2);
+//    lv_style_set_shadow_spread(&lvStyleBtn, 2);
 
     lv_style_init(&lvStyleBtn_focused);
     lv_style_set_bg_color(&lvStyleBtn_focused,  COLOR_ACCENT);
@@ -346,10 +346,10 @@ void init_styles()
     lv_style_set_border_width(&lvStyleMsgBox,4);
     lv_style_set_border_opa(&lvStyleMsgBox, LV_OPA_COVER);
     lv_style_set_border_color(&lvStyleMsgBox, COLOR_ACCENT);
-//	lv_style_set_shadow_color(&lvStyleMsgBox, COLOR_SHADOW);
-//	lv_style_set_shadow_opa(&lvStyleMsgBox, LV_OPA_50);
-//	lv_style_set_shadow_spread(&lvStyleMsgBox, 4);
-//	lv_style_set_shadow_width(&lvStyleMsgBox, 4);
+//    lv_style_set_shadow_color(&lvStyleMsgBox, COLOR_SHADOW);
+//    lv_style_set_shadow_opa(&lvStyleMsgBox, LV_OPA_50);
+//    lv_style_set_shadow_spread(&lvStyleMsgBox, 4);
+//    lv_style_set_shadow_width(&lvStyleMsgBox, 4);
     lv_style_set_text_color(&lvStyleMsgBox, COLOR_PLAIN_TEXT);
     lv_style_set_text_font(&lvStyleMsgBox,  &FONT_MED);
 
@@ -360,10 +360,10 @@ void init_styles()
     lv_style_set_bg_color(&lvStyleSemiTranspFrame, COLOR_SEMI_TRANSP);
     lv_style_set_border_width(&lvStyleSemiTranspFrame, 1);
     lv_style_set_border_opa(&lvStyleSemiTranspFrame, LV_OPA_80);
-//	lv_style_set_shadow_color(&lvStyleSemiTranspFrame, COLOR_SHADOW);
-//	lv_style_set_shadow_opa(&lvStyleSemiTranspFrame, LV_OPA_20);
-//	lv_style_set_shadow_width(&lvStyleSemiTranspFrame, 4);
-//	lv_style_set_shadow_spread(&lvStyleSemiTranspFrame, 4);
+//    lv_style_set_shadow_color(&lvStyleSemiTranspFrame, COLOR_SHADOW);
+//    lv_style_set_shadow_opa(&lvStyleSemiTranspFrame, LV_OPA_20);
+//    lv_style_set_shadow_width(&lvStyleSemiTranspFrame, 4);
+//    lv_style_set_shadow_spread(&lvStyleSemiTranspFrame, 4);
     lv_style_set_pad_all(&lvStyleSemiTranspFrame, 0);
 
     lv_style_init(&lvStyleInvisibleCont);
@@ -378,8 +378,8 @@ void init_styles()
     lv_style_set_bg_opa(&lvStyleSwitch, LV_OPA_COVER);
     lv_style_set_border_width(&lvStyleSwitch, 1);
     lv_style_set_border_opa(&lvStyleSwitch, LV_OPA_COVER);
-//	lv_style_set_shadow_color(&lvStyleSwitch, COLOR_SHADOW);
-//	lv_style_set_shadow_opa(&lvStyleSwitch, LV_OPA_20);
+//    lv_style_set_shadow_color(&lvStyleSwitch, COLOR_SHADOW);
+//    lv_style_set_shadow_opa(&lvStyleSwitch, LV_OPA_20);
 
     /* progress bar */
     lv_style_init(&lvStyleProgBarBg);
@@ -544,7 +544,7 @@ void display_main_widgets()
     static const void* arrPathBtnImgs[N_BTNS] = {&btn_img_1, &btn_img_2, &btn_img_3};
     
     
-    for(iBtn = 0; iBtn < N_BTNS; ++iBtn)	
+    for(iBtn = 0; iBtn < N_BTNS; ++iBtn)    
     {
         x_begin = iBtn * (CONT_WIDTH_MARGIN + CONT_WIDTH) + CONT_WIDTH_MARGIN;
         y_begin = CONT_HEIGHT_MARGIN;
@@ -570,7 +570,7 @@ void display_main_widgets()
         lv_obj_set_style_text_align(lvLblForBtn1, LV_TEXT_ALIGN_CENTER, 0);
         lv_label_set_text(lvLblForBtn1, arrBtnHintLabels[iBtn]);
         lv_obj_align(lvLblForBtn1, LV_ALIGN_CENTER, 0, CONT_HEIGHT / 4);
-#endif	
+#endif    
 
         // 按钮
         lv_obj_t *lvBtn1 = lv_button_create(lvContForBtn1);
@@ -627,7 +627,7 @@ static void back_event_cb(lv_event_t * e)
 
     if(func_dismiss)
     {
-    	func_dismiss();
+        func_dismiss();
     }
 }
 
@@ -813,7 +813,7 @@ void display_touchscreen_calib_widgets()
         lvCircTouchPoint = lv_image_create(lvContCalib);
         lv_image_set_src(lvCircTouchPoint, &character_icon_small_transp);
         lv_obj_set_style_bg_opa(lvCircTouchPoint, LV_OPA_0, 0);
-//		lv_obj_set_style_bg_color(lvCircTouchPoint, COLOR_ACCENT, 0);
+//        lv_obj_set_style_bg_color(lvCircTouchPoint, COLOR_ACCENT, 0);
         lv_obj_set_align(lvCircTouchPoint, LV_ALIGN_CENTER);
         lv_obj_set_pos(lvCircTouchPoint, LV_HOR_RES_MAX * (0.1 - 0.5), LV_VER_RES_MAX * (0.1 - 0.5) ); // zeroed at screen center
     }
@@ -986,11 +986,11 @@ void my_i16toa(char* dest, int16_t num)
         dest--;
         while(start<dest)
         {
-        	char temp = *start;
-        	*start = *dest;
-        	*dest = temp;
-        	start++;
-        	dest--;
+            char temp = *start;
+            *start = *dest;
+            *dest = temp;
+            start++;
+            dest--;
         }
     }
     else
@@ -1020,11 +1020,11 @@ void my_utoa(char* dest, uint32_t num)
         dest--;
         while(start<dest)
         {
-        	char temp = *start;
-        	*start = *dest;
-        	*dest = temp;
-        	start++;
-        	dest--;
+            char temp = *start;
+            *start = *dest;
+            *dest = temp;
+            start++;
+            dest--;
         }
     }
     else

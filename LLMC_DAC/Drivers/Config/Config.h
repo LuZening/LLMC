@@ -24,9 +24,9 @@ typedef enum
 {
     CONFIG_VAR_U8 = 0,
     CONFIG_VAR_I32,
-	CONFIG_VAR_BYTESTRING,
+    CONFIG_VAR_BYTESTRING,
     CONFIG_VAR_BYTESTRING_LONG,
-	CONFIG_VAR_OBJ,
+    CONFIG_VAR_OBJ,
 } config_var_type_t;
 
 typedef struct

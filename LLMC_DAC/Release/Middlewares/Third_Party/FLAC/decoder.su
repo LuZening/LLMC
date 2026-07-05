@@ -1,0 +1,5 @@
+decoder.c:139:12:decode_residuals	88	static
+decoder.c:179:12:decode_subframe_fixed	48	static
+decoder.c:93:6:init_flac_context	16	static
+decoder.c:231:5:decode_subframe_lpc	184	static
+decoder.c:495:5:flac_decode_frame	56	static

@@ -99,29 +99,29 @@ void MX_USB_DEVICE_Init(void)
 
   if(cfg.usbCfgDescSelector== USB_CFG_DESC_UAC1_0)
   {
-	  if (USBD_RegisterClass(&hUsbDeviceHS, &USBD_AUDIO) != USBD_OK)
-	  {
-	    Error_Handler();
-	  }
-	  if (USBD_AUDIO_RegisterInterface(&hUsbDeviceHS, &USBD_AUDIO_fops_HS) != USBD_OK)
-	  {
-		Error_Handler();
-	  }
+      if (USBD_RegisterClass(&hUsbDeviceHS, &USBD_AUDIO) != USBD_OK)
+      {
+        Error_Handler();
+      }
+      if (USBD_AUDIO_RegisterInterface(&hUsbDeviceHS, &USBD_AUDIO_fops_HS) != USBD_OK)
+      {
+        Error_Handler();
+      }
   }
   else if(cfg.usbCfgDescSelector == USB_CFG_DESC_MASS_STORAGE)
   {
-	  // unmount the file system first
-	  isFilesystemOK = false;
-	  FRESULT fr = f_mount(NULL, "", 0);
+      // unmount the file system first
+      isFilesystemOK = false;
+      FRESULT fr = f_mount(NULL, "", 0);
 
-	  if (USBD_RegisterClass(&hUsbDeviceHS, &USBD_MSC) != USBD_OK)
-	  {
-	    Error_Handler();
-	  }
-	  if(USBD_MSC_RegisterStorage(&hUsbDeviceHS, &USBD_Storage_Interface_fops_HS) != USBD_OK)
-	  {
-		  Error_Handler();
-	  }
+      if (USBD_RegisterClass(&hUsbDeviceHS, &USBD_MSC) != USBD_OK)
+      {
+        Error_Handler();
+      }
+      if(USBD_MSC_RegisterStorage(&hUsbDeviceHS, &USBD_Storage_Interface_fops_HS) != USBD_OK)
+      {
+          Error_Handler();
+      }
   }
   if (USBD_Start(&hUsbDeviceHS) != USBD_OK)
   {

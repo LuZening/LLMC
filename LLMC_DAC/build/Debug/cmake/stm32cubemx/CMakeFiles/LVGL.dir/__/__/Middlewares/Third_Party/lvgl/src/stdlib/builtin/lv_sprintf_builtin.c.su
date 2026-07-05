@@ -1,0 +1,10 @@
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/stdlib/builtin/lv_sprintf_builtin.c:130:20:_out_buffer	0	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/stdlib/builtin/lv_sprintf_builtin.c:138:20:_out_null	0	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/stdlib/builtin/lv_sprintf_builtin.c:163:21:_atoi	0	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/stdlib/builtin/lv_sprintf_builtin.c:173:15:_out_rev	48	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/stdlib/builtin/lv_sprintf_builtin.c:202:15:_ntoa_format	48	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/stdlib/builtin/lv_sprintf_builtin.c:256:15:_ntoa_long	88	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/stdlib/builtin/lv_sprintf_builtin.c:281:15:_ntoa_long_long	120	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/stdlib/builtin/lv_sprintf_builtin.c:555:12:_lv_vsnprintf	112	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/stdlib/builtin/lv_sprintf_builtin.c:872:5:lv_snprintf	24	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/stdlib/builtin/lv_sprintf_builtin.c:881:5:lv_vsnprintf	16	static

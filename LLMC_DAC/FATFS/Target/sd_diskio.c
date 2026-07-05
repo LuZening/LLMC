@@ -34,7 +34,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-bool g_SDCard_transmitting = false;
+volatile bool g_SDCard_transmitting = false;
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -686,6 +686,18 @@ void BSP_SD_AbortCallback(void)
 
 /* USER CODE BEGIN lastSection */
 /* can be used to modify / undefine previous code or add new code */
+void SD_ResetQueue(void)
+{
+    if (SDQueueID != NULL)
+    {
+#if (osCMSIS <= 0x20000U)
+        osMessageDelete(SDQueueID);
+        SDQueueID = NULL;
+#else
+        osMessageQueueReset(SDQueueID);
+#endif
+    }
+}
 /* USER CODE END lastSection */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

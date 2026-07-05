@@ -53,11 +53,11 @@ void DMA2D_XferCpltCallback(DMA2D_HandleTypeDef *hdma2d)
 void LTDC_flush_cb(lv_display_t * disp, const lv_area_t * area, uint8_t * px_map)
 {
     /* A: transfer each part*/
-//	  const int bytesPerPx = 2;
-//	  int w = area->x2 - area->x1 + 1;
-//	  int h = area->y2 - area->y1 + 1;
-//	  size_t offset = bytesPerPx*(LV_HOR_RES_MAX * area->y1 + area->x1);
-//	  uint16_t lineoffset = LV_HOR_RES_MAX - w;
+//      const int bytesPerPx = 2;
+//      int w = area->x2 - area->x1 + 1;
+//      int h = area->y2 - area->y1 + 1;
+//      size_t offset = bytesPerPx*(LV_HOR_RES_MAX * area->y1 + area->x1);
+//      uint16_t lineoffset = LV_HOR_RES_MAX - w;
     if(lv_display_flush_is_last(disp))
     {
 

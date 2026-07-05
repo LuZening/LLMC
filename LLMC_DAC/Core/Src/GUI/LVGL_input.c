@@ -80,7 +80,7 @@ void start_LVGL_input_tasks(bool calibrate_touchscreen)
     TouchScreenCalibTaskHandle = osThreadNew(task_touch_screen_calibrate, NULL, &TouchScreenCalibTask_attr);
     if(calibrate_touchscreen)
     {
-//		TouchScreenCalibTaskHandle = osThreadNew(task_touch_screen_calibrate, NULL, &TouchScreenCalibTask_attr);
+//        TouchScreenCalibTaskHandle = osThreadNew(task_touch_screen_calibrate, NULL, &TouchScreenCalibTask_attr);
         start_calibrate_touchscreen();
     }
     else // use existing calibration info
@@ -119,8 +119,8 @@ void task_touch_screen_calibrate()
         static bool isPointConfirmed = false;
         uint8_t i;
         /* wait for a signal to start the task */
-    //		if(!TSCalibAfterStart) // 如果设置在上电时即启动校准界面，则不用等待标志位
-    //			osThreadFlagsWait(TOUCHSCREEN_CALIB_START, osFlagsWaitAll, osWaitForever);
+    //        if(!TSCalibAfterStart) // 如果设置在上电时即启动校准界面，则不用等待标志位
+    //            osThreadFlagsWait(TOUCHSCREEN_CALIB_START, osFlagsWaitAll, osWaitForever);
         /* show calibration scene */
         isTSCalibrating = true;
         /* init calibration config */
@@ -150,8 +150,8 @@ void task_touch_screen_calibrate()
                 lv_obj_set_pos(lvCircTouchPoint,
                         cfg.TSCalibInfo.real_X[i] - LV_HOR_RES_MAX / 2 , cfg.TSCalibInfo.real_Y[i] -  LV_VER_RES_MAX / 2); // REFERENCED TO CENTER
                 lv_unlock();
-    //			osThreadFlagsClear(0xffff);
-    //			osDelay(pdMS_TO_TICKS(200));
+    //            osThreadFlagsClear(0xffff);
+    //            osDelay(pdMS_TO_TICKS(200));
                 osDelay((pdMS_TO_TICKS(500))); // delay 500ms
                 osThreadFlagsClear(0xffff);
 
@@ -186,7 +186,7 @@ void task_touch_screen_calibrate()
         dismiss_touchscreen_calib_widgets();
         display_main_widgets();
         lv_unlock();
-    //		}
+    //        }
     }
 }
 
@@ -214,12 +214,12 @@ void lvGetTouchscreenXY(lv_indev_t* indev, lv_indev_data_t* data)
     const int Z_threshold = 300;
     static int X[N_SAMPLES], Y[N_SAMPLES],Z[N_SAMPLES];
     int avg_X = 0, avg_Y = 0, avg_Z = 0;
-//	taskENTER_CRITICAL();
+//    taskENTER_CRITICAL();
     for(int i = 0; i < N_SAMPLES; ++i)
     {
         Z[i] = touch_read_XY_ADC(&X[i], &Y[i]);
     }
-//	taskEXIT_CRITICAL();
+//    taskEXIT_CRITICAL();
     // mid-value filtering
     insertionSort(Z, N_SAMPLES);
     if(Z[1] > Z_threshold) // make sure almost all samples are pressed solid
@@ -259,7 +259,7 @@ void lvGetRotEnc(lv_indev_t* indev, lv_indev_data_t* data)
     static uint32_t cntPrev = 0;
     data->enc_diff = rotenc.cntRot - cntPrev;
     cntPrev = rotenc.cntRot;
-//	if(rotenc.SW.state == 0) // state=0 means pressed
+//    if(rotenc.SW.state == 0) // state=0 means pressed
     if(HAL_GPIO_ReadPin(ENCSW_GPIO_Port, ENCSW_Pin) == 0)
         data->state = LV_INDEV_STATE_PRESSED;
     else // state=1 means released

@@ -1,0 +1,7 @@
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/others/sysmon/lv_sysmon.c:266:13:mem_observer_cb	32	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/others/sysmon/../../others/observer/../../core/../display/lv_display.h:410:26:lv_layer_sys	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/others/sysmon/../../others/observer/../../core/lv_obj_style.h:241:20:lv_obj_set_style_pad_all	16	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/others/sysmon/lv_sysmon.c:70:6:_lv_sysmon_builtin_init	16	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/others/sysmon/lv_sysmon.c:85:6:_lv_sysmon_builtin_deinit	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/others/sysmon/lv_sysmon.c:96:12:lv_sysmon_create	48	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/others/sysmon/lv_sysmon.c:249:13:mem_update_timer_cb	16	static

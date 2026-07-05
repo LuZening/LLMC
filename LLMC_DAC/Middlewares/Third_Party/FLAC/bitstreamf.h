@@ -27,34 +27,34 @@
 
 static __inline unsigned short swap16(unsigned short value)
 /*
-	result[15..8] = value[ 7..0];
-	result[ 7..0] = value[15..8];
+    result[15..8] = value[ 7..0];
+    result[ 7..0] = value[15..8];
 */
 {
-	return (value >> 8) | (value << 8);
+    return (value >> 8) | (value << 8);
 }
 
 static __inline unsigned long swap32(unsigned long value)
 /*
-	result[31..24] = value[ 7.. 0];
-	result[23..16] = value[15.. 8];
-	result[15.. 8] = value[23..16];
-	result[ 7.. 0] = value[31..24];
+    result[31..24] = value[ 7.. 0];
+    result[23..16] = value[15.. 8];
+    result[15.. 8] = value[23..16];
+    result[ 7.. 0] = value[31..24];
 */
 {
-	unsigned long hi = swap16(value >> 16);
-	unsigned long lo = swap16(value & 0xffff);
-	
-	return (lo << 16) | hi;
+    unsigned long hi = swap16(value >> 16);
+    unsigned long lo = swap16(value & 0xffff);
+    
+    return (lo << 16) | hi;
 
-//	register int temp;
-//	__asm{
-//		EOR temp, value, value, ROR#16
-//		MOV temp, temp, LSR#8
-//		BIC temp, temp, #0xFF00
-//		EOR value, temp, value, ROR#8
-//	}
-//	return value;
+//    register int temp;
+//    __asm{
+//        EOR temp, value, value, ROR#16
+//        MOV temp, temp, LSR#8
+//        BIC temp, temp, #0xFF00
+//        EOR value, temp, value, ROR#8
+//    }
+//    return value;
 }
 
 
@@ -67,23 +67,23 @@ static __inline unsigned long swap32(unsigned long value)
 /* bit input */
 /* buffer, buffer_end and size_in_bits must be present and used by every reader */
 typedef struct GetBitContext {
-	const uint8_t *buffer, *buffer_end;
-	int index;
-	int size_in_bits;
+    const uint8_t *buffer, *buffer_end;
+    int index;
+    int size_in_bits;
 } GetBitContext;
 
 #define VLC_TYPE int16_t
 
 typedef struct VLC {
-	int bits;
-	VLC_TYPE (*table)[2]; ///< code, bits
-	int table_size, table_allocated;
+    int bits;
+    VLC_TYPE (*table)[2]; ///< code, bits
+    int table_size, table_allocated;
 } VLC;
 
 typedef struct RL_VLC_ELEM {
-	int16_t level;
-	int8_t len;
-	uint8_t run;
+    int16_t level;
+    int8_t len;
+    uint8_t run;
 } RL_VLC_ELEM;
 
 
@@ -91,17 +91,17 @@ static __inline uint32_t unaligned32(const void *v) {
 
 
 #ifndef DECODER_SIM
-	__packed union Unaligned {
-		uint8_t b[4];
-		uint32_t i;
-	};
-	
-	return ((union Unaligned *)v)->i;
+    __packed union Unaligned {
+        uint8_t b[4];
+        uint32_t i;
+    };
+    
+    return ((union Unaligned *)v)->i;
 #else
 #pragma pack(1)
-	uint32_t u = *(unsigned long*)v;
+    uint32_t u = *(unsigned long*)v;
 #pragma pack()
-	return u;
+    return u;
 #endif
 
 }
@@ -153,11 +153,11 @@ for examples see get_bits, show_bits, skip_bits, get_vlc
 */
 
 static __inline int unaligned32_be(const void *v){
-	return betoh32(unaligned32(v));  // original
+    return betoh32(unaligned32(v));  // original
 }
 
 static __inline int unaligned32_le(const void *v){
-	return letoh32(unaligned32(v));  // original
+    return letoh32(unaligned32(v));  // original
 }
 
 #   define MIN_CACHE_BITS 25
@@ -200,61 +200,61 @@ static __inline int unaligned32_le(const void *v){
 
 
 static __inline int get_bits_count(GetBitContext *s){
-	return s->index;
+    return s->index;
 }
 
 static __inline int get_sbits(GetBitContext *s, int n){
-	register int tmp;
-	OPEN_READER(re, s)
-	UPDATE_CACHE(re, s)
-	tmp = SHOW_SBITS(re, s, n);
-	LAST_SKIP_BITS(re, s, n)
-	CLOSE_READER(re, s)
-	return tmp;
+    register int tmp;
+    OPEN_READER(re, s)
+    UPDATE_CACHE(re, s)
+    tmp = SHOW_SBITS(re, s, n);
+    LAST_SKIP_BITS(re, s, n)
+    CLOSE_READER(re, s)
+    return tmp;
 }
 
 static __inline unsigned int get_bits(GetBitContext *s, int n){
-	register int tmp;
-	OPEN_READER(re, s)
-	UPDATE_CACHE(re, s)
-	tmp = SHOW_UBITS(re, s, n);
-	LAST_SKIP_BITS(re, s, n)
-	CLOSE_READER(re, s)
+    register int tmp;
+    OPEN_READER(re, s)
+    UPDATE_CACHE(re, s)
+    tmp = SHOW_UBITS(re, s, n);
+    LAST_SKIP_BITS(re, s, n)
+    CLOSE_READER(re, s)
     return tmp;
 }
 
 static __inline unsigned int show_bits(GetBitContext *s, int n){
-	register int tmp;
-	OPEN_READER(re, s)
-	UPDATE_CACHE(re, s)
-	tmp = SHOW_UBITS(re, s, n);
-//	CLOSE_READER(re, s)
-	return tmp;
+    register int tmp;
+    OPEN_READER(re, s)
+    UPDATE_CACHE(re, s)
+    tmp = SHOW_UBITS(re, s, n);
+//    CLOSE_READER(re, s)
+    return tmp;
 }
 
 static __inline void skip_bits(GetBitContext *s, int n){
 /*
-	OPEN_READER(re, s)
-	UPDATE_CACHE(re, s)
-	LAST_SKIP_BITS(re, s, n)
-	CLOSE_READER(re, s)
+    OPEN_READER(re, s)
+    UPDATE_CACHE(re, s)
+    LAST_SKIP_BITS(re, s, n)
+    CLOSE_READER(re, s)
 
-	int re_index = s->index;
-	unaligned32_be(((const uint8_t *)s->buffer) + (re_index >> 3)) << (re_index & 0x07);
-	re_index += n;
-	s->index = re_index;
+    int re_index = s->index;
+    unaligned32_be(((const uint8_t *)s->buffer) + (re_index >> 3)) << (re_index & 0x07);
+    re_index += n;
+    s->index = re_index;
 */
-	s->index += n;
+    s->index += n;
 }
 
 static __inline unsigned int get_bits1(GetBitContext *s){
-	int index = s->index;
-	uint8_t result = s->buffer[index >> 3];
-	result <<= (index & 0x07);
-	result >>= 8 - 1;
-	index ++;
-	s->index = index;
-	return result;
+    int index = s->index;
+    uint8_t result = s->buffer[index >> 3];
+    result <<= (index & 0x07);
+    result >>= 8 - 1;
+    index ++;
+    s->index = index;
+    return result;
 }
 
 static __inline unsigned int show_bits1(GetBitContext *s){
@@ -283,13 +283,13 @@ static __inline void init_get_bits(GetBitContext *s, const uint8_t *buffer, int 
         UPDATE_CACHE(re, s)
         CLOSE_READER(re, s)
     }
-	
-	{
-		int re_index = s->index;
-		unaligned32_be(((const uint8_t *)s->buffer) + (re_index >> 3)) << (re_index & 0x07);
-		unaligned32_be(((const uint8_t *)s->buffer) + (re_index >> 3)) << (re_index & 0x07);
-		s->index = re_index;
-	}
+    
+    {
+        int re_index = s->index;
+        unaligned32_be(((const uint8_t *)s->buffer) + (re_index >> 3)) << (re_index & 0x07);
+        unaligned32_be(((const uint8_t *)s->buffer) + (re_index >> 3)) << (re_index & 0x07);
+        s->index = re_index;
+    }
 */
 }
 

@@ -99,7 +99,7 @@ void display_audio_signal_path_screen()
     // grid layout背景
     lvMainContAudioPathScreen = lv_obj_create(scr);
     lv_obj_remove_flag(lvMainContAudioPathScreen, LV_OBJ_FLAG_SCROLLABLE);
-//	lv_obj_remove_flag(lvMainContAudioPathScreen, LV_OBJ_FLAG_CLICKABLE);
+//    lv_obj_remove_flag(lvMainContAudioPathScreen, LV_OBJ_FLAG_CLICKABLE);
     lv_obj_set_size(lvMainContAudioPathScreen, LV_PCT(90), LV_PCT(90));
     lv_obj_add_style(lvMainContAudioPathScreen, &lvStyleSemiTranspFrame, 0);
     lv_obj_set_style_bg_opa(lvMainContAudioPathScreen, LV_OPA_COVER, 0);
@@ -127,7 +127,7 @@ void display_audio_signal_path_screen()
     static const char* arrInputLabels[] = {"麦克风1","麦克风2", "USB播放", "文件播放"};
 
     // note: column_dsc and row_dsc must be static!!!!!
-//	static int32_t column_dsc[] = { LV_GRID_CONTENT, LV_GRID_CONTENT, LV_GRID_CONTENT, LV_GRID_CONTENT, LV_GRID_CONTENT, LV_GRID_TEMPLATE_LAST};   /*4 columns with 100 and 400 ps width*/
+//    static int32_t column_dsc[] = { LV_GRID_CONTENT, LV_GRID_CONTENT, LV_GRID_CONTENT, LV_GRID_CONTENT, LV_GRID_CONTENT, LV_GRID_TEMPLATE_LAST};   /*4 columns with 100 and 400 ps width*/
     static int32_t column_dsc[] = { LV_GRID_FR(1), LV_GRID_FR(1), LV_GRID_FR(1), LV_GRID_FR(1), LV_GRID_FR(1), LV_GRID_TEMPLATE_LAST};   /*4 columns with 100 and 400 ps width*/
     static int32_t row_dsc[] = { LV_GRID_CONTENT, LV_GRID_CONTENT, LV_GRID_CONTENT, LV_GRID_TEMPLATE_LAST}; /*3 100 px tall rows*/
     lv_obj_set_grid_dsc_array(lvContMatrix, column_dsc, row_dsc);
@@ -136,28 +136,28 @@ void display_audio_signal_path_screen()
     // TODO: put items in grid
     for(i = 0; i < (1 + N_INPUTS) * (1 + N_OUTPUTS); ++i)
     {
-    	// columns are inputs, indices are outputs
+        // columns are inputs, indices are outputs
         uint8_t col= i % (N_INPUTS+1);
         uint8_t row = i / (N_INPUTS+1);
         int iInput = col - 1;
         int iOutput = row - 1;
         // skip upper-left corner, leave it to be empty
         if(i == 0)
-        	continue;
+            continue;
         // making column header for inputs, buttons that trigger settings menu
         if(row == 0)
         {
-        	lv_obj_t *btnInput = lv_button_create(lvContMatrix);
-        	lv_group_add_obj(lvGroupAudioPathScreen, btnInput);
-        	/*Stretch the cell horizontally and vertically too
+            lv_obj_t *btnInput = lv_button_create(lvContMatrix);
+            lv_group_add_obj(lvGroupAudioPathScreen, btnInput);
+            /*Stretch the cell horizontally and vertically too
              *Set span to 1 to make the cell 1 column/row sized*/
             lv_obj_set_grid_cell(btnInput, LV_GRID_ALIGN_CENTER, col, 1,
                     LV_GRID_ALIGN_CENTER, row, 1);
-        	lv_obj_t *lblCaption = lv_label_create(btnInput);
-        	lv_label_set_text_static(lblCaption, arrInputLabels[iInput]);
-        	lv_label_set_long_mode(lblCaption, LV_LABEL_LONG_WRAP);
-        	lv_obj_set_style_text_align(lblCaption, LV_TEXT_ALIGN_CENTER, 0);
-        	lv_obj_center(lblCaption);
+            lv_obj_t *lblCaption = lv_label_create(btnInput);
+            lv_label_set_text_static(lblCaption, arrInputLabels[iInput]);
+            lv_label_set_long_mode(lblCaption, LV_LABEL_LONG_WRAP);
+            lv_obj_set_style_text_align(lblCaption, LV_TEXT_ALIGN_CENTER, 0);
+            lv_obj_center(lblCaption);
             lv_obj_set_user_data(btnInput, (void*)iInput);
             lv_obj_add_event_cb(btnInput, input_btns_click_cb, LV_EVENT_CLICKED, NULL);
 
@@ -165,24 +165,24 @@ void display_audio_signal_path_screen()
         // making indices for outputs, buttons that trigger settings menu
         else if(col == 0)
         {
-        	lv_obj_t *btnOutput = lv_button_create(lvContMatrix);
-        	/*Stretch the cell horizontally and vertically too
+            lv_obj_t *btnOutput = lv_button_create(lvContMatrix);
+            /*Stretch the cell horizontally and vertically too
              *Set span to 1 to make the cell 1 column/row sized*/
             lv_obj_set_grid_cell(btnOutput, LV_GRID_ALIGN_CENTER, col, 1,
                     LV_GRID_ALIGN_CENTER, row, 1);
-        	lv_obj_t *lblCaption = lv_label_create(btnOutput);
-        	lv_label_set_text_static(lblCaption, arrOutputLabels[iOutput]);
-        	lv_label_set_long_mode(lblCaption, LV_LABEL_LONG_WRAP);
-        	lv_obj_set_style_text_align(lblCaption, LV_TEXT_ALIGN_CENTER, 0);
-        	lv_obj_center(lblCaption);
-        	lv_group_add_obj(lvGroupAudioPathScreen, btnOutput);
+            lv_obj_t *lblCaption = lv_label_create(btnOutput);
+            lv_label_set_text_static(lblCaption, arrOutputLabels[iOutput]);
+            lv_label_set_long_mode(lblCaption, LV_LABEL_LONG_WRAP);
+            lv_obj_set_style_text_align(lblCaption, LV_TEXT_ALIGN_CENTER, 0);
+            lv_obj_center(lblCaption);
+            lv_group_add_obj(lvGroupAudioPathScreen, btnOutput);
         }
         // col > 0 and row > 0, making switches
         else
         {
 
-        	lv_obj_t *sw = lv_switch_create(lvContMatrix);
-        	/*Stretch the cell horizontally and vertically too
+            lv_obj_t *sw = lv_switch_create(lvContMatrix);
+            /*Stretch the cell horizontally and vertically too
              *Set span to 1 to make the cell 1 column/row sized*/
             lv_obj_set_grid_cell(sw, LV_GRID_ALIGN_CENTER, col, 1,
                     LV_GRID_ALIGN_CENTER, row, 1);

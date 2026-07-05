@@ -36,7 +36,7 @@
 #ifndef _MPADECOBJFIXPT_H_
 #define _MPADECOBJFIXPT_H_
 
-#include "Helix/mp3dec.h"		/* public C API for new MP3 decoder */
+#include "Helix/mp3dec.h"        /* public C API for new MP3 decoder */
 #ifdef 0
 class CMpaDecObj
 {
@@ -73,36 +73,36 @@ public:
     //                          number of PCM bytes prodced upon return.
     ///////////////////////////////////////////////////////////////////////////
     void    DecodeFrame_v(unsigned char *pSource,
-              	          unsigned long *pulSize,
-                   	      unsigned char *pPCM,
-                       	  unsigned long *pulPCMSize);
+                            unsigned long *pulSize,
+                             unsigned char *pPCM,
+                             unsigned long *pulPCMSize);
 
-	// overloaded new version that returns error code in errCode
+    // overloaded new version that returns error code in errCode
     void    DecodeFrame_v(unsigned char *pSource,
-              	          unsigned long *pulSize,
-                   	      unsigned char *pPCM,
-                       	  unsigned long *pulPCMSize, 
-						  int *errCode);
+                            unsigned long *pulSize,
+                             unsigned char *pPCM,
+                             unsigned long *pulPCMSize, 
+                          int *errCode);
 
     void    GetPCMInfo_v(unsigned long &ulSampRate,
                          int &nChannels,
                          int &nBitsPerSample);
 
-	// return number of samples per frame, PER CHANNEL (renderer multiplies this result by nChannels)
+    // return number of samples per frame, PER CHANNEL (renderer multiplies this result by nChannels)
     int     GetSamplesPerFrame_n();
 
     void    SetTrustPackets(unsigned char bTrust) { m_bTrustPackets = bTrust; }
 
 private:
-	void *              m_pDec;		// generic void ptr
+    void *              m_pDec;        // generic void ptr
 
-	void *				m_pDecL1;	// not implemented (could use old Xing mpadecl1.cpp)
-	void *				m_pDecL2;	// not implemented (could use old Xing mpadecl2.cpp)
-	HMP3Decoder			m_pDecL3;
+    void *                m_pDecL1;    // not implemented (could use old Xing mpadecl1.cpp)
+    void *                m_pDecL2;    // not implemented (could use old Xing mpadecl2.cpp)
+    HMP3Decoder            m_pDecL3;
 
-	MP3FrameInfo		m_lastMP3FrameInfo;
-	unsigned char		m_bUseFrameSize;
+    MP3FrameInfo        m_lastMP3FrameInfo;
+    unsigned char        m_bUseFrameSize;
         unsigned char           m_bTrustPackets;
 };
 #endif
-#endif	/* _MPADECOBJFIXPT_H_ */
+#endif    /* _MPADECOBJFIXPT_H_ */

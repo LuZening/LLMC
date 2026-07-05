@@ -62,7 +62,7 @@ extern "C" {
 // NOTE: OVERRIDE usbd_conf.h
 #include "audio_settings.h"
 #define USBD_AUDIO_FREQ_DEFAULT                        48000U
-#define USBD_AUDIO_FREQ_MIC_DEFAULT                        48000U
+#define USBD_AUDIO_FREQ_MIC_DEFAULT                        96000U
 #define USBD_AUDIO_FREQ_SPEAKER_DEFAULT                48000U
 #define USB_AUDIO_BIT_DEPTH_DEFAULT                    DEFAULT_BIT_DEPTH
 #define USB_AUDIO_PREHEAT_MS_RECORD                        20U

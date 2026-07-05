@@ -114,7 +114,7 @@ static __inline int get_sr_golomb_flac(GetBitContext *gb, int k, int limit, int 
 #define get_ur_golomb_shorten(gb, k) get_ur_golomb_jpegls(gb, k, INT_MAX, 0)
 /*
 static __inline unsigned int get_ur_golomb_shorten(GetBitContext *gb, int k){
-	return get_ur_golomb_jpegls(gb, k, INT_MAX, 0);
+    return get_ur_golomb_jpegls(gb, k, INT_MAX, 0);
 }
 */
 

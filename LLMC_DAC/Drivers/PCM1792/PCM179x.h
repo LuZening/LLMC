@@ -31,17 +31,17 @@
 #define PCM179X_FMT_32BIT_I2S 0b101U // same as 24bit
 
 typedef struct  {
-	uint8_t ID;
-	uint16_t addr_i2c;
-	uint32_t fclk_Hz;
-	uint8_t bitdepth;
+    uint8_t ID;
+    uint16_t addr_i2c;
+    uint32_t fclk_Hz;
+    uint8_t bitdepth;
 
-	uint8_t regvals[6];
+    uint8_t regvals[6];
 
-	uint32_t rate;
+    uint32_t rate;
 
 
-}	pcm179x_t;
+}    pcm179x_t;
 
 extern pcm179x_t pcm179x;
 

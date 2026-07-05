@@ -1,0 +1,4 @@
+bitstreamf.h:28:32:swap16	16	static
+bitstreamf.h:37:31:swap32	24	static
+Ext_flac.c:39:6:flac_dump_headers	16	static
+Ext_flac.c:54:5:parse_flac	64	static

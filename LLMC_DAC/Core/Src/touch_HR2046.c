@@ -69,19 +69,19 @@ static bool ols_2_var_with_const(int* Y, int *X1, int *X2, uint8_t n, float *par
     int sum_Y = 0;
     for(int i = 0; i < m; ++i)
     {
-    	sum_error += ABS(Yhat[i] - Y[i]);
-    	sum_Y += ABS(Y[i]);
+        sum_error += ABS(Yhat[i] - Y[i]);
+        sum_Y += ABS(Y[i]);
     }
     int Y_to_error = sum_Y / sum_error;
 #ifdef DEBUG
     if(Y_to_error < 10) // error should < 10%
     {
-    	return false;
+        return false;
     }
 #else
     if(Y_to_error < 20) // error should < 5%
     {
-    	return false;
+        return false;
     }
 #endif
     return true;
@@ -132,19 +132,19 @@ static bool ols_1_var_with_const(int* Y, int *X1, uint8_t n, float *params)
     int sum_Y = 0;
     for(int i = 0; i < m; ++i)
     {
-    	sum_error += ABS(Yhat[i] - Y[i]);
-    	sum_Y += ABS(Y[i]);
+        sum_error += ABS(Yhat[i] - Y[i]);
+        sum_Y += ABS(Y[i]);
     }
     int Y_to_error = sum_Y / sum_error;
 #ifdef DEBUG
     if(Y_to_error < 10) // error should < 10%
     {
-    	return false;
+        return false;
     }
 #else
     if(Y_to_error < 20) // error should < 5%
     {
-    	return false;
+        return false;
     }
 #endif
     return true;
@@ -198,12 +198,12 @@ bool touch_set_calibrate(int real_X[5], int real_Y[5],
      */
     bool r;
     // solve for X axis
-//	r = ols_2_var_with_const(real_X, ADC_X, ADC_Y, 5, result->params_X);
+//    r = ols_2_var_with_const(real_X, ADC_X, ADC_Y, 5, result->params_X);
     r = ols_1_var_with_const(real_X, ADC_X, 5, result->params_X);
     if(!r)
         return false;
     // solve for Y axis
-//	r = ols_2_var_with_const(real_Y, ADC_X, ADC_Y, 5, result->params_Y);
+//    r = ols_2_var_with_const(real_Y, ADC_X, ADC_Y, 5, result->params_Y);
     r = ols_1_var_with_const(real_Y, ADC_Y, 5, result->params_Y);
     if(!r)
         return false;
@@ -246,10 +246,10 @@ int touch_convert_XY_ADC_to_physical(int ADC_X,int ADC_Y,int ADC_Z,
     if(pTSCalib != NULL && pTSCalib->isCalibrated)
     {
         // ADC_X[4]: X_Center
-//		*pX = pTSCalib->params_X[0] + pTSCalib->params_X[1] * ADC_X + pTSCalib->params_X[2] * ADC_Y;
+//        *pX = pTSCalib->params_X[0] + pTSCalib->params_X[1] * ADC_X + pTSCalib->params_X[2] * ADC_Y;
         *pX = pTSCalib->params_X[0] + pTSCalib->params_X[1] * ADC_X;
         // ADC_Y[4]: Y_Center
-//		*pY = pTSCalib->params_Y[0] + pTSCalib->params_Y[1] * ADC_X + pTSCalib->params_Y[2] * ADC_Y;
+//        *pY = pTSCalib->params_Y[0] + pTSCalib->params_Y[1] * ADC_X + pTSCalib->params_Y[2] * ADC_Y;
         *pY = pTSCalib->params_Y[0] + pTSCalib->params_Y[1] * ADC_Y;
         *pZ = (ADC_Z > 400)?(1):(0);
     }

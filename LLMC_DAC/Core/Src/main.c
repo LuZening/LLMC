@@ -183,14 +183,14 @@ void NP_power_enable(uint8_t state)
 
 void encoder_preamp_power_enable(uint8_t ch, uint8_t state)
 {
-//	if(ch == 1)
-//	{
-//		HAL_GPIO_WritePin(PREAMP_PD1_GPIO_Port, PREAMP_PD1_Pin, 1-state);
-//	}
-//	else if(ch == 2)
-//	{
-//		HAL_GPIO_WritePin(PREAMP_PD2_GPIO_Port, PREAMP_PD2_Pin, 1-state);
-//	}
+//    if(ch == 1)
+//    {
+//        HAL_GPIO_WritePin(PREAMP_PD1_GPIO_Port, PREAMP_PD1_Pin, 1-state);
+//    }
+//    else if(ch == 2)
+//    {
+//        HAL_GPIO_WritePin(PREAMP_PD2_GPIO_Port, PREAMP_PD2_Pin, 1-state);
+//    }
 }
 
 // locally implemented version of save config
@@ -285,8 +285,8 @@ void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai)
 void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
 {
 
-//	static uint32_t cycles1, cycles2;
-//	cycles1 = DWT->CYCCNT;
+//    static uint32_t cycles1, cycles2;
+//    cycles1 = DWT->CYCCNT;
     static uint32_t cnt = 0;
     cnt++;
     if(hsai == &hsai_BlockB2) // output to decoder
@@ -297,8 +297,8 @@ void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
     {
         // pass
     }
-//	cycles2 = DWT->CYCCNT;
-//	uint32_t cycles_used = cycles2 - cycles1; // 9000 (1 input), 16000 (2 inputs)
+//    cycles2 = DWT->CYCCNT;
+//    uint32_t cycles_used = cycles2 - cycles1; // 9000 (1 input), 16000 (2 inputs)
     return;
 }
 
@@ -352,8 +352,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
       /*LIST OF EXTI INTERRUPTS
        * T_INTX:  4 FALLING
        * SHUTDOWNX: 4 FALLING
-       * ENCA: 7	FALLING/RISING
-       * ENCSW: 9	FALLING
+       * ENCA: 7    FALLING/RISING
+       * ENCSW: 9    FALLING
        * OUT1 DETECT: 9 RISING
        * OUT2_DETECT: 8 RISING
        * MIC_DETECT1: 8 RISING
@@ -1732,8 +1732,8 @@ static void MX_GPIO_Init(void)
   /*LIST OF EXTI INTERRUPTS
    * T_INTX:  4 FALLING
    * SHUTDOWNX: 4 FALLING
-   * ENCA: 7	FALLING/RISING
-   * ENCSW: 9	FALLING
+   * ENCA: 7    FALLING/RISING
+   * ENCSW: 9    FALLING
    * OUT1 DETECT: 9 RISING
    * OUT2_DETECT: 8 RISING
    * MIC_DETECT1: 8 RISING
@@ -1750,6 +1750,17 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 char bufLVGLDebug[256] = {0};
+
+/* Re-initialise SDMMC after MSC mode: reset hsd1 handle, call MX init
+ * then disk_initialize() so HAL_SD_Init sees RESET state and performs
+ * full hardware init. Used by USB_switch_configuration_hot() in MyUSB.c. */
+void MX_SDMMC1_SD_ReInit(void)
+{
+    memset(&hsd1, 0, sizeof(hsd1));
+    MX_SDMMC1_SD_Init();
+    SD_ResetQueue();
+    SD_Driver.disk_initialize(0);
+}
 /* LVGL timer for tasks. */
 void taskLVGLTimer(void * argument)
 {

@@ -1,0 +1,16 @@
+lv_draw_sw_mask.c:949:52:lv_draw_mask_fade	16	static
+lv_draw_sw_mask.c:995:52:lv_draw_mask_map	20	static
+lv_draw_sw_mask.c:381:52:lv_draw_mask_line	24	static
+lv_draw_sw_mask.c:701:52:lv_draw_mask_angle	48	static
+lv_draw_sw_mask.c:839:52:lv_draw_mask_radius	40	static
+lv_draw_sw_mask.c:80:6:lv_draw_sw_mask_init	0	static
+lv_draw_sw_mask.c:85:6:lv_draw_sw_mask_deinit	0	static
+lv_draw_sw_mask.c:90:45:lv_draw_sw_mask_apply	40	static
+lv_draw_sw_mask.c:109:6:lv_draw_sw_mask_free_param	8	static
+lv_draw_sw_mask.c:129:6:_lv_draw_sw_mask_cleanup	16	static
+lv_draw_sw_mask.c:140:6:lv_draw_sw_mask_line_points_init	32	static
+lv_draw_sw_mask.c:222:6:lv_draw_sw_mask_line_angle_init	40	static
+lv_draw_sw_mask.c:240:6:lv_draw_sw_mask_angle_init	40	static
+lv_draw_sw_mask.c:293:6:lv_draw_sw_mask_radius_init	80	static
+lv_draw_sw_mask.c:356:6:lv_draw_sw_mask_fade_init	16	static
+lv_draw_sw_mask.c:369:6:lv_draw_sw_mask_map_init	12	static

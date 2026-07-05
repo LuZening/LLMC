@@ -1,0 +1,11 @@
+lv_fs_fatfs.c:55:6:lv_fs_fatfs_init	16	static
+lv_fs_fatfs.c:93:13:fs_init	4	static
+lv_fs_fatfs.c:112:15:fs_open	48	static
+lv_fs_fatfs.c:150:20:fs_close	16	static
+lv_fs_fatfs.c:168:20:fs_read	32	static
+lv_fs_fatfs.c:185:20:fs_write	32	static
+lv_fs_fatfs.c:202:20:fs_seek	24	static
+lv_fs_fatfs.c:229:20:fs_tell	24	static
+lv_fs_fatfs.c:243:15:fs_dir_open	32	static
+lv_fs_fatfs.c:274:20:fs_dir_read	344	static
+lv_fs_fatfs.c:314:20:fs_dir_close	16	static

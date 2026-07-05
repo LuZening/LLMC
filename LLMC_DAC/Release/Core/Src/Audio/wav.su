@@ -1,0 +1,2 @@
+wav.c:17:7:find_str	28	static
+wav.c:40:5:wav_parse_header	20	static

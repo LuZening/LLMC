@@ -175,7 +175,7 @@
 static uint8_t __attribute__((section(".ITCMRAM_isr_vector"))) isr_vector_RAM[0x400];
 void SystemInit (void)
 {
-//	while(1);
+//    while(1);
 #if defined (DATA_IN_D2_SRAM)
  __IO uint32_t tmpreg;
 #endif /* DATA_IN_D2_SRAM */
@@ -305,10 +305,10 @@ void SystemInit (void)
 
     // set vector table at DTCMRAM1
     const size_t addrFlash = 0x90000000;
-//	RCC->CFGR = 0;
+//    RCC->CFGR = 0;
     memcpy((void*)isr_vector_RAM, (void*)addrFlash, sizeof(isr_vector_RAM));
     SCB->VTOR = (uint32_t)isr_vector_RAM;
-//	__enable_irq();
+//    __enable_irq();
       /* User added END*/
 }
 

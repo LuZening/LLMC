@@ -1,0 +1,10 @@
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/led/../../core/../misc/../font/../draw/../misc/lv_color_op.h:49:48:lv_color_mix	16	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/led/lv_led.c:130:13:lv_led_event	304	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/led/lv_led.c:122:13:lv_led_constructor	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/led/lv_led.c:53:12:lv_led_create	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/led/lv_led.c:65:6:lv_led_set_color	16	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/led/lv_led.c:74:6:lv_led_set_brightness	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/led/lv_led.c:87:6:lv_led_on	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/led/lv_led.c:92:6:lv_led_off	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/led/lv_led.c:110:9:lv_led_get_brightness	0	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/widgets/led/lv_led.c:97:6:lv_led_toggle	8	static

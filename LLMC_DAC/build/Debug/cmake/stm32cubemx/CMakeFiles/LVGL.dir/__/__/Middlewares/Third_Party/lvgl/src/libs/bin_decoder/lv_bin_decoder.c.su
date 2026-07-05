@@ -1,0 +1,14 @@
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/bin_decoder/lv_bin_decoder.c:670:20:load_indexed	0	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/bin_decoder/lv_bin_decoder.c:994:20:decode_indexed_line	16	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/bin_decoder/lv_bin_decoder.c:107:13:lv_bin_decoder_info	32	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/bin_decoder/lv_bin_decoder.c:1042:20:fs_read_file_at	24	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/bin_decoder/lv_bin_decoder.c:550:20:decode_indexed	48	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/bin_decoder/lv_bin_decoder.c:533:13:free_decoder_data	16	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/bin_decoder/lv_bin_decoder.c:815:20:decode_alpha_only	56	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/bin_decoder/lv_bin_decoder.c:370:13:lv_bin_decoder_get_area	56	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/bin_decoder/lv_bin_decoder.c:516:25:get_decoder_data	8	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/bin_decoder/lv_bin_decoder.c:1060:20:decompress_image	16	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/bin_decoder/lv_bin_decoder.c:885:20:decode_compressed	48	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/bin_decoder/lv_bin_decoder.c:174:13:lv_bin_decoder_open	48	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/bin_decoder/lv_bin_decoder.c:351:6:lv_bin_decoder_close	16	static
+E:/Projects/You/LLMC/LLMC_DAC/Middlewares/Third_Party/lvgl/src/libs/bin_decoder/lv_bin_decoder.c:89:6:lv_bin_decoder_init	8	static

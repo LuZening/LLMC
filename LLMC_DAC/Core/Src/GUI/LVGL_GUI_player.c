@@ -84,7 +84,7 @@ static void dismiss_FS_player_screen(void)
     /* hide GUI widgets, instead of close the window */
     if(isFSPlayerScreenCreated)
     {
-    	deregister_group_without_del(lvGroupFSPlayerScreen);
+        deregister_group_without_del(lvGroupFSPlayerScreen);
         lv_obj_add_flag(lvMainContFS, LV_OBJ_FLAG_HIDDEN);
         isFSPlayerScreenHidden = true;
     }
@@ -151,14 +151,14 @@ static void loop_icon_change(lv_obj_t* icon, FS_play_mode_t mode)
         lv_image_set_src(icon, LV_SYMBOL_MINUS);
         break;
     case FS_PLAY_MODE_ONE_LOOP:
-    	lv_image_set_src(icon, LV_SYMBOL_LOOP);
-    	break;
+        lv_image_set_src(icon, LV_SYMBOL_LOOP);
+        break;
     case FS_PLAY_MODE_SEQUENTIAL:
-    	lv_image_set_src(icon, LV_SYMBOL_LIST);
-    	break;
+        lv_image_set_src(icon, LV_SYMBOL_LIST);
+        break;
     case FS_PLAY_MODE_RANDOM:
-    	lv_image_set_src(icon, LV_SYMBOL_SHUFFLE);
-    	break;
+        lv_image_set_src(icon, LV_SYMBOL_SHUFFLE);
+        break;
     }
 }
 static void loop_event_handler_cb(lv_event_t* e)
@@ -167,26 +167,26 @@ static void loop_event_handler_cb(lv_event_t* e)
     lv_obj_t* obj = lv_event_get_target(e);
     if(code == LV_EVENT_CLICKED)
     {
-    	FS_play_mode_t modeNew;
-    	switch(modePlay)
-    	{
+        FS_play_mode_t modeNew;
+        switch(modePlay)
+        {
         case FS_PLAY_MODE_ONE_SHOT:
-    		modeNew = FS_PLAY_MODE_ONE_LOOP;
-    		break;
+            modeNew = FS_PLAY_MODE_ONE_LOOP;
+            break;
         case FS_PLAY_MODE_ONE_LOOP:
-        	modeNew = FS_PLAY_MODE_SEQUENTIAL;
-        	break;
+            modeNew = FS_PLAY_MODE_SEQUENTIAL;
+            break;
         case FS_PLAY_MODE_SEQUENTIAL:
-        	modeNew = FS_PLAY_MODE_RANDOM;
-        	break;
+            modeNew = FS_PLAY_MODE_RANDOM;
+            break;
         case FS_PLAY_MODE_RANDOM:
-        	modeNew = FS_PLAY_MODE_ONE_SHOT;
-        	break;
+            modeNew = FS_PLAY_MODE_ONE_SHOT;
+            break;
         default:
-        	modeNew = FS_PLAY_MODE_ONE_LOOP;
-    	}
-    	loop_icon_change(obj, modeNew);
-    	modePlay = modeNew;
+            modeNew = FS_PLAY_MODE_ONE_LOOP;
+        }
+        loop_icon_change(obj, modeNew);
+        modePlay = modeNew;
     }
 }
 
@@ -559,9 +559,9 @@ static void duration_timer_cb(lv_timer_t* t)
 #ifndef LVGL_SIM
     osMutexAcquire(mtxFSPlayer, 100);
     if(samplesPerMs > 0)
-    	elapsed_time_ms = samplesPlayed / samplesPerMs;
+        elapsed_time_ms = samplesPlayed / samplesPerMs;
     else
-    	elapsed_time_ms = 0;
+        elapsed_time_ms = 0;
     osMutexRelease(mtxFSPlayer);
     lv_label_set_text_fmt(elapsed_time_label, "%"LV_PRIu32":%02"LV_PRIu32, elapsed_time_ms / 60000, elapsed_time_ms % 60000 / 1000);
     lv_slider_set_value(slider_obj, elapsed_time_ms, LV_ANIM_OFF);
@@ -610,12 +610,12 @@ void display_FS_player_screen()
 
     /* File Exp Part BEGIN */
     // LHS
-//	lv_obj_set_layout(lvCont, LV_LAYOUT_GRID);
+//    lv_obj_set_layout(lvCont, LV_LAYOUT_GRID);
     const uint16_t COL_WIDTH = LV_HOR_RES_MAX / 2;
     const uint16_t ROW_HEIGHT =LV_VER_RES_MAX;
-//	static int32_t column_dsc[] = {COL_WIDTH, COL_WIDTH, LV_GRID_TEMPLATE_LAST};   /*4 columns with 100 and 400 ps width*/
-//	static int32_t row_dsc[] = {ROW_HEIGHT,LV_GRID_TEMPLATE_LAST}; /*3 100 px tall rows*/
-//	lv_obj_set_grid_dsc_array(lvCont, column_dsc, row_dsc);
+//    static int32_t column_dsc[] = {COL_WIDTH, COL_WIDTH, LV_GRID_TEMPLATE_LAST};   /*4 columns with 100 and 400 ps width*/
+//    static int32_t row_dsc[] = {ROW_HEIGHT,LV_GRID_TEMPLATE_LAST}; /*3 100 px tall rows*/
+//    lv_obj_set_grid_dsc_array(lvCont, column_dsc, row_dsc);
 
     lv_obj_t* lvContFileExp = lv_obj_create(lvMainContFS);
     lv_obj_set_size(lvContFileExp, COL_WIDTH, ROW_HEIGHT);
@@ -676,20 +676,20 @@ void display_FS_player_screen()
 #endif
     if (!isOpen_PL)
     {
-    	// check folder existance. Make a new one if necessary
+        // check folder existance. Make a new one if necessary
 #ifndef LVGL_SIM
-    	fr = f_opendir(&dir, FS_FOLDER_PLAYLIST);
-    	if(fr == FR_OK)
-    		f_closedir(&dir);
-    	else
-    	{
-    		// make dir
-    		fr = f_mkdir(FS_FOLDER_PLAYLIST);
-    		if(fr != FR_OK)
-    			show_toast("Playlist folder not found!");
-    	}
+        fr = f_opendir(&dir, FS_FOLDER_PLAYLIST);
+        if(fr == FR_OK)
+            f_closedir(&dir);
+        else
+        {
+            // make dir
+            fr = f_mkdir(FS_FOLDER_PLAYLIST);
+            if(fr != FR_OK)
+                show_toast("Playlist folder not found!");
+        }
 #endif
-    	fr = f_open(&filePL, FS_FOLDER_PLAYLIST _T("/") FS_FNAME_PLAYLSIT_1, FA_READ | FA_WRITE | FA_OPEN_ALWAYS);
+        fr = f_open(&filePL, FS_FOLDER_PLAYLIST _T("/") FS_FNAME_PLAYLSIT_1, FA_READ | FA_WRITE | FA_OPEN_ALWAYS);
         if (fr == 0)
         {
             isOpen_PL = true;

@@ -234,8 +234,8 @@ bool get_config_variable_by_name(const char* name, void* buf)
             strncpy((char*)buf, (char*)(pMap->pV), CONFIG_VAR_BYTESTRING_LONG);
             break;
         default:
-//        	assert("obj type not supported yet");
-        	break;
+//            assert("obj type not supported yet");
+            break;
         }
 
     }
@@ -275,9 +275,9 @@ int get_config_string(char* buf, int lenbuf)
                 "%s=%s", pMap->name, ((char*)(pMap->pV)));
             break;
             case CONFIG_VAR_BYTESTRING_LONG:
-			nW = snprintf(p, lenbuf - nWritten - 1,
-							"%s=%s", pMap->name, ((char*)(pMap->pV)));
-			break;
+            nW = snprintf(p, lenbuf - nWritten - 1,
+                            "%s=%s", pMap->name, ((char*)(pMap->pV)));
+            break;
         }
         nWritten += nW;
         p += nW;

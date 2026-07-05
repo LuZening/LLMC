@@ -124,8 +124,8 @@ void init_USB_player();
 void USB_player_task_start();
 
 
-#define MASK_MIC1	(1U << (IDX_CHANNEL_MIC1 - 1)) // mic1 connected to CH2(R)
-#define MASK_MIC2	(1U << (IDX_CHANNEL_MIC2 - 1)) // mic2 wired to CH1(L)
+#define MASK_MIC1    (1U << (IDX_CHANNEL_MIC1 - 1)) // mic1 connected to CH2(R)
+#define MASK_MIC2    (1U << (IDX_CHANNEL_MIC2 - 1)) // mic2 wired to CH1(L)
 //extern uint8_t ChannelLREnableBits;
 uint32_t get_encoder_I2S_sample_count(uint32_t* pPrevcnt);
 uint32_t get_encoder_I2S_sample_count_TIM(uint32_t* pPrevcnt);
