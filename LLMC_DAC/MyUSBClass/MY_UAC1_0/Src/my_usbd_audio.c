@@ -163,6 +163,8 @@ static precise_counter_t lastSampleCount_mic = {0};
 static precise_counter_t counter_feedback = {0};
 /* Drift correction state machine for microphone Data In */
 #define DRIFT_THRESHOLD 8
+/* 漏帧积压上限：正常掉帧不丢数据，积压超过该时长才做受控丢弃 */
+#define MIC_MAX_BACKLOG_MS 20
 enum { DRIFT_NORMAL = 0, DRIFT_HIGH, DRIFT_LOW };
 static uint8_t drift_state = DRIFT_NORMAL;
 static int32_t cum_samples_err = 0;
@@ -1013,29 +1015,15 @@ size_t USB_absorb_from_fifo_mic_in(USBD_HandleTypeDef *pdev,  uint8_t *buf, size
         countDiff = standard_count_diff;
     }
     // convert sample count to bytes
-    size_t countDiff_limited;
-    size_t countToDrop = 0;
-    if (countDiff > max_count)
-    {
-        countDiff_limited = max_count;
-        countToDrop += countDiff - max_count;
-        global_counter_USB_mic_loss += countToDrop * sizePerSampleCount;
-    }
-    else
-        countDiff_limited = countDiff;
+    /* 不再丢弃超过 max_count 的样本：本帧最多发 max_count，
+     * 多余样本留在 FIFO 中，由下面的漂移状态机逐帧排空 */
 #else // always submit standard length
-    size_t countDiff_limited = STANDARD_COUNT_DIFF;
+    size_t countDiff = standard_count_diff;
 #endif
-    /* Drop overflowed samples if necessary */
     /* Fixed base: standard packet size. Drift correction via state machine below. */
     int32_t sizeToGet = (int32_t)(standard_count_diff * sizePerSampleCount);
     uint32_t sizeGot = 0;
     size_t sizeAvail = kfifo_get_filled_size(&fifo_to_USB_record);
-    if(countToDrop > 0)
-    {
-        fifo_to_USB_record.out += MIN(sizeAvail, countToDrop * sizePerSampleCount);
-        sizeAvail = kfifo_get_filled_size(&fifo_to_USB_record);
-    }
     uint32_t sizeFree = fifo_to_USB_record.size - sizeAvail;
     /* Jump start when data is warmed up */
     if(ready_for_output_USB_record == 0)
@@ -1046,7 +1034,20 @@ size_t USB_absorb_from_fifo_mic_in(USBD_HandleTypeDef *pdev,  uint8_t *buf, size
     /* transfer data with adjusted length from the FIFO to the USB transmit buffer */
     if(ready_for_output_USB_record)
     {
-        cum_samples_err += (int32_t)countDiff_limited - (int32_t)standard_count_diff;
+        /* 用未截断的 countDiff 记账：漏帧产生的积压由 DRIFT_HIGH 逐帧 +1 样本排空 */
+        cum_samples_err += (int32_t)countDiff - (int32_t)standard_count_diff;
+        /* 安全阀：积压超过 MIC_MAX_BACKLOG_MS 才丢弃多余部分，正常漏帧不丢 */
+        int32_t max_backlog = (int32_t)(standard_count_diff * MIC_MAX_BACKLOG_MS);
+        if (cum_samples_err > max_backlog)
+        {
+            size_t excess = (size_t)(cum_samples_err - max_backlog);
+            size_t dropBytes = MIN(sizeAvail, excess * sizePerSampleCount);
+            fifo_to_USB_record.out += dropBytes;
+            sizeAvail -= dropBytes;
+            global_counter_USB_mic_loss += dropBytes;
+            cum_samples_err = 0;
+            drift_state = DRIFT_NORMAL;
+        }
         switch(drift_state)
         {
         case DRIFT_NORMAL:

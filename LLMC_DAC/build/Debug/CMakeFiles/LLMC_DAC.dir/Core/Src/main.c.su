@@ -1,5 +1,5 @@
 E:/Projects/You/LLMC/LLMC_DAC/Core/Src/main.c:1293:13:MX_SDMMC1_SD_Init	0	static
-E:/Projects/You/LLMC/LLMC_DAC/Core/Src/main.c:2375:6:MPU_Config	48	static
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/main.c:2374:6:MPU_Config	48	static
 E:/Projects/You/LLMC/LLMC_DAC/Core/Src/main.c:1580:13:MX_GPIO_Init	88	static
 E:/Projects/You/LLMC/LLMC_DAC/Core/Src/main.c:1514:13:MX_DMA_Init	16	static
 E:/Projects/You/LLMC/LLMC_DAC/Core/Src/main.c:1767:6:taskLVGLTimer	24	static
@@ -26,7 +26,7 @@ E:/Projects/You/LLMC/LLMC_DAC/Core/Src/main.c:1759:6:MX_SDMMC1_SD_ReInit	8	stati
 E:/Projects/You/LLMC/LLMC_DAC/Core/Src/main.c:1831:6:init_async_i2c	16	static
 E:/Projects/You/LLMC/LLMC_DAC/Core/Src/main.c:1840:9:transmit_async_i2c	32	static,ignoring_inline_asm
 E:/Projects/You/LLMC/LLMC_DAC/Core/Src/main.c:1865:6:StartHumanInOutTask	32	static
-E:/Projects/You/LLMC/LLMC_DAC/Core/Src/main.c:2486:6:Error_Handler	0	static,ignoring_inline_asm
+E:/Projects/You/LLMC/LLMC_DAC/Core/Src/main.c:2485:6:Error_Handler	0	static,ignoring_inline_asm
 E:/Projects/You/LLMC/LLMC_DAC/Core/Src/main.c:211:6:SAI_encoder_init	8	static
 E:/Projects/You/LLMC/LLMC_DAC/Core/Src/main.c:239:6:SAI_decoder_init	8	static
 E:/Projects/You/LLMC/LLMC_DAC/Core/Src/main.c:1238:13:MX_SAI2_Init	8	static

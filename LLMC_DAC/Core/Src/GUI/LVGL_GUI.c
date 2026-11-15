@@ -679,7 +679,6 @@ static lv_obj_t* create_volume_button(lv_obj_t* parent)
 lv_obj_t* lblBatterySOC_sym = NULL;
 lv_obj_t* lblVbatVoltage = NULL;
 lv_obj_t* lblTempC = NULL;
-lv_obj_t* lblTempTouchC = NULL;
 static void create_battery_SOC_temp_symbol(lv_obj_t* parent)
 {
 
@@ -715,14 +714,6 @@ static void create_battery_SOC_temp_symbol(lv_obj_t* parent)
     lv_obj_set_style_pad_all(lblTempC, 0, 0);
     lv_label_set_text(lblTempC, "Core25" DEGREE_SIGN);
 
-    /* Amb = TSC2046 芯片温度（近似环境温度） */
-    lblTempTouchC = lv_label_create(cont);
-    lv_obj_set_style_text_font(lblTempTouchC, &FONT_SMALL, 0);
-    lv_obj_set_style_text_color(lblTempTouchC, COLOR_BUTTON, 0);
-    lv_obj_set_style_pad_all(lblTempTouchC, 0, 0);
-    lv_obj_set_style_pad_left(lblTempTouchC, 6, 0);
-    lv_label_set_text(lblTempTouchC, "Amb25" DEGREE_SIGN);
-
 
 }
 /************************ Generic widgets END ***********************/
@@ -734,18 +725,6 @@ void GUI_set_temperature(int16_t v)
             lv_label_set_text_fmt(lblTempC, "Core%d" DEGREE_SIGN, v);
         else
             lv_label_set_text(lblTempC, "Core--");
-    }
-}
-
-/* TSC2046 芯片温度（近似环境温度）；INT16_MIN 表示本次读数无效 */
-void GUI_set_temperature_touch(int16_t v)
-{
-    if(lblTempTouchC)
-    {
-        if(v == INT16_MIN)
-            lv_label_set_text(lblTempTouchC, "Amb--");
-        else
-            lv_label_set_text_fmt(lblTempTouchC, "Amb%d" DEGREE_SIGN, v);
     }
 }
 

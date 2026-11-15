@@ -2305,7 +2305,7 @@ void StartDefaultTask(void *argument)
       osDelay(pdMS_TO_TICKS(1000)); // poll battery/temperature once per second
       /* TASK: detect battery life (非阻塞状态机) */
       static int VBAT_mv_avg = 0;
-      if(touch_meas_start(1))
+      if(touch_meas_start(0))
       {
           /* 状态机推进；正常情况下第一次 step 即完成，不需要等待 */
           uint8_t measDone = 0;
@@ -2330,7 +2330,7 @@ void StartDefaultTask(void *argument)
           /* 按锂电池 OCV-SOC 曲线把电压换算成百分比，再映射到 5 档电量图标 */
           int socPercent = battery_mv_to_soc_percent(VBAT_mv_avg);
           lv_lock();
-          /* 顶栏顺序：[x.xV] [电池图标] [Core 温度] [Amb 温度] */
+          /* 顶栏顺序：[x.xV] [电池图标] [Core 温度] */
           GUI_set_vbat_voltage(touch_meas_get_vbat_mv());
           if(socPercent >= 90)
           {
@@ -2363,7 +2363,6 @@ void StartDefaultTask(void *argument)
               temp_C_avg = (temp_C_avg * 15 + temp_C) / 16;
           lv_lock();
           GUI_set_temperature(temp_C_avg);
-          GUI_set_temperature_touch((int16_t)touch_meas_get_temperature());
           lv_unlock();
       }
   /* USER CODE END 5 */
