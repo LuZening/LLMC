@@ -105,15 +105,9 @@ int main(void)
   HAL_GPIO_WritePin(PWR_EN_GPIO_Port, PWR_EN_Pin, GPIO_PIN_SET); // hold power line
   int WE = 0;
   W25Q128_OCTO_SPI_Init(&hospi1, WE);
-//  ret=W25Q128_OSPI_Erase_Chip(&hospi1);
-////  ret=W25Q128_OSPI_EraseSector(&hospi1,0,0x7FFFFF);
-////  ret=W25Q128_OSPI_EraseSector(&hospi1,0x800000,0xFFFFFF);
-//  ret=W25Q128_OSPI_Read(&hospi1, rxbuf, 0, 100);
-//  ret=W25Q128_OSPI_Write(&hospi1,txbuf,0,sizeof(txbuf));
-//  ret=W25Q128_OSPI_Read(&hospi1, rxbuf, 0, 100);
-//  W25Q128_OSPI_Configuration(&hospi1);
+
   W25Q128_OSPI_EnableMemoryMappedMode(&hospi1);
-//  HAL_Delay(100);
+
 
 
   // NOTE: +4 skips stack pointer at the first word, the address of ResetHandler is stored at +4

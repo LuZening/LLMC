@@ -2,4 +2,5 @@ MyUSB.c:31:6:USB_my_init_no_cache_memory	8	static
 MyUSB.c:43:6:USB_switch_to_configuration	0	static
 MyUSB.c:57:8:USBD_my_static_malloc	0	static
 MyUSB.c:63:6:USB_switch_configuration_hot	16	static
-MyUSB.c:144:6:USB_stop	8	static
+MyUSB.c:150:6:USB_stop	8	static
+MyUSB.c:160:6:USB_reenumerate	8	static

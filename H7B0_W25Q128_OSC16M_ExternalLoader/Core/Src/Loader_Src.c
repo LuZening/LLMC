@@ -40,21 +40,21 @@ int Init(void)
     SystemClock_Config();
 
     MX_GPIO_Init();
-    MX_OCTOSPI1_Init();
+//    MX_OCTOSPI1_Init();
 
     HAL_GPIO_WritePin(PWR_EN_GPIO_Port, PWR_EN_Pin, 1); // hold the power line to avoid shuttingdown
-//    __HAL_RCC_OSPI1_FORCE_RESET();  //completely reset peripheral
-//    __HAL_RCC_OSPI1_RELEASE_RESET();
+    __HAL_RCC_OSPI1_FORCE_RESET();  //completely reset peripheral
+    __HAL_RCC_OSPI1_RELEASE_RESET();
 
     if (W25Q128_OCTO_SPI_Init(&hospi1, 1) != HAL_OK)
     {
-    	//__disable_irq();  //disable interrupts
+    	__disable_irq();  //disable interrupts
         return LOADER_FAIL;
     }
 
     if (W25Q128_OSPI_EnableMemoryMappedMode(&hospi1) != HAL_OK)
     {
-    	//__disable_irq(); //disable interrupts
+    	__disable_irq(); //disable interrupts
         return LOADER_FAIL;
     }
 
@@ -62,7 +62,7 @@ int Init(void)
     volatile uint32_t a = *(volatile uint32_t*) 0x90000000;
     a++;
 
-    //__disable_irq(); //disable interrupts
+    __disable_irq(); //disable interrupts
     return LOADER_OK;
 }
 
