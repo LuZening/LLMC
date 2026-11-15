@@ -83,6 +83,7 @@ static void menu_settings_event_cb(lv_event_t * e)
         lv_dropdown_get_selected_str(obj, sText, sizeof(sText));
 #ifndef LVGL_SIM
         uint8_t bitdepth_new;
+        uint8_t formatChanged = 0;
         // bit depth first
         if(strnstr(sText, "24", sizeof(sText)))
             bitdepth_new = 24;
@@ -92,6 +93,7 @@ static void menu_settings_event_cb(lv_event_t * e)
         {
             cfg.USB_record_audio_bit_depth = bitdepth_new;
             isModified = true;
+            formatChanged = 1;
         }
         // sample rate later
         uint32_t FS_new;
@@ -107,7 +109,12 @@ static void menu_settings_event_cb(lv_event_t * e)
         {
             cfg.USB_record_audio_sample_rate_Hz = FS_new;
             isModified = true;
+            formatChanged = 1;
         }
+        /* 录音格式会改变描述符里的采样率和 wMaxPacketSize，必须让主机重新枚举，
+         * 否则主机会继续按旧描述符分配带宽和缓冲区，导致超发/丢包 */
+        if(formatChanged && (cfg.usbCfgDescSelector == USB_CFG_DESC_UAC1_0))
+            USB_reenumerate();
 #endif
     }
     else if(obj == lvCheck_USB_volume_control)

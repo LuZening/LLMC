@@ -23,7 +23,7 @@ struct KFIFO_DMA
 #ifdef USE_DMA_ON_KFIFO
     volatile unsigned int dmacur; /* DMA cursor position */
     size_t dmastep; // turn kfifo buffer to multiple segments for DMA transfer, each segment is a minial part for DMA
-    uint8_t pow_of_two;Q
+    uint8_t pow_of_two;
 #endif
 };
 

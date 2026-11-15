@@ -223,7 +223,7 @@ static size_t output_fifo_mixer_absorb(size_t maxlen)
             uint8_t oversample = 1;
             if(pFifo == &fifo_from_USB_playback)
             {
-                if(haudio->sample_rate_Hzs[0] < DEFAULT_SAMPLE_RATE_HZ)
+                if((haudio != NULL) && (haudio->sample_rate_Hzs[0] < DEFAULT_SAMPLE_RATE_HZ))
                 {
                     oversample = 2;
                     sizeAbsorbed_f32 = kfifo_get(pFifo, (uint8_t*)bufMixerAbsorbed_f32, sizeToAbsorb_f32 / 2);

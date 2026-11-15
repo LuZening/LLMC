@@ -88,18 +88,14 @@ size_t __kfifo_put(struct KFIFO_DMA *fifo, const uint8_t *buffer, size_t len)
 //        fifo->out += (len - freespace);
         return 0;
     }
-    uint32_t in_mod = __kfifo_mod(fifo, fifo->in);
-    fifo->in += len;
-/*
-     * Ensure that we sample the fifo->out index -before- we
-     * start putting bytes into the kfifo.
-     */
-    // for multicore
-    //    smp_mb();
+    /* 取 in 快照，先把数据写入缓冲区，最后再发布新的 in。
+     * 否则优先级更高的消费者可能在 memcpy 之前看到新 in，读到尚未写入的数据。 */
+    uint32_t in = fifo->in;
+    uint32_t in_mod = __kfifo_mod(fifo, in);
 
     size_t L;
 
-    /* first put the data starting from fifo->in to buffer end */
+    /* first put the data starting from in to buffer end */
     L = min(len, fifo->size - in_mod);
     memcpy(fifo->buffer + in_mod, buffer, L);
 
@@ -107,13 +103,9 @@ size_t __kfifo_put(struct KFIFO_DMA *fifo, const uint8_t *buffer, size_t len)
     if(len - L)
         memcpy(fifo->buffer, buffer + L, len - L);
 
-    /*
-     * Ensure that we add the bytes to the kfifo -before-
-     * we update the fifo->in index.
-     */
-
-  // smp_wmb();   //for multicore
-
+    /* 保证数据写入先于 in 的更新对其它中断可见 */
+    __DMB();
+    fifo->in = in + len;
 
     // override
 

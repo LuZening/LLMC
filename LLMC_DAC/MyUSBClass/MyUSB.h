@@ -33,3 +33,7 @@ void USB_switch_configuration_hot(USBCfgDescSelector_t new_sel);
 
 void * USBD_my_static_malloc(uint32_t size);
 void USB_stop(void); /* tear down USB so FatFS can access SD card */
+
+/* 软断开再软连接，强制主机重新枚举并重新读取配置描述符。
+ * 用于采样率/位深等会改变描述符 wMaxPacketSize 的配置变更。 */
+void USB_reenumerate(void);

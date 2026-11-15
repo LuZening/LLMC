@@ -706,6 +706,7 @@ static uint8_t USBD_AUDIO_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 static uint8_t USBD_AUDIO_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 {
     UNUSED(cfgidx);
+    USBD_AUDIO_HandleTypeDef *haudio_itf = (USBD_AUDIO_HandleTypeDef*)pdev->pClassData;
 
     /* Close Endpoints */
     uint8_t ep_addr;
@@ -730,17 +731,24 @@ static uint8_t USBD_AUDIO_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
     pdev->ep_in[ep_addr & EP_ADDR_MSK].is_used = 0U;
     pdev->ep_in[ep_addr & EP_ADDR_MSK].bInterval = 0U;
 
+    /* 先阻止音频 ISR 再访问即将释放的对象 */
+    is_USB_audio_inited = 0;
+
     /* DeInit  physical Interface components */
-    if (pdev->pClassData != NULL)
+    if (haudio_itf != NULL)
     {
 //    for(uint8_t i = 0; i < AUDIO_STREAM_NUM_INTERFACES; ++i)
 //      ((USBD_AUDIO_ItfTypeDef *)pdev->pUserData)[i]->DeInit(0U);
+        /* 先停流并清标志，再释放，避免 free 之后继续访问 */
+        haudio_itf->EPIN_tx_flags[0] = 0U;
+        haudio_itf->EPIN_tx_flags[1] = 0U;
+        haudio_itf->alt_settings[0] = 0U;
+        haudio_itf->alt_settings[1] = 0U;
         (void) USBD_free(pdev->pClassData);
         pdev->pClassData = NULL;
     }
 
-    /* Clear feedback transmission flag */
-    haudio->EPIN_tx_flags[1] = 0U; // sync EPIN
+    haudio = NULL;
     return (uint8_t) USBD_OK;
 }
 
@@ -1062,7 +1070,7 @@ size_t USB_absorb_from_fifo_mic_in(USBD_HandleTypeDef *pdev,  uint8_t *buf, size
             sizeToGet = (int32_t)sizePerSampleCount;
         if (sizeToGet > (int32_t)(max_count * sizePerSampleCount))
             sizeToGet = (int32_t)(max_count * sizePerSampleCount);
-        /* Clamp to caller-provided buffer size (packet_sizes[1]) */
+        /* Clamp to caller-provided buffer capacity (endpoint wMaxPacketSize) */
         if (sizeToGet > (int32_t)n)
             sizeToGet = (int32_t)n;
 
@@ -1139,6 +1147,8 @@ static uint8_t USBD_AUDIO_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
      */
     USBD_AUDIO_HandleTypeDef *haudio;
     haudio = (USBD_AUDIO_HandleTypeDef*) pdev->pClassData;
+    if (haudio == NULL)
+        return (uint8_t) USBD_OK;
     /* Endpoint buffer transmitted: microphone in */
     if (epnum == (AUDIO_MIC_IN_EP & (0x0F)))
     {
@@ -1160,9 +1170,18 @@ static uint8_t USBD_AUDIO_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
         else
         {
             uint8_t *bufEPin = haudio->bufDI;
+            /* NOTE: USB_absorb_from_fifo_mic_in() 的 n 是发送缓冲区的容量上限，
+             * 不是标称包长。包长会根据漂移在标称值上下浮动 1 个样本，
+             * 因此这里留出与端点 wMaxPacketSize 相同的余量(标称 + 标称/8)，
+             * 同时保证不超过 bufDI 的实际容量。 */
+            uint16_t sizeMaxPacket = CALC_AUDIO_PACKET_SIZE_FS(
+                    haudio->sample_rate_Hzs[1] + haudio->sample_rate_Hzs[1] / USB_MAX_IN_PACKET_SIZE_EXPANSION_DENOMINATOR,
+                    haudio->bit_depths[1], MAX_CHANNELS);
+            if (sizeMaxPacket > sizeof(haudio->bufDI))
+                sizeMaxPacket = (uint16_t)sizeof(haudio->bufDI);
             // absorb data from mixer fifo
 //            USBD_LL_FlushEP(pdev, AUDIO_MIC_IN_EP);
-            sizeLastPacket_mic = USB_absorb_from_fifo_mic_in(pdev, bufEPin, haudio->packet_sizes[1]);
+            sizeLastPacket_mic = USB_absorb_from_fifo_mic_in(pdev, bufEPin, sizeMaxPacket);
             (void) USBD_LL_Transmit(pdev, AUDIO_MIC_IN_EP, bufEPin, sizeLastPacket_mic);
             haudio->EPIN_tx_flags[0] = 1U; // mic EPIN
             haudio->EPIN_NSOF[0] = fnsof_new; // record the latest SOF number here, so in ISOInIncomplete callback we can tell if the transfer of microphone data is transferred
@@ -1321,23 +1340,43 @@ static uint8_t USBD_AUDIO_EP0_RxReady(USBD_HandleTypeDef *pdev)
             if (haudio->control.cs == AUDIO_STREAMING_REQ_FREQ_CTRL)
             {
                 uint32_t new_freq = *((uint32_t*)&haudio->control.data) & 0x00ffffff;
+                uint8_t freqOK = 0;
                 if(epnum == AUDIO_SPEAKER_OUT_EP)
                 {
-                    if (haudio->sample_rate_Hzs[0] != new_freq)
-                    {
-                        haudio->sample_rate_Hzs[0] = new_freq;
-
-                        AUDIO_OUT_Restart(pdev);
-                    }
+                    /* 扬声器描述符只声明 48kHz；接受其它速率会按未分配的
+                     * 包长发数据（例如 96k -> 576B > EP 实际的 316B） */
+                    freqOK = (new_freq == USBD_AUDIO_FREQ_SPEAKER_DEFAULT);
                 }
                 else if(epnum == AUDIO_MIC_IN_EP)
                 {
-                    if (haudio->sample_rate_Hzs[1] != new_freq)
+                    /* 麦克风只支持 48k/96k，且不能高于描述符声明的速率：
+                     * 主机是按描述符里的 wMaxPacketSize 分配带宽的 */
+                    freqOK = ((new_freq == 48000U) || (new_freq == 96000U)) &&
+                             (new_freq <= cfg.USB_record_audio_sample_rate_Hz);
+                }
+                if(freqOK)
+                {
+                    if(epnum == AUDIO_SPEAKER_OUT_EP)
                     {
-                        haudio->sample_rate_Hzs[1] = new_freq;
-                        AUDIO_IN_Restart(pdev);
+                        if (haudio->sample_rate_Hzs[0] != new_freq)
+                        {
+                            haudio->sample_rate_Hzs[0] = new_freq;
+
+                            AUDIO_OUT_Restart(pdev);
+                        }
+                    }
+                    else if(epnum == AUDIO_MIC_IN_EP)
+                    {
+                        if (haudio->sample_rate_Hzs[1] != new_freq)
+                        {
+                            haudio->sample_rate_Hzs[1] = new_freq;
+                            AUDIO_IN_Restart(pdev);
+                        }
                     }
                 }
+                /* 请求已处理完（有效或已拒绝），清除待处理状态 */
+                haudio->control.cmd = 0U;
+                haudio->control.len = 0U;
             }
         }
 
@@ -1369,6 +1408,8 @@ static uint8_t USBD_AUDIO_SOF(USBD_HandleTypeDef *pdev)
 {
     USBD_AUDIO_HandleTypeDef *haudio;
     haudio = (USBD_AUDIO_HandleTypeDef*) pdev->pClassData;
+    if (haudio == NULL)
+        return (uint8_t) USBD_OK;
     USB_OTG_GlobalTypeDef* USBx = USB_OTG_HS;
     uint32_t USBx_BASE = (uint32_t)USBx;
     fnsof_new = (USBx_DEVICE->DSTS & USB_OTG_DSTS_FNSOF) >> 8;
@@ -1511,7 +1552,10 @@ static uint8_t USBD_AUDIO_IsoINIncomplete(USBD_HandleTypeDef *pdev,
      * or, the Endpoint is set to be retreived by the HOST at an interval, which is common for the Feedback Endpoint
      * */
 
-    UNUSED(pdev);
+    USBD_AUDIO_HandleTypeDef *haudio;
+    haudio = (USBD_AUDIO_HandleTypeDef*) pdev->pClassData;
+    if (haudio == NULL)
+        return (uint8_t) USBD_OK;
     UNUSED(epnum);
 
       USB_OTG_GlobalTypeDef* USBx = USB_OTG_HS;
@@ -1643,7 +1687,6 @@ static uint8_t USBD_AUDIO_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum)
     size_t PacketSize;
     USBD_AUDIO_HandleTypeDef *haudio;
     haudio = (USBD_AUDIO_HandleTypeDef*) pdev->pClassData;
-    KFIFO_DMA* pfifo = &(haudio->FIFOs[0]);
 
     if (haudio == NULL)
     {
@@ -1720,6 +1763,20 @@ static void AUDIO_REQ_SetCurrent(USBD_HandleTypeDef *pdev,
 
     if (req->wLength != 0U)
     {
+        /* 端点采样率控制的数据固定为 3 字节，且只支持描述符声明的两个流端点；
+         * 其它形式直接 STALL，避免把非法的长度/端点当作采样率处理 */
+        if (((req->bmRequest & 0x1f) == AUDIO_STREAMING_EP_REQ) &&
+            (HIBYTE(req->wValue) == AUDIO_STREAMING_REQ_FREQ_CTRL))
+        {
+            uint8_t ep = LOBYTE(req->wIndex);
+            if ((req->wLength != 3U) ||
+                ((ep != AUDIO_SPEAKER_OUT_EP) && (ep != AUDIO_MIC_IN_EP)))
+            {
+                USBD_CtlError(pdev, req);
+                return;
+            }
+        }
+
         /* Prepare the reception of the buffer over EP0 */
         (void) USBD_CtlPrepareRx(pdev, haudio->control.data, req->wLength);
 

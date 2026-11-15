@@ -808,6 +808,8 @@ int main(void)
   /* USER CODE BEGIN RTOS_EVENTS */
   HAL_IWDG_Refresh(&hiwdg1);
   /* add events, ... */
+  /* 触摸 SPI 互斥锁必须在调度器启动前创建 */
+  touch_spi_lock_init();
 //  HAL_Delay(100);
   /* USER CODE END RTOS_EVENTS */
 
@@ -1839,9 +1841,14 @@ uint8_t transmit_async_i2c(uint8_t slot, uint8_t* packet, uint8_t len)
 {
     uint8_t data[BYTES_I2C_MAX_SINGLE_TRANSMIT + 1];
     uint8_t lenTransmitted = 0;
-    if(slot < N_I2C_TRANSMIT_SLOTS)
+    if((slot < N_I2C_TRANSMIT_SLOTS) && (len <= BYTES_I2C_MAX_SINGLE_TRANSMIT))
     {
         KFIFO_DMA* pfifo = &arr_fifo_I2C_transmit[slot];
+        /* 本函数同时被 USB 中断(EP0 音量控制)和 LVGL 任务调用，
+         * kfifo 不是多生产者安全的，用 PRIMASK 保护最短入队临界区；
+         * 保存/恢复原 PRIMASK，保证在中断上下文中也能嵌套使用。 */
+        uint32_t primask = __get_PRIMASK();
+        __disable_irq();
         uint8_t sizeFree = kfifo_get_free_space(pfifo);
         if(sizeFree > len)
         {
@@ -1850,6 +1857,7 @@ uint8_t transmit_async_i2c(uint8_t slot, uint8_t* packet, uint8_t len)
             kfifo_put(pfifo, data, len+1);
             lenTransmitted = len;
         }
+        __set_PRIMASK(primask);
     }
     return lenTransmitted;
 }
@@ -1907,23 +1915,30 @@ void StartHumanInOutTask(void *argument)
             }
             /* TASK: process analog device reset END */
             /* TASK: process I2C BEGIN */
-            for(int i = 0; i < N_I2C_TRANSMIT_SLOTS; ++i)
             {
-                uint8_t sizeFilled = kfifo_get_filled_size(&arr_fifo_I2C_transmit[i]);
-                if(sizeFilled > 0 )
+                static uint8_t __attribute__((section(".DMA_no_cache"))) data[BYTES_I2C_MAX_SINGLE_TRANSMIT];
+                for(int i = 0; i < N_I2C_TRANSMIT_SLOTS; ++i)
                 {
+                    /* 一次只启动一包 DMA：上一包未完成时不要把下一包从 FIFO 弹出，
+                     * 否则会覆盖发送缓冲、丢包，甚至误复位正在传输的 I2C 外设 */
+                    if(hi2c1.State != HAL_I2C_STATE_READY)
+                        break;
+                    if(kfifo_get_filled_size(&arr_fifo_I2C_transmit[i]) == 0)
+                        continue;
                     uint8_t sizePack;
                     kfifo_get(&arr_fifo_I2C_transmit[i], &sizePack, 1);
-                    if(sizePack > 0)
+                    if((sizePack == 0) || (sizePack > BYTES_I2C_MAX_SINGLE_TRANSMIT))
+                        continue;
+                    kfifo_get(&arr_fifo_I2C_transmit[i], data, sizePack);
+                    uint16_t addrDevice = arr_I2C_device_addrs[i];
+                    /* 总线被从机拉死时复位外设；此时没有进行中的 DMA，是安全的 */
+                    if (__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_BUSY)) {
+                        HAL_I2C_Init(&hi2c1);
+                    }
+                    if(HAL_I2C_Master_Transmit_DMA(&hi2c1, addrDevice, data, sizePack) != HAL_OK)
                     {
-                        static uint8_t __attribute__((section(".DMA_no_cache"))) data[BYTES_I2C_MAX_SINGLE_TRANSMIT];
-                        kfifo_get(&arr_fifo_I2C_transmit[i], data, sizePack);
-                        uint16_t addrDevice = arr_I2C_device_addrs[i];
-                        if (__HAL_I2C_GET_FLAG(&hi2c1, I2C_FLAG_BUSY)) {
-                            HAL_I2C_Init(&hi2c1);
-                        }
-                        HAL_I2C_Master_Transmit_DMA(&hi2c1, addrDevice, data, sizePack);
-                        // the interval between tasks are sufficent for DMA transmission, so no need for syncnization with DMA finish signal
+                        /* 发送失败则放回队列尾，下一轮重试 */
+                        (void)transmit_async_i2c((uint8_t)i, data, sizePack);
                     }
                 }
             }
@@ -2287,33 +2302,49 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-      osDelay(osWaitForever);
-      /* TASK: detect battery life */
+      osDelay(pdMS_TO_TICKS(1000)); // poll battery/temperature once per second
+      /* TASK: detect battery life (非阻塞状态机) */
       static int VBAT_mv_avg = 0;
-      taskENTER_CRITICAL();
-      int VBAT_mv = touch_read_VBAT_mv();
-      taskEXIT_CRITICAL();
-      if(VBAT_mv_avg == 0)
-          VBAT_mv_avg = VBAT_mv;
-      else
-          VBAT_mv_avg = (VBAT_mv_avg * 15 + VBAT_mv) / 16;
+      if(touch_meas_start(1))
+      {
+          /* 状态机推进；正常情况下第一次 step 即完成，不需要等待 */
+          uint8_t measDone = 0;
+          for(uint32_t i = 0; (i < 50U) && (measDone == 0); ++i)
+          {
+              measDone = (uint8_t)touch_meas_step();
+              if(measDone == 0)
+                  osDelay(1);
+          }
+          if(measDone != 0)
+          {
+              int VBAT_mv = touch_meas_get_vbat_mv();
+              if(VBAT_mv_avg == 0)
+                  VBAT_mv_avg = VBAT_mv;
+              else
+                  VBAT_mv_avg = (VBAT_mv_avg * 15 + VBAT_mv) / 16;
+          }
+      }
       // GUI updates
       if(isGUIReady)
       {
+          /* 按锂电池 OCV-SOC 曲线把电压换算成百分比，再映射到 5 档电量图标 */
+          int socPercent = battery_mv_to_soc_percent(VBAT_mv_avg);
           lv_lock();
-          if(VBAT_mv_avg > 4000U) // SOC: 100%
+          /* 顶栏顺序：[x.xV] [电池图标] [Core 温度] [Amb 温度] */
+          GUI_set_vbat_voltage(touch_meas_get_vbat_mv());
+          if(socPercent >= 90)
           {
               GUI_set_battery_SOC(4);
           }
-          else if(VBAT_mv_avg > 3800) // SOC: 75%
+          else if(socPercent >= 65)
           {
               GUI_set_battery_SOC(3);
           }
-          else if(VBAT_mv_avg > 3600) // SOC: 50%
+          else if(socPercent >= 40)
           {
               GUI_set_battery_SOC(2);
           }
-          else if(VBAT_mv_avg > 3400) // SOC: 25%
+          else if(socPercent >= 15)
           {
               GUI_set_battery_SOC(1);
           }
@@ -2332,6 +2363,7 @@ void StartDefaultTask(void *argument)
               temp_C_avg = (temp_C_avg * 15 + temp_C) / 16;
           lv_lock();
           GUI_set_temperature(temp_C_avg);
+          GUI_set_temperature_touch((int16_t)touch_meas_get_temperature());
           lv_unlock();
       }
   /* USER CODE END 5 */

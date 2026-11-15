@@ -25,9 +25,15 @@ extern SPI_HandleTypeDef hspi1;
 //#define HR2046_CMD_READ_Z2 0xc1    /* read Z2 */
 #define HR2046_CMD_READ_Z1 0xb0    /* Read Z1 */
 #define HR2046_CMD_READ_Z2 0xc0    /* read Z2 */
-#define HR2046_CMD_READ_TEMP 0x84
-#define HR2046_CMD_READ_TEMP_91 0xF4
-#define HR2046_CMD_READ_VBAT 0xA4
+/* TSC2046 控制字节: S(1) | A2A1A0 | MODE(0=12bit, 1=8bit) | SER/DFR(1=单端) | PD1 PD0
+ * 注意:
+ *  - TSC2046 的 MODE 极性是 0=12bit、1=8bit(为兼容 ADS7843)，与 ADS7846 相反；
+ *  - 本板 VREF 引脚外接 3.3V(实测 3.28V)，内部 2.5V 基准被外部源覆盖，
+ *    因此 PD1=0 关闭内部基准，PD0=0 采用转换后自动掉电；
+ *  - 电池/温度用单端模式(SER/DFR=1)，基准为 VREF-GND。 */
+#define HR2046_CMD_READ_TEMP 0x84      /* TEMP0: 12bit, 单端, 外部 VREF */
+#define HR2046_CMD_READ_TEMP_91 0xF4   /* TEMP1: 12bit, 单端, 外部 VREF */
+#define HR2046_CMD_READ_VBAT 0xA4      /* VBAT : 12bit, 单端, 外部 VREF */
 
 #define TOUCHSCREEN_CALIB_START 0b01
 #define TOUCHSCREEN_CALIB_POINT_CAPTURED 0b10
@@ -35,7 +41,7 @@ extern SPI_HandleTypeDef hspi1;
 #define TOUCHSCREEN_CALIB_LEFT_MARGIN 0.1
 #define TOUCHSCREEN_CALIB_UPPER_MARGIN 0.1
 
-#define HR2046_VREF_MV 2500U
+#define HR2046_VREF_MV 3250U
 
 #include <stdbool.h>
 
@@ -77,8 +83,19 @@ int touch_read_XY_physical(int *pX, int *pY);
 int touch_convert_XY_ADC_to_physical(int ADC_X,int ADC_Y,int ADC_Z,
         int* pX, int* pY, int* pZ);
 
-int touch_read_VBAT_mv();
+/* 非阻塞电量/温度测量状态机：
+ * touch_meas_start() 发起一次测量（占用 SPI 总线并记录起始时间）；
+ * 之后调用 touch_meas_step() 推进，返回 1 表示本次测量完成。
+ * 本板 VREF 为外部常开的 3.25V，无需等待基准建立。 */
+bool touch_meas_start(uint8_t with_temperature);
+int touch_meas_step(void);
+int touch_meas_get_vbat_mv(void);
+int touch_meas_get_temperature(void);
 
-int touch_read_temperature();
+/* 初始化触摸 SPI 互斥锁，必须在 osKernelStart() 之前调用一次 */
+void touch_spi_lock_init(void);
+
+/* 按单节锂离子电池典型 OCV-SOC 曲线，把电池电压(mV)映射为 0~100 的电量百分比 */
+int battery_mv_to_soc_percent(int mv);
 
 #endif /* TOUCH_HR2046_H_ */

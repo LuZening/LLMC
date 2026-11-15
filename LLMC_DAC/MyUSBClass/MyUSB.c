@@ -130,6 +130,12 @@ void USB_switch_configuration_hot(USBCfgDescSelector_t new_sel)
         isFilesystemOK = (fr == FR_OK);
 
         output_to_usb_init();
+
+        /* 离开 UAC 时调用了 encocder_input_stop()/output_to_usb_stop()，
+         * 这里重新应用音频连接，恢复麦克风与 USB 录音通路 */
+        osMutexAcquire(mtxConfig, osWaitForever);
+        audio_connections_apply(cfg.audio_connections);
+        osMutexRelease(mtxConfig);
     }
     else
     {
@@ -147,5 +153,17 @@ void USB_stop(void)
     USBD_Stop(&hUsbDeviceHS);
     USBD_DeInit(&hUsbDeviceHS);
     osDelay(pdMS_TO_TICKS(50));
+}
+
+/* 软断开再软连接，强制主机重新枚举并重新读取配置描述符。
+ * USBD_Stop() 会回调类的 DeInit()，重新枚举后由 SET_CONFIGURATION 重新 Init。 */
+void USB_reenumerate(void)
+{
+    if(hUsbDeviceHS.pData == NULL)
+        return;
+    USBD_Stop(&hUsbDeviceHS);
+    /* 让主机可靠地检测到断开（规范要求 > 2.5us，这里给足余量） */
+    osDelay(pdMS_TO_TICKS(50));
+    USBD_Start(&hUsbDeviceHS);
 }
 

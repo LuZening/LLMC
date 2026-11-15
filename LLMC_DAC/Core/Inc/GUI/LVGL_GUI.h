@@ -242,6 +242,8 @@ lv_obj_t* show_msgbox_farewell();
   *  external interfaces  BEGIN
   ****************************************************************/
 void GUI_set_temperature(int16_t v);
+void GUI_set_temperature_touch(int16_t v);
+void GUI_set_vbat_voltage(int mv);
 void GUI_set_battery_SOC(uint8_t i);
 extern bool audio_analog_chips_need_reset;
 void reset_audio_analog_chips();
